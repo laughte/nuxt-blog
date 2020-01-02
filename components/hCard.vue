@@ -1,28 +1,44 @@
 <template>
-  <v-card flat class="mx-auto" max-width="271px" :to="{name:'arDetail',params:{id:item.id}}">
-    <v-img class="white--text align-end" height="159px" :src="item.pic">
+  <v-card flat max-width="271px" :to="'/'+item._id">
+    <v-img
+      class="white--text align-end"
+      width="auto"
+      height="159px"
+      :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+    >
       <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
     </v-img>
     <div class="grid_author_avt">
       <v-avatar class="avatar" size="30">
-        <img :src="item.user.avatar" alt="John" />
+        <img :src="item.avatar" :alt="item.author" />
       </v-avatar>
     </div>
 
     <v-card-subtitle class="py-2 d-flex justify-start align-center">
       <div class="dot"></div>
-      {{item.user.name}}
+      {{item.author?item.author:'未知作者'}}
       <div class="dot"></div>
-      {{item.type}}
+      {{item.type?item.type:'未分类'}}
       <div class="dot"></div>
+      {{item.sorce?item.sorce:"未知来源"}}
     </v-card-subtitle>
 
     <v-card-text class="text--primary pb-0">
       <v-list three-line class="pa-0">
         <v-list-item class="pa-0">
           <v-list-item-content class="pa-0">
-            <v-list-item-title class="title font-weight-black">{{item.title}}</v-list-item-title>
-            <v-list-item-subtitle class="font-weight-medium">{{item.content}}</v-list-item-subtitle>
+            <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
+
+            <v-list-item-subtitle
+              class="font-weight-medium"
+              v-if="item.blocks[1]"
+              v-text="item.blocks[1].data.text"
+            ></v-list-item-subtitle>
+            <v-list-item-subtitle
+              class="font-weight-medium"
+              v-if="item.blocks[2]"
+              v-text="item.blocks[2].data.text"
+            ></v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -39,7 +55,7 @@
       </v-btn>
       <v-btn disabled text>
         <v-icon small>mdi-comment-processing-outline</v-icon>
-        {{item.comment.length}}
+        {{item.reply}}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -58,7 +74,6 @@ export default {
 <style>
 .grid_author_avt {
   position: relative;
-  z-index: 9;
   display: block;
   width: 100px;
   height: 36px;
@@ -98,10 +113,10 @@ export default {
   border-radius: 50%;
   background: #fb8c00;
 }
-.dot:nth-child(1) {
+.dot:nth-child(2) {
   background: #d81b60;
 }
-.dot:nth-child(2) {
+.dot:nth-child(3) {
   background: #00e5ff;
 }
 </style>

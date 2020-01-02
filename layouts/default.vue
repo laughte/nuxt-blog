@@ -41,34 +41,31 @@
         <span class="title">goLove</span>
       </v-toolbar-title>
 
-      <v-row class="mr-4" align="center">
-        <v-btn text>
-          <b>首页</b>
-        </v-btn>
-        <v-btn text>
-          <b>写文章</b>
-        </v-btn>
-        <v-btn text>
-          <b>图片</b>
-        </v-btn>
-        <v-btn text>
-          <b>音乐</b>
-        </v-btn>
-        <v-btn text>
-          <b>读书</b>
+      <v-row class="mr-4 d-none d-sm-none d-md-flex" align="center">
+        <v-btn text :key="index" v-for="(item,index) in menus" :to="item.href">
+          <b>{{item.title}}</b>
         </v-btn>
       </v-row>
-
+      <v-row class="mr-4 d-flex d-sm-none d-none d-sm-flex d-md-none" align="center">
+        <v-menu open-on-hover close-on-click close-on-content-click offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on">
+              <b>Dropdown</b>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="(item, index) in menus" :key="index" :to="item.href">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-row>
       <v-menu
         v-if="$store.state.user.userName"
-        v-model="value"
-        :disabled="disabled"
-        :absolute="absolute"
-        :open-on-hover="openOnHover"
-        :close-on-click="closeOnClick"
-        :close-on-content-click="closeOnContentClick"
-        :offset-x="offsetX"
-        :offset-y="offsetY"
+        :open-on-hover="true"
+        :close-on-click="true"
+        :close-on-content-click="true"
+        :offset-y="true"
       >
         <template v-slot:activator="{ on }">
           <v-btn
@@ -98,7 +95,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-container class="fill-height">
+      <v-container>
         <nuxt keep-alive />
       </v-container>
     </v-content>
@@ -106,12 +103,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   props: {
     source: String
   },
   data: () => ({
     drawer: null,
+    menus: [
+      { title: '首页', href: '/' },
+      { title: '写文章', href: '/writeboard' },
+      { title: '图片' },
+      { title: '音乐' },
+      { title: '读书' }
+    ],
     usermenus: [
       { title: '我的主页' },
       { title: '收藏的文章' },
@@ -125,17 +130,16 @@ export default {
       { icon: 'mdi-history', text: 'History' },
       { icon: 'mdi-featured_play_list', text: 'Playlists' },
       { icon: 'mdi-watch_later', text: 'Watch Later' }
-    ],
-    items2: [
-      { picture: 28, text: 'Joseph' },
-      { picture: 38, text: 'Apple' },
-      { picture: 48, text: 'Xbox Ahoy' },
-      { picture: 58, text: 'Nokia' },
-      { picture: 78, text: 'MKBHD' }
     ]
   }),
+  methods: {
+    ...mapActions(['getdata'])
+  },
   created() {
     this.$vuetify.theme.light = true
+    if (this.$store.state.content.article.length < 1) {
+      this.getdata({ api: '/api/myblog', type: 'article' })
+    }
   }
 }
 </script>

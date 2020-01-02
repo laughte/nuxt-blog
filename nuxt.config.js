@@ -30,6 +30,11 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/axios',
+    { src: '~/plugins/vue-mavon-editor', srr: false },
+    {
+      src: '~/plugins/vue-editor.js', ssr: false
+    }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -49,6 +54,7 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: "http://39.105.168.171:80",
   },
   /*
   ** vuetify module configuration

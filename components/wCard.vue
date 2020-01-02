@@ -1,29 +1,44 @@
 <template>
-  <v-card style="overflow:hidden" class="ma-4" flat :to="{name:'arDetail',params:{id:item,id}}">
+  <v-card style="overflow:hidden" max-width="634px" flat :to="'/'+item._id">
     <v-img
-      style="position:absolute;width: 100%;height:auto;filter: blur(55px);opacity:0.3;z-index: 0"
+      class="d-flex d-sm-none"
+      style="position:absolute;width: 100%;height:auto;filter: blur(35px);opacity:0.2;z-index: 0"
       :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/Ga6gdADXFjo7iL1.jpg'"
     ></v-img>
     <div style="overflow: hidden" class="d-flex justify-start align-center">
-      <!-- <v-img width="40.79%" height="auto" :src="item.pic"></v-img> -->
+      <v-img
+        class="d-none d-sm-flex"
+        width="40.79%"
+        height="100%"
+        :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+      ></v-img>
       <div>
         <v-card-subtitle class="py-2 d-flex justify-start align-center">
           <v-avatar size="30">
-            <img :src="item.user.avatar" alt="John" />
+            <img :src="item.avatar" :alt="item.author" />
           </v-avatar>
 
-          <div class="dot"></div>
-          {{item.user.name}}
-          <div class="dot"></div>
-          {{item.type}}
-          <div class="dot"></div>
+          <div class="dot dot1"></div>
+          {{item.author?item.author:'未知作者'}}
+          <div class="dot dot2"></div>
+          {{item.type?item.type:'未分类'}}
+          <div class="dot dot3"></div>
           {{item.sorce?item.sorce:"未知来源"}}
         </v-card-subtitle>
         <v-list three-line class="py-0">
           <v-list-item>
             <v-list-item-content class="py-0">
-              <v-list-item-title class="title font-weight-black">{{item.title}}</v-list-item-title>
-              <v-list-item-subtitle class="font-weight-medium">{{item.content}}</v-list-item-subtitle>
+              <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
+              <v-list-item-subtitle
+                class="font-weight-medium"
+                v-if="item.blocks[1]"
+                v-text="item.blocks[1].data.text"
+              ></v-list-item-subtitle>
+              <v-list-item-subtitle
+                class="font-weight-medium"
+                v-if="item.blocks[2]"
+                v-text="item.blocks[2].data.text"
+              ></v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -38,7 +53,7 @@
           </v-btn>
           <v-btn disabled text>
             <v-icon small>mdi-comment-processing-outline</v-icon>
-            {{item.comment.length}}
+            {{item.reply}}
           </v-btn>
         </v-card-actions>
       </div>
@@ -56,5 +71,18 @@ export default {
 <style scoped>
 .subtitle:hover {
   color: #37bdca;
+}
+.dot {
+  margin: 0px 4px 0px 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fb8c00;
+}
+.dot2 {
+  background: #d81b60;
+}
+.dot3 {
+  background: #00e5ff;
 }
 </style>
