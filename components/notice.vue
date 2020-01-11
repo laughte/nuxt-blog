@@ -24,7 +24,7 @@ export default {
 .noticebox {
   width: 100%;
   height: 120px;
-  background: #f6f6f6;
+  background: rgba(243, 243, 243, 0.5);
   padding: 0 5%;
 }
 .noticecontent {

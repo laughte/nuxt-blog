@@ -1,43 +1,66 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row justify="center">
-      <v-col cols="12" class="d-none d-sm-flex">
-        <carousel :items="pictures" :height="'350px'"></carousel>
-      </v-col>
-      <v-col cols="12" class="d-flex d-sm-none">
-        <carousel :items="pictures" :height="'200px'"></carousel>
-      </v-col>
-
       <!--  -->
-      <v-layout column justify-center align-center>
-        <notice
-          :item="{icon:'mdi-heart',msg:'love you forever,my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
-        ></notice>
+      <!-- <v-layout column justify-center align-center> -->
 
-        <v-flex xs12 sm8 d-flex justify-around flex-wrap>
+      <!-- <v-flex class="pa-0" xs12 sm8  d-flex justify-space-around flex-wrap>
           <h-card
-            class="ma-2"
+            class="mb-4"
             v-for="(item,index) in $store.state.content.article"
             :key="index"
             :item="item"
           ></h-card>
-        </v-flex>
+      </v-flex>-->
+      <v-col xs="12" sm="12" md="10" lg="10" xl="8">
+        <v-row justify="space-around">
+          <!-- <v-col class="d-none d-sm-flex pa-0" class="d-flex d-sm-none pa-0">
+            <carousel :items="pictures" :height="'350px'"></carousel>
+          </v-col>-->
+          <v-col class="pa-0">
+            <carousel :items="pictures" :height="'300px'"></carousel>
+          </v-col>
 
-        <dividline :item="{icon:'mdi-book',title:'文章分类'}"></dividline>
+          <notice
+            :item="{icon:'mdi-heart',msg:'love you forever,my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
+          ></notice>
+          <dividline class="my-4" :item="{icon:'mdi-book',title:'最新文章' }"></dividline>
 
-        <v-row justify="center" align="center">
+          <v-col
+            lg="3"
+            xl="3"
+            md="4"
+            sm="5"
+            :key="index"
+            v-for="(item,index) in $store.state.content.article"
+          >
+            <h-card :item="item"></h-card>
+          </v-col>
+          <dividline class="my-4" :item="{icon:'mdi-book',title:'文章分类' }"></dividline>
           <v-col
             xl="5"
             lg="6"
             md="10"
-            sm="12"
+            sm="10"
+            xs="12"
             v-for="(item,index) in $store.state.content.article"
             :key="index"
           >
             <w-card :item="item"></w-card>
           </v-col>
         </v-row>
-      </v-layout>
+      </v-col>
+
+      <!-- <v-flex class="pa-0" xs12 sm8 lg6 xl5 d-flex justify-space-around flex-wrap>
+        <w-card
+          class="mb-4"
+          v-for="(item,index) in $store.state.content.article"
+          :key="index"
+          :item="item"
+        ></w-card>
+      </v-flex>-->
+
+      <!-- </v-layout> -->
     </v-row>
   </v-container>
 </template>
@@ -55,34 +78,34 @@ export default {
   data: () => ({
     pictures: [
       {
-        src: 'https://i.loli.net/2019/11/03/FILK8AOZsd3ykQo.jpg'
+        src: 'http://yanxuan.nosdn.127.net/1e3c1965b099eeb8c50014756e71f0e9.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'
+        src: 'http://yanxuan.nosdn.127.net/b933afe0f3d0eee91f7760ea08d9d6c1.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/Ga6gdADXFjo7iL1.jpg'
+        src: 'http://yanxuan.nosdn.127.net/0858193d36033dcc7f7d642f25742f0e.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/Zw3kGHJiObqfa4z.jpg'
+        src: 'http://yanxuan.nosdn.127.net/1fb0488a2bba1009e8effd8b4f2608e6.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/3etF5A7m9ZkEI1o.jpg'
+        src: 'http://yanxuan.nosdn.127.net/36409b5f464c55f21c0531f85f2549ef.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/V9ugmoQ2yEaxfpr.jpg'
+        src: 'http://yanxuan.nosdn.127.net/2b37b5792f59d4791d56ad31834f7144.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/P9p8uaw2eD4GA1C.jpg'
+        src: 'http://yanxuan.nosdn.127.net/a3fae62acdc72cedc014c63274c751c4.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/u3JgRqLN75Cy2rl.jpg'
+        src: 'http://yanxuan.nosdn.127.net/d8a01523914edb9bb29fd07f000d6c93.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/JMwCOpkG8e6IPRU.jpg'
+        src: 'http://yanxuan.nosdn.127.net/3dda1392058eaef0975ecf312b645e12.jpg'
       },
       {
-        src: 'https://i.loli.net/2019/11/03/LEChzx6vUX9qotf.jpg'
+        src: 'http://yanxuan.nosdn.127.net/ad146d5a572f88ee3b29f8e44f23004c.jpg'
       }
     ],
     artdata: [

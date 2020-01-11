@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="idstyle">
     <editor
       :autofocus="true"
       :init-data="initData"
@@ -44,4 +44,7 @@ export default {
 </script>
 
 <style>
+.idstyle {
+  color: white;
+}
 </style>

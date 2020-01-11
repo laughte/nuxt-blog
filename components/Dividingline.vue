@@ -4,7 +4,7 @@
       <v-icon>{{item.icon}}</v-icon>
       {{item.title}}
     </div>
-    <v-divider inset></v-divider>
+    <v-divider light inset></v-divider>
   </div>
 </template>
 

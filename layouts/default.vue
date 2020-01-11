@@ -41,25 +41,12 @@
         <span class="title">goLove</span>
       </v-toolbar-title>
 
-      <v-row class="mr-4 d-none d-sm-none d-md-flex" align="center">
+      <v-row class="d-none d-sm-flex d-sm-none d-md-flex" align="center">
         <v-btn text :key="index" v-for="(item,index) in menus" :to="item.href">
           <b>{{item.title}}</b>
         </v-btn>
       </v-row>
-      <v-row class="mr-4 d-flex d-sm-none d-none d-sm-flex d-md-none" align="center">
-        <v-menu open-on-hover close-on-click close-on-content-click offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn text v-on="on">
-              <b>Dropdown</b>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in menus" :key="index" :to="item.href">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-row>
+
       <v-menu
         v-if="$store.state.user.userName"
         :open-on-hover="true"
@@ -95,7 +82,14 @@
     </v-app-bar>
 
     <v-content>
-      <v-container>
+      <v-container fluid>
+        <v-tabs class="d-flex d-sm-none d-none d-sm-flex d-md-none" show-arrows>
+          <v-tabs-slider color="yellow"></v-tabs-slider>
+          <v-tab v-for="(item,index) in menus" :key="index" :to="item.href">
+            <b>{{item.title}}</b>
+          </v-tab>
+        </v-tabs>
+        <!-- <star class="star" /> -->
         <nuxt keep-alive />
       </v-container>
     </v-content>
@@ -103,8 +97,10 @@
 </template>
 
 <script>
+import star from '~/components/star-demo.vue'
 import { mapActions } from 'vuex'
 export default {
+  components: { star },
   props: {
     source: String
   },
@@ -113,7 +109,7 @@ export default {
     menus: [
       { title: '首页', href: '/' },
       { title: '写文章', href: '/writeboard' },
-      { title: '图片' },
+      { title: '图片', href: '' },
       { title: '音乐' },
       { title: '读书' }
     ],
@@ -125,6 +121,13 @@ export default {
       { title: '注销' }
     ],
     items: [
+      { icon: 'mdi-trending_up', text: 'Most Popular' },
+      { icon: 'mdi-subscriptions', text: 'Subscriptions' },
+      { icon: 'mdi-history', text: 'History' },
+      { icon: 'mdi-featured_play_list', text: 'Playlists' },
+      { icon: 'mdi-watch_later', text: 'Watch Later' }
+    ],
+    items2: [
       { icon: 'mdi-trending_up', text: 'Most Popular' },
       { icon: 'mdi-subscriptions', text: 'Subscriptions' },
       { icon: 'mdi-history', text: 'History' },
@@ -143,3 +146,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.star {
+  position: absolute;
+}
+</style>

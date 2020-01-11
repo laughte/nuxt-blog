@@ -30,8 +30,8 @@ export default {
         image: {
           // Like in https://github.com/editor-js/image#config-params
           endpoints: {
-            byFile: 'http://127.0.0.1:8090/image',
-            byUrl: 'http://127.0.0.1:8090/image-by-url'
+            byFile: 'http://39.105.168.171:8090/image/',
+            byUrl: 'http://39.105.168.171:8090/image-by-url'
           },
           field: 'image',
           types: 'image/*'

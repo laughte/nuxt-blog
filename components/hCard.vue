@@ -1,5 +1,5 @@
 <template>
-  <v-card flat max-width="271px" :to="'/'+item._id">
+  <v-card flat max-width="100%" :to="'/'+item._id">
     <v-img
       class="white--text align-end"
       width="auto"
@@ -45,15 +45,15 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn disabled text>
+      <v-btn class="ma-0" disabled text>
         <v-icon small>mdi-clock-outline</v-icon>
         {{new Date(item.time).toLocaleDateString()}}
       </v-btn>
-      <v-btn disabled text>
+      <v-btn class="ma-0" disabled text>
         <v-icon small>mdi-eye</v-icon>
         {{item.see}}
       </v-btn>
-      <v-btn disabled text>
+      <v-btn class="ma-0" disabled text>
         <v-icon small>mdi-comment-processing-outline</v-icon>
         {{item.reply}}
       </v-btn>

@@ -1,5 +1,5 @@
 <template>
-  <v-card style="overflow:hidden" max-width="634px" flat :to="'/'+item._id">
+  <v-card style="overflow:hidden" max-height="206px" max-width="100%" flat :to="'/'+item._id">
     <v-img
       class="d-flex d-sm-none"
       style="position:absolute;width: 100%;height:auto;filter: blur(35px);opacity:0.2;z-index: 0"
@@ -10,7 +10,7 @@
         class="d-none d-sm-flex"
         width="40.79%"
         height="100%"
-        :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+        :src="item.pic?item.pic:'http://yanxuan.nosdn.127.net/3f93828304a82d7f23c106e24d80eb39.jpg'"
       ></v-img>
       <div>
         <v-card-subtitle class="py-2 d-flex justify-start align-center">
