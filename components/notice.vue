@@ -23,15 +23,15 @@ export default {
 <style>
 .noticebox {
   width: 100%;
-  height: 120px;
+  height: 110px;
   background: rgba(243, 243, 243, 0.5);
-  padding: 0 5%;
+  padding: 25px 5%;
 }
 .noticecontent {
   padding: 15px 0 0 10px;
   text-align: center;
   display: flex;
-  margin: 33px auto;
+  margin: 0 auto;
   border-radius: 50px;
 
   height: 54px;

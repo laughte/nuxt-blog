@@ -1,5 +1,5 @@
 export const state = () => ({
-    user: { userName: '紫玉', avatar: 'https://cdn.vuetifyjs.com/images/john.jpg' },
+    user:{userName:""},
     content: {
         article: [],
         jokes: [],
@@ -24,6 +24,18 @@ export const mutations = {
     pushdata(state, json) {
         state.content[json.type].unshift(json.data)
     },
+
+    //user login 
+    USERLOGIN(state,user){
+        state.user = user;
+        //save login infomations
+        window.sessionStorage.setItem('user',JSON.stringify(user))
+    },
+    //user exit
+    USEREXIT(state) {
+        state.user = {};
+        window.sessionStorage.removeItem('user');
+      },
 }
 
 
@@ -40,4 +52,17 @@ export const actions = {
             }
         }
     },
+
+    // user login
+    userlogin({
+        commit
+    },data){
+        commit('USERLOGIN',data);
+    },
+    // user exit
+    userexit({
+        commit
+    },data){
+        commit('USEREXIT');
+    }
 }

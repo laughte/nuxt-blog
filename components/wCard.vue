@@ -1,17 +1,24 @@
 <template>
-  <v-card style="overflow:hidden" max-height="206px" max-width="100%" flat :to="'/'+item._id">
+  <v-card
+  color="rgba(255,255,255,0.5)"
+  dark
+    shaped
+    style="overflow:hidden"
+    max-height="206px"
+    max-width="100%"
+    flat
+    :to="'/'+item._id"
+  >
     <v-img
-      class="d-flex d-sm-none"
-      style="position:absolute;width: 100%;height:auto;filter: blur(35px);opacity:0.2;z-index: 0"
+      style="position:absolute;width: 100%;height:auto;filter: blur(35px);opacity:0.1;z-index: 0"
       :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/Ga6gdADXFjo7iL1.jpg'"
     ></v-img>
     <div style="overflow: hidden" class="d-flex justify-start align-center">
-      <v-img
+      <!-- <v-img
         class="d-none d-sm-flex"
-        width="40.79%"
-        height="100%"
+        width="41%"
         :src="item.pic?item.pic:'http://yanxuan.nosdn.127.net/3f93828304a82d7f23c106e24d80eb39.jpg'"
-      ></v-img>
+      ></v-img>-->
       <div>
         <v-card-subtitle class="py-2 d-flex justify-start align-center">
           <v-avatar size="30">
@@ -25,20 +32,20 @@
           <div class="dot dot3"></div>
           {{item.sorce?item.sorce:"未知来源"}}
         </v-card-subtitle>
-        <v-list three-line class="py-0">
+        <v-list color="transparent" three-line class="py-0">
           <v-list-item>
             <v-list-item-content class="py-0">
-              <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
+              <v-list-item-title class="title font-weight-bold">{{item.blocks[0].data.text}}</v-list-item-title>
               <v-list-item-subtitle
                 class="font-weight-medium"
                 v-if="item.blocks[1]"
                 v-text="item.blocks[1].data.text"
               ></v-list-item-subtitle>
-              <v-list-item-subtitle
+              <!-- <v-list-item-subtitle
                 class="font-weight-medium"
                 v-if="item.blocks[2]"
                 v-text="item.blocks[2].data.text"
-              ></v-list-item-subtitle>
+              ></v-list-item-subtitle>-->
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -47,12 +54,13 @@
             <v-icon small>mdi-clock-outline</v-icon>
             {{new Date(item.time).toLocaleDateString()}}
           </v-btn>
+          <v-spacer></v-spacer>
           <v-btn disabled text>
             <v-icon small>mdi-eye</v-icon>
             {{item.see}}
           </v-btn>
           <v-btn disabled text>
-            <v-icon small>mdi-comment-processing-outline</v-icon>
+            <v-icon small>mdi-chat-processing</v-icon>
             {{item.reply}}
           </v-btn>
         </v-card-actions>

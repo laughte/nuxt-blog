@@ -1,5 +1,5 @@
 <template>
-  <v-card flat max-width="100%" :to="'/'+item._id">
+  <v-card  flat max-width="100%" :to="'/'+item._id">
     <v-img
       class="white--text align-end"
       width="auto"
@@ -24,7 +24,7 @@
     </v-card-subtitle>
 
     <v-card-text class="text--primary pb-0">
-      <v-list three-line class="pa-0">
+      <v-list color="transparent" three-line class="pa-0">
         <v-list-item class="pa-0">
           <v-list-item-content class="pa-0">
             <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
@@ -34,27 +34,28 @@
               v-if="item.blocks[1]"
               v-text="item.blocks[1].data.text"
             ></v-list-item-subtitle>
-            <v-list-item-subtitle
+            <!-- <v-list-item-subtitle
               class="font-weight-medium"
               v-if="item.blocks[2]"
               v-text="item.blocks[2].data.text"
-            ></v-list-item-subtitle>
+            ></v-list-item-subtitle>-->
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-card-text>
 
-    <v-card-actions>
-      <v-btn class="ma-0" disabled text>
+    <v-card-actions class="py-0">
+      <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-clock-outline</v-icon>
         {{new Date(item.time).toLocaleDateString()}}
       </v-btn>
-      <v-btn class="ma-0" disabled text>
+      <v-spacer></v-spacer>
+      <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-eye</v-icon>
         {{item.see}}
       </v-btn>
-      <v-btn class="ma-0" disabled text>
-        <v-icon small>mdi-comment-processing-outline</v-icon>
+      <v-btn class="ma-0 pa-0" disabled text>
+        <v-icon small>mdi-chat-processing</v-icon>
         {{item.reply}}
       </v-btn>
     </v-card-actions>
@@ -74,6 +75,7 @@ export default {
 <style>
 .grid_author_avt {
   position: relative;
+  
   display: block;
   width: 100px;
   height: 36px;
@@ -83,6 +85,7 @@ export default {
 }
 
 .grid_author_avt:after {
+
   content: '';
   position: absolute;
   width: 100%;
@@ -103,9 +106,7 @@ export default {
   margin: auto;
   position: absolute;
 }
-.text {
-  margin-left: 8px;
-}
+
 .dot {
   margin: 0px 4px 0px 8px;
   width: 6px;

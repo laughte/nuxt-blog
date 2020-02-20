@@ -17,15 +17,13 @@
           <!-- <v-col class="d-none d-sm-flex pa-0" class="d-flex d-sm-none pa-0">
             <carousel :items="pictures" :height="'350px'"></carousel>
           </v-col>-->
-          <v-col class="pa-0">
+          <v-col>
             <carousel :items="pictures" :height="'300px'"></carousel>
+            <notice
+              :item="{icon:'mdi-heart',notice:'通知',msg:'my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
+            ></notice>
           </v-col>
-
-          <notice
-            :item="{icon:'mdi-heart',msg:'love you forever,my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
-          ></notice>
           <dividline class="my-4" :item="{icon:'mdi-book',title:'最新文章' }"></dividline>
-
           <v-col
             lg="3"
             xl="3"
@@ -36,7 +34,9 @@
           >
             <h-card :item="item"></h-card>
           </v-col>
+
           <dividline class="my-4" :item="{icon:'mdi-book',title:'文章分类' }"></dividline>
+
           <v-col
             xl="5"
             lg="6"

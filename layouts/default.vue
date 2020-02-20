@@ -71,7 +71,7 @@
       </v-menu>
 
       <div v-else>
-        <v-btn class="mr-4" to="/signin" text>signin</v-btn>
+        <v-btn class="mr-4" to="/login" text>login</v-btn>
         <!-- <v-btn depressed class="mr-4 textcolor--text" color="listbgcolor" to="/signup">login</v-btn> -->
       </div>
       <v-avatar size="40px">
