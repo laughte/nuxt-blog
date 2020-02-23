@@ -1,39 +1,43 @@
 <template>
+  <v-card-actions style="opacity:0.5">
+    <v-btn class="ma-0" text>
+      <v-icon small>mdi-clock-outline</v-icon>
+      {{new Date(item.time).toLocaleDateString()}}
+    </v-btn>
+    <!-- <v-spacer></v-spacer> -->
+    <v-btn :disabled="disabled" @click.stop="addLike" icon>
+      <v-icon
+        :color="item.like.indexOf($store.state.user.userName)?'transprant':'red'"
+        small
+      >mdi-heart</v-icon>
+      <p>{{ item.like.length }}</p>
+    </v-btn>
+    <v-btn :disabled="disabled" class="mx-0" @click.stop="addCollect" icon>
+      <v-icon
+        :color="item.collect.indexOf($store.state.user.userName)?'transprant':'orange'"
+        small
+      >mdi-star</v-icon>
+      <p v-text="item.collect.length"></p>
+    </v-btn>
 
-    <v-card-actions >
-      <v-btn class="ma-0" disabled text>
-        <v-icon small>mdi-clock-outline</v-icon>
-        {{new Date(item.time).toLocaleDateString()}}
-      </v-btn>
-      <!-- <v-spacer></v-spacer> -->
-      <v-btn :disabled="disabled" v-if="flag"  @click="addLike" icon>
-        <v-icon small>mdi-heart</v-icon>
-        <p>{{ item.like }}</p>
-      </v-btn>
-      <v-btn :disabled="disabled" v-if="flag" class="mx-0"  @click="addCollect" icon>
-        <v-icon small>mdi-star</v-icon>
-        <p v-text="item.collect.length"></p>
-      </v-btn>
+    <v-btn v-if="flag" :disabled="disabled" class="mx-0" icon>
+      <v-icon small>mdi-chat-processing</v-icon>
+      <p v-text="item.reply.length"></p>
+    </v-btn>
+    <v-btn v-if="flag" :disabled="disabled" icon>
+      <v-icon small>mdi-eye</v-icon>
+      <p v-text="item.see"></p>
+    </v-btn>
 
-      <v-btn :disabled="disabled" class="mx-0"  icon>
-        <v-icon small>mdi-chat-processing</v-icon>
-        <p v-text="item.reply.length"></p>
-      </v-btn>
-      <v-btn :disabled="disabled" icon>
-        <v-icon small>mdi-eye</v-icon>
-        <p v-text="item.see"></p>
-      </v-btn>
-
-      <!-- <div class="flex-grow-1"></div> -->
-      <!--      <v-btn v-if="$store.state.ifEdite" @click="save">保存更改</v-btn>-->
-    </v-card-actions>
-
+    <!-- <div class="flex-grow-1"></div> -->
+    <!--      <v-btn v-if="$store.state.ifEdite" @click="save">保存更改</v-btn>-->
+  </v-card-actions>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
 export default {
-  props: { item: {}, flag: Boolean ,disabled:Boolean},
+  props: { item: {}, flag: Boolean, disabled: Boolean },
   data() {
     return {}
   },

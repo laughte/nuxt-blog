@@ -22,7 +22,7 @@
       <div>
         <v-card-subtitle class="py-2 d-flex justify-start align-center">
           <v-avatar size="30">
-            <img :src="item.avatar" :alt="item.author" />
+            <img :src="item.avatar" />
           </v-avatar>
 
           <div class="dot dot1"></div>
@@ -49,7 +49,7 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <action :item="item" :disabled="true" :flag="true" />
+        <action :item="item" :disabled="false" :flag="true" />
         <!-- <v-card-actions class="py-0">
           <v-btn disabled text>
             <v-icon small>mdi-clock-outline</v-icon>

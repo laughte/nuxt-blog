@@ -1,5 +1,5 @@
 <template>
-  <v-card  flat max-width="100%" @click="showDetail">
+  <v-card flat max-width="100%" @click="showDetail">
     <v-img
       class="white--text align-end"
       width="auto"
@@ -10,7 +10,7 @@
     </v-img>
     <div class="grid_author_avt">
       <v-avatar class="avatar" size="30">
-        <img :src="item.avatar" :alt="item.author" />
+        <img :src="item.avatar" />
       </v-avatar>
     </div>
 
@@ -43,10 +43,10 @@
         </v-list-item>
       </v-list>
     </v-card-text>
- <action :item="item" :flag='false' :disabled="true" />
+    <action :item="item" :flag="false" :disabled="false" />
     <!-- <v-card-actions class="py-0 px-0"> -->
-     
-      <!-- <v-btn class="ma-0 pa-0" disabled text>
+
+    <!-- <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-clock-outline</v-icon>
         {{new Date(item.time).toLocaleDateString()}}
       </v-btn>
@@ -58,7 +58,7 @@
       <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-chat-processing</v-icon>
         {{item.reply.length}}
-      </v-btn> -->
+    </v-btn>-->
     <!-- </v-card-actions> -->
   </v-card>
 </template>
@@ -68,16 +68,16 @@
 
 <script>
 import action from '~/components/actions.vue'
-import {mapMutations} from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   name: 'hCard',
   props: { item: Object },
-  components:{action},
-  methods:{
+  components: { action },
+  methods: {
     ...mapMutations(['articleEdit']),
-    showDetail(){
+    showDetail() {
       this.$router.push(`/${this.item._id}`)
-      this.articleEdit({data:this.item,type:'see'})
+      this.articleEdit({ data: this.item, type: 'see' })
     }
   }
 }
@@ -86,7 +86,7 @@ export default {
 <style>
 .grid_author_avt {
   position: relative;
-  
+
   display: block;
   width: 100px;
   height: 36px;
@@ -96,7 +96,6 @@ export default {
 }
 
 .grid_author_avt:after {
-
   content: '';
   position: absolute;
   width: 100%;

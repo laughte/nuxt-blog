@@ -31,7 +31,7 @@ module.exports = {
   */
   plugins: [
     '~/plugins/axios',
-    { src: '~/plugins/vue-mavon-editor', srr: false },
+    // { src: '~/plugins/vue-mavon-editor', srr: false },
     {
       src: '~/plugins/vue-editor.js', ssr: false
     }

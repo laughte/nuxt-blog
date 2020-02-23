@@ -47,48 +47,45 @@ export const mutations = {
           let n = e[json.type].indexOf(state.user.userName)
           if (n > -1) {
             e[json.type].splice(n, 1)
-            this.$axios.post('/api/delArray', { id: e._id, collect: state.user.userName })
-              .then(res => {
-                console.log(res)
-              })
+            if (json.type === "collect") {
+              this.$axios.post('/api/delArray', { id: e._id, collect: state.user.userName })
+                .then(res => {
+                  console.log(res)
+                })
+            } else if (json.type === "like") {
+              this.$axios.post('/api/delArray', { id: e._id, like: state.user.userName })
+                .then(res => {
+                  console.log(res)
+                })
+            }
           } else {
             e[json.type].push(state.user.userName)
-            this.$axios.post('/api/addArray', { id: e._id, collect: state.user.userName })
-              .then(res => {
-                console.log(res)
-              })
+            if (json.type === "collect") {
+              this.$axios.post('/api/addArray', { id: e._id, collect: state.user.userName })
+                .then(res => {
+                  console.log(res)
+                })
+            } else if (json.type === "like") {
+              this.$axios.post('/api/addArray', { id: e._id, like: state.user.userName })
+                .then(res => {
+                  console.log(res)
+                })
+            }
           }
-        } else if (json.type === 'like') {
-          json.data.countflag = !json.data.countflag
-          if (json.data.countflag) {
-            e[json.type]++
-            this.$axios.post('/api/updateInt', { id: e._id, like: 1 })
-              .then(res => {
-                console.log(res)
-              })
-          } else {
-            e[json.type]--
-            this.$axios.post('/api/updateInt', { id: e._id, like: -1 })
-              .then(res => {
-                console.log(res)
-              })
-          }
-
         } else if (json.type === 'see') {
           e[json.type]++
           this.$axios.post('/api/updateInt', { id: e._id, see: 1 })
             .then(res => {
               console.log(res)
             })
+
         }
-        // this.$axios.post('/api/update',e)
       } else if (e._id === json.data.articleId) {
         if (json.type === 'reply') {
           e.reply.unshift(json.data)
 
         }
       }
-
     })
   },
 

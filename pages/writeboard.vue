@@ -48,8 +48,8 @@ export default {
       //   console.log(JSON.stringify(response))
       response.type = this.type
       response.author = this.$store.state.user.userName
-      response.avatar = this.$store.state.user.avatar
-      response.like = 0
+      response.avatar = this.$store.state.user.imgsrc
+      response.like = []
       response.collect = []
       response.reply = []
       response.see = 0

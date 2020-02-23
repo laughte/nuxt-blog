@@ -37,7 +37,7 @@
     <v-app-bar app clipped-right dense>
       <v-spacer />
       <v-icon class="mx-4">fab fa-youtube</v-icon>
-      <v-toolbar-title class="mr-12 align-center">
+      <v-toolbar-title class="mr-12 align-center" @click="gohome">
         <span class="title">goLove</span>
       </v-toolbar-title>
 
@@ -107,7 +107,7 @@ export default {
   },
   data() {
     return {
-      backgroundimg:'',
+      backgroundimg: '',
       drawer: null,
       menus: [
         { title: '首页', href: '/' },
@@ -138,7 +138,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getdata', 'userexit', 'userlogin'])
+    ...mapActions(['getdata', 'userexit', 'userlogin']),
+    gohome() {
+      this.$router.push('/')
+    }
   },
   mounted() {
     let user = window.sessionStorage.getItem('user')
@@ -152,12 +155,9 @@ export default {
       this.getdata({ api: '/api/myblog', type: 'article' })
     }
 
-
     //  let res= this.$axios.get('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302')
     //       .then(console.log(res))
     //  this.backgroundimg = "url('https://img.xjh.me/desktop/bg/nature/63505535_p0.jpg')"
-    
- 
   }
 }
 </script>
