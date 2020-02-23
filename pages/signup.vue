@@ -9,6 +9,15 @@
               <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>注册</v-toolbar-title>
                 <v-spacer />
+                  <v-avatar size="36px">
+      <img alt="Avatar" v-if="user.imgsrc" :src="user.imgsrc" />
+
+      <v-btn icon v-else color="pink" >
+        <v-icon else>mdi-plus</v-icon>
+      </v-btn>
+    </v-avatar>
+
+    
                 <!-- <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-btn
@@ -38,6 +47,15 @@
                   <span>Codepen</span>
                 </v-tooltip>-->
               </v-toolbar>
+
+              <v-container>
+      <!-- <v-avatar size="36px" :key="i" class="ma-4" @click="imgsrcicon(e)" v-for="(e,i) in tempurls">
+        <img alt="Avatar" :src="e.imageurl" />
+      </v-avatar> -->
+      <!-- <v-card-actions> -->
+        <!-- <v-btn @click="avatarflag=false" text>确认</v-btn> -->
+      <!-- </v-card-actions> -->
+    </v-container>
               <v-card-text>
                 <v-form ref="form" v-model="valid">
                   <v-text-field
@@ -106,8 +124,10 @@
 export default {
   name: 'signup',
   data: () => ({
-    avatarflag: false,
+   
+    tempurls:[],
     show2: false,
+    avatarflag: false,
     show1: false,
     alertflag: false,
     issuc: false,
@@ -169,7 +189,37 @@ export default {
             console.log(err)
           })
       }
-    }
+    },
+     async getPicture() {
+      // let picUrl = []
+      // this.$axios
+      //   .get('https://api.isoyu.com/api/picture/index?page=20')
+      //   .then(res => {
+      //     // console.log(res.data)
+      //     res.data.forEach(e => {
+      //       e.pics.forEach(m => {
+      //         picUrl.push(m)
+      //       })
+      //     })
+      //   })
+
+      let res = await this.$axios.get(
+        'http://api.btstu.cn/sjtx/api.php?lx=c1&format=images'
+        // 'https://api.ixiaowai.cn/api/api.php?return=json'
+        // 'https://www.mxnzp.com/image/girl/list/random'
+        // 'http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=false'
+      )
+
+      console.log(res)
+      this.user.imgsrc = res.imgurl
+    },
+      imgsrcicon(e) {
+      this.user.imgsrc = e.imageUrl
+      // console.log(this.user.imgsrc)
+    },
+  },
+  mounted(){
+    this.getPicture() 
   }
 }
 </script>

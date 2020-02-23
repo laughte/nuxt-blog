@@ -1,8 +1,11 @@
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
-
+const cors = require('koa2-cors')
 const app = new Koa()
+
+//跨域解决方案
+app.use(cors());
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
@@ -14,7 +17,7 @@ async function start () {
 
   const {
     host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 3000
+    port = process.env.PORT || 3600
   } = nuxt.options.server
 
   // Build in development

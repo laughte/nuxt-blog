@@ -113,7 +113,7 @@ export default {
               this.issuc=true
               this.userlogin(res.data)
               setTimeout(() => {
-                this.$router.push('/')
+                this.$router.go(-1)
               }, 600);
             }
           })

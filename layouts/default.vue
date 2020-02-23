@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app right clipped>
+    <!-- <v-navigation-drawer v-model="drawer" app right clipped>
       <v-list dense>
         <v-list-item v-for="item in items" :key="item.text" link>
           <v-list-item-action>
@@ -32,7 +32,7 @@
           <v-list-item-title class="grey--text text--darken-1">Manage Subscriptions</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer>-->
 
     <v-app-bar app clipped-right dense>
       <v-spacer />
@@ -64,7 +64,7 @@
           ></v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="(item, index) in usermenus" :key="index" @click>
+          <v-list-item v-for="(item, index) in usermenus" :key="index" @click="item.action">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -77,12 +77,11 @@
       <v-avatar size="40px">
         <img v-if="$store.state.user.imgsrc" :src=" $store.state.user.imgsrc" alt="avatar" />
       </v-avatar>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
       <v-spacer />
     </v-app-bar>
-
-    <v-content>
-      <v-container fluid>
+    <v-content :style="{backgroundImage:backgroundimg}">
+      <v-container class="pa-0 mt-12" fluid>
         <v-tabs class="d-flex d-sm-none d-none d-sm-flex d-md-none" show-arrows>
           <v-tabs-slider color="yellow"></v-tabs-slider>
           <v-tab v-for="(item,index) in menus" :key="index" :to="item.href">
@@ -93,56 +92,72 @@
         <nuxt keep-alive />
       </v-container>
     </v-content>
+    <foot :item="{author:'Laughter',time:'2020',version:'V4.0'}" />
   </v-app>
 </template>
 
 <script>
+import foot from '~/components/foot.vue'
 import star from '~/components/star-demo.vue'
 import { mapActions } from 'vuex'
 export default {
-  components: { star },
+  components: { foot },
   props: {
     source: String
   },
-  data: () => ({
-    drawer: null,
-    menus: [
-      { title: '首页', href: '/' },
-      { title: '写文章', href: '/writeboard' },
-      { title: '图片', href: '' },
-      { title: '音乐' },
-      { title: '读书' }
-    ],
-    usermenus: [
-      { title: '我的主页' },
-      { title: '收藏的文章' },
-      { title: '喜欢的文章' },
-      { title: '设置' },
-      { title: '注销' }
-    ],
-    items: [
-      { icon: 'mdi-trending_up', text: 'Most Popular' },
-      { icon: 'mdi-subscriptions', text: 'Subscriptions' },
-      { icon: 'mdi-history', text: 'History' },
-      { icon: 'mdi-featured_play_list', text: 'Playlists' },
-      { icon: 'mdi-watch_later', text: 'Watch Later' }
-    ],
-    items2: [
-      { icon: 'mdi-trending_up', text: 'Most Popular' },
-      { icon: 'mdi-subscriptions', text: 'Subscriptions' },
-      { icon: 'mdi-history', text: 'History' },
-      { icon: 'mdi-featured_play_list', text: 'Playlists' },
-      { icon: 'mdi-watch_later', text: 'Watch Later' }
-    ]
-  }),
+  data() {
+    return {
+      backgroundimg:'',
+      drawer: null,
+      menus: [
+        { title: '首页', href: '/' },
+        { title: '写文章', href: '/writeboard' },
+        { title: '图片', href: '' },
+        { title: '音乐' },
+        { title: '读书' }
+      ],
+      usermenus: [
+        { title: '管理中心' },
+        { title: '设置' },
+        { title: '注销', action: this.userexit }
+      ],
+      items: [
+        { icon: 'mdi-trending_up', text: 'Most Popular' },
+        { icon: 'mdi-subscriptions', text: 'Subscriptions' },
+        { icon: 'mdi-history', text: 'History' },
+        { icon: 'mdi-featured_play_list', text: 'Playlists' },
+        { icon: 'mdi-watch_later', text: 'Watch Later' }
+      ],
+      items2: [
+        { icon: 'mdi-trending_up', text: 'Most Popular' },
+        { icon: 'mdi-subscriptions', text: 'Subscriptions' },
+        { icon: 'mdi-history', text: 'History' },
+        { icon: 'mdi-featured_play_list', text: 'Playlists' },
+        { icon: 'mdi-watch_later', text: 'Watch Later' }
+      ]
+    }
+  },
   methods: {
-    ...mapActions(['getdata'])
+    ...mapActions(['getdata', 'userexit', 'userlogin'])
+  },
+  mounted() {
+    let user = window.sessionStorage.getItem('user')
+    if (user) {
+      this.userlogin(JSON.parse(user))
+    }
   },
   created() {
     this.$vuetify.theme.light = true
     if (this.$store.state.content.article.length < 1) {
       this.getdata({ api: '/api/myblog', type: 'article' })
     }
+
+
+    //  let res= this.$axios.get('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302')
+    //       .then(console.log(res))
+    //  this.backgroundimg = "url('https://img.xjh.me/desktop/bg/nature/63505535_p0.jpg')"
+    
+ 
   }
 }
 </script>

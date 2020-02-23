@@ -1,5 +1,5 @@
 <template>
-  <v-card  flat max-width="100%" :to="'/'+item._id">
+  <v-card  flat max-width="100%" @click="showDetail">
     <v-img
       class="white--text align-end"
       width="auto"
@@ -43,9 +43,10 @@
         </v-list-item>
       </v-list>
     </v-card-text>
-
-    <v-card-actions class="py-0">
-      <v-btn class="ma-0 pa-0" disabled text>
+ <action :item="item" :flag='false' :disabled="true" />
+    <!-- <v-card-actions class="py-0 px-0"> -->
+     
+      <!-- <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-clock-outline</v-icon>
         {{new Date(item.time).toLocaleDateString()}}
       </v-btn>
@@ -56,9 +57,9 @@
       </v-btn>
       <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-chat-processing</v-icon>
-        {{item.reply}}
-      </v-btn>
-    </v-card-actions>
+        {{item.reply.length}}
+      </v-btn> -->
+    <!-- </v-card-actions> -->
   </v-card>
 </template>
 
@@ -66,9 +67,19 @@
 
 
 <script>
+import action from '~/components/actions.vue'
+import {mapMutations} from 'vuex'
 export default {
   name: 'hCard',
-  props: { item: Object }
+  props: { item: Object },
+  components:{action},
+  methods:{
+    ...mapMutations(['articleEdit']),
+    showDetail(){
+      this.$router.push(`/${this.item._id}`)
+      this.articleEdit({data:this.item,type:'see'})
+    }
+  }
 }
 </script>
 

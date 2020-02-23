@@ -1,13 +1,13 @@
 <template>
   <v-card
-  color="rgba(255,255,255,0.5)"
-  dark
+    color="rgba(255,255,255,0.5)"
+    dark
     shaped
     style="overflow:hidden"
     max-height="206px"
     max-width="100%"
     flat
-    :to="'/'+item._id"
+    @click="showDetail"
   >
     <v-img
       style="position:absolute;width: 100%;height:auto;filter: blur(35px);opacity:0.1;z-index: 0"
@@ -49,7 +49,8 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-card-actions class="py-0">
+        <action :item="item" :disabled="true" :flag="true" />
+        <!-- <v-card-actions class="py-0">
           <v-btn disabled text>
             <v-icon small>mdi-clock-outline</v-icon>
             {{new Date(item.time).toLocaleDateString()}}
@@ -61,18 +62,28 @@
           </v-btn>
           <v-btn disabled text>
             <v-icon small>mdi-chat-processing</v-icon>
-            {{item.reply}}
+            {{item.reply.length}}
           </v-btn>
-        </v-card-actions>
+        </v-card-actions>-->
       </div>
     </div>
   </v-card>
 </template>
 
 <script>
+import action from '~/components/actions.vue'
+import { mapMutations } from 'vuex'
 export default {
   props: { item: {} },
-  name: 'wCard'
+  components: { action },
+  name: 'wCard',
+  methods: {
+    ...mapMutations(['articleEdit']),
+    showDetail() {
+      this.$router.push(`/${this.item._id}`)
+      this.articleEdit({ data: this.item, type: 'see' })
+    }
+  }
 }
 </script>
 

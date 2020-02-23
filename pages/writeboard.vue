@@ -51,7 +51,7 @@ export default {
       response.avatar = this.$store.state.user.avatar
       response.like = 0
       response.collect = []
-      response.reply = 0
+      response.reply = []
       response.see = 0
       response.delete = 0
       // console.log(response)

@@ -14,14 +14,18 @@
       </v-list-item-content>
     </v-list-item>
 
-    <v-divider></v-divider>
     <v-list color="transparent">
-      <transition-group appear>
-        <template v-for="(e,i) in comments">
+      <!-- <transition-group appear> -->
+      <!-- <template v-for="(e,i) in item.reply">
+          
+          <v-divider  :key="i" inset></v-divider>
+      </template>-->
+      <template v-for="(e) in item.reply">
+        <v-list-item :key="e._id">
           <live-msg :item="e" :key="e._id" />
-          <v-divider class="mb-6" v-if="i !== comments.length-1" :key="i" inset></v-divider>
-        </template>
-      </transition-group>
+        </v-list-item>
+      </template>
+      <!-- </transition-group> -->
     </v-list>
 
     <div class="msgfooter"></div>
@@ -29,6 +33,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import liveMsg from './liveMsg'
 export default {
   components: { liveMsg },
@@ -38,23 +43,12 @@ export default {
   data() {
     return {
       btnDisabled: false,
-      msgcontent: '',
-      comments: []
+      msgcontent: ''
     }
   },
 
   methods: {
-    showcomments() {
-      let Json = {
-        articleId: this.item._id
-      }
-      this.$axios.post('/api/msgSearch', Json).then(res => {
-        this.comments = res.reverse()
-      })
-    },
-    appendItem(e) {
-      this.comments.unshift(e)
-    },
+    ...mapMutations(['articleEdit']),
 
     addmsg() {
       if (this.$store.state.user.userName) {
@@ -70,11 +64,10 @@ export default {
         }
 
         this.$axios
-          .post('/api/msgInsert', msgItem)
+          .post('/api/addArray', { id: this.item._id, reply: msgItem })
           .then(res => {
             this.msgcontent = ''
-            this.appendItem(res.ops[0])
-            this.$emit('addReply')
+            this.articleEdit({ data: msgItem, type: 'reply' })
           })
           .catch(err => {
             console.log(err)
@@ -95,9 +88,7 @@ export default {
         })
     }
   },
-  activated() {
-    this.showcomments()
-  },
+  activated() {},
   computed: {
     lContent() {
       return this.msgcontent.length
@@ -111,5 +102,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+
