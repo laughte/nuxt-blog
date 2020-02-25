@@ -36,25 +36,25 @@ router //bolgcontent
       console.log(err)
     }
   })
-   
-// 上传头像图片
-  .post("/uploadavatar",async ctx=>{
-    let res = await DB.insert('avatar',ctx.request.body);
-    try{
-      if(res.result.ok){
-	      ctx.body=res
+
+  // 上传头像图片
+  .post("/uploadavatar", async ctx => {
+    let res = await DB.insert('avatar', ctx.request.body);
+    try {
+      if (res.result.ok) {
+        ctx.body = res
       }
-    }catch(err){
-	    console.log(err)
+    } catch (err) {
+      console.log(err)
     }
   })
-// 请求头像数据
-  .get('/downloadavatar',async ctx=>{
-     let res = await DB.find('avatar', ctx.request.body);
-	  console.log(res)
-     try{
-	if(res.result.ok){ctx.body=res}
-     }catch(err){console.log(err)}
+  // 请求头像数据
+  .get('/dlavatar', async ctx => {
+    let res = await DB.find('avatar', ctx.request.body);
+    console.log(res)
+    try {
+      if (res.result.ok) { ctx.body = res }
+    } catch (err) { console.log(err) }
   })
 
 
@@ -190,50 +190,51 @@ router.get('/getUser', async (ctx) => {
 
 })
 // 注册
-router.post('/signup', async (ctx) => {
+router
+  .post('/signup', async (ctx) => {
 
-  let userName = ctx.request.body.username
-  let Email = ctx.request.body.email
-  let user = await DB.find('users', {
-    username: userName
-  })
-  let uemail = await DB.find('users', {
-    email: Email
-  })
-  // console.log(user)
-  if (user.length === 0 && uemail.length === 0) {
-    // 创建新用户
-    let res = await DB.insert('users', ctx.request.body);
-    console.log(res)
-    try {
-      if (res.result.ok) {
-        ctx.body = {
-          status: 200,
-          data: {
-            "userName": res.ops[0].username,
-            "id": res.ops[0]._id,
-            "email": res.ops[0].email,
-            "imgsrc": res.ops[0].imgsrc,
-            "msgFlag": res.ops[0].delflag,
-          },
-          msg: '注册成功'
+    let userName = ctx.request.body.username
+    let Email = ctx.request.body.email
+    let user = await DB.find('users', {
+      username: userName
+    })
+    let uemail = await DB.find('users', {
+      email: Email
+    })
+    // console.log(user)
+    if (user.length === 0 && uemail.length === 0) {
+      // 创建新用户
+      let res = await DB.insert('users', ctx.request.body);
+      console.log(res)
+      try {
+        if (res.result.ok) {
+          ctx.body = {
+            status: 200,
+            data: {
+              "userName": res.ops[0].username,
+              "id": res.ops[0]._id,
+              "email": res.ops[0].email,
+              "imgsrc": res.ops[0].imgsrc,
+              "msgFlag": res.ops[0].delflag,
+            },
+            msg: '注册成功'
+          }
         }
+      } catch (error) {
+        ctx.body = {
+          status: 0,
+          msg: '注册失败'
+        }
+        console.log(error);
       }
-    } catch (error) {
+    } else {
       ctx.body = {
-        status: 0,
-        msg: '注册失败'
+        code: -1,
+        msg: '该用户名或者邮箱已被注册,请从新输入!'
       }
-      console.log(error);
     }
-  } else {
-    ctx.body = {
-      code: -1,
-      msg: '该用户名或者邮箱已被注册,请从新输入!'
-    }
-  }
 
-})
+  })
 // 登录
 router.post('/signin', async (ctx, next) => {
   let res = await DB.find('users', ctx.request.body);
@@ -521,4 +522,7 @@ router
     console.log(id)
     let res = await DB.remove('image', {
       '_id': DB.setObjectId(id)
-    });
+    })
+  })
+
+module.exports = router;

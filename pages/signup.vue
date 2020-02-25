@@ -9,15 +9,14 @@
               <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>注册</v-toolbar-title>
                 <v-spacer />
-                  <v-avatar size="36px">
-      <img alt="Avatar" v-if="user.imgsrc" :src="user.imgsrc" />
+                <v-avatar size="36px">
+                  <img alt="Avatar" v-if="user.imgsrc" :src="user.imgsrc" />
 
-      <v-btn icon v-else color="pink" >
-        <v-icon else>mdi-plus</v-icon>
-      </v-btn>
-    </v-avatar>
+                  <v-btn icon v-else color="pink">
+                    <v-icon else>mdi-plus</v-icon>
+                  </v-btn>
+                </v-avatar>
 
-    
                 <!-- <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-btn
@@ -49,13 +48,19 @@
               </v-toolbar>
 
               <v-container>
-      <!-- <v-avatar size="36px" :key="i" class="ma-4" @click="imgsrcicon(e)" v-for="(e,i) in tempurls">
-        <img alt="Avatar" :src="e.imageurl" />
-      </v-avatar> -->
-      <!-- <v-card-actions> -->
-        <!-- <v-btn @click="avatarflag=false" text>确认</v-btn> -->
-      <!-- </v-card-actions> -->
-    </v-container>
+                <v-avatar
+                  size="36px"
+                  :key="i"
+                  class="ma-4"
+                  @click="imgsrcicon(e)"
+                  v-for="(e,i) in $store.state.content.avatars"
+                >
+                  <img alt="Avatar" :src="e.url" />
+                </v-avatar>
+                <!-- <v-card-actions> -->
+                <!-- <v-btn @click="avatarflag=false" text>确认</v-btn> -->
+                <!-- </v-card-actions> -->
+              </v-container>
               <v-card-text>
                 <v-form ref="form" v-model="valid">
                   <v-text-field
@@ -65,7 +70,13 @@
                     prepend-icon="mdi-human"
                     type="text"
                   />
-                  <v-text-field prepend-icon="mdi-email" v-model="user.email" :rules="emailRules" label="E-mail" required></v-text-field>
+                  <v-text-field
+                    prepend-icon="mdi-email"
+                    v-model="user.email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
                   <v-text-field
                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="show1 ? 'text' : 'password'"
@@ -78,8 +89,6 @@
                     @click:append="show1 = !show1"
                     prepend-icon="mdi-lock"
                   />
-
-      
 
                   <v-checkbox
                     v-model="checkbox"
@@ -121,11 +130,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'signup',
   data: () => ({
-   
-    tempurls:[],
+    tempurls: [],
     show2: false,
     avatarflag: false,
     show1: false,
@@ -168,11 +177,12 @@ export default {
     checkbox: false
   }),
   methods: {
+    ...mapActions(['getdata', 'userexit', 'userlogin']),
     validate() {
       if (this.$refs.form.validate()) {
         this.$axios
-          .post('/api/signup',this.user)
-          .then(res=>{
+          .post('/api/signup', this.user)
+          .then(res => {
             this.alertflag = true
             this.subtitle = res.msg
             if (res.status === 200) {
@@ -185,12 +195,12 @@ export default {
               }, 1000)
             }
           })
-          .catch(err=>{
+          .catch(err => {
             console.log(err)
           })
       }
     },
-     async getPicture() {
+    async getPicture() {
       // let picUrl = []
       // this.$axios
       //   .get('https://api.isoyu.com/api/picture/index?page=20')
@@ -202,25 +212,19 @@ export default {
       //       })
       //     })
       //   })
-
-      let res = await this.$axios.get("/api/downloadavatar",{})
-      console.log(res)
-        // 'http://api.btstu.cn/sjtx/api.php?lx=c1&format=images'
-        // 'https://api.ixiaowai.cn/api/api.php?return=json'
-        // 'https://www.mxnzp.com/image/girl/list/random'
-        // 'http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=false'
-      
-
-    
-      this.user.imgsrc = res.imgurl
+      // 'http://api.btstu.cn/sjtx/api.php?lx=c1&format=images'
+      // 'https://api.ixiaowai.cn/api/api.php?return=json'
+      // 'https://www.mxnzp.com/image/girl/list/random'
+      // 'http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=false'
+      // this.user.imgsrc = res.imgurl
     },
-      imgsrcicon(e) {
-      this.user.imgsrc = e.imageUrl
+    imgsrcicon(e) {
+      this.user.imgsrc = e.url
       // console.log(this.user.imgsrc)
-    },
+    }
   },
-  mounted(){
-    this.getPicture() 
+  mounted() {
+    // this.getPicture()
   }
 }
 </script>

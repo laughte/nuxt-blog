@@ -37,7 +37,7 @@ export default {
       if (this.url) {
         this.urls.unshift(this.url)
         this.$axios.post('api/uploadavatar', { url: this.url }).then(res => {
-          console.lo(res)
+          console.log(res)
         })
         this.url = ''
       } else {

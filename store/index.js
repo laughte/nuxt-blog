@@ -1,6 +1,7 @@
 export const state = () => ({
   user: { userName: "" },
   content: {
+    avatars: [],
     article: [],
     jokes: [],
     news: [],
@@ -95,6 +96,7 @@ export const mutations = {
 export const actions = {
   async getdata({ commit }, json) {
     let res = await this.$axios.get(json.api)
+
     if (res instanceof Array) {
       commit('setdata', { type: json.type, data: res })
     } else {

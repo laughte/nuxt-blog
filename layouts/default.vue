@@ -117,7 +117,7 @@ export default {
         { title: '读书' }
       ],
       usermenus: [
-        { title: '管理中心',action:this.managepath },
+        { title: '管理中心', action: this.managepath },
         { title: '设置' },
         { title: '注销', action: this.userexit }
       ],
@@ -142,7 +142,7 @@ export default {
     gohome() {
       this.$router.push('/')
     },
-    managepath(){
+    managepath() {
       this.$router.push('/manage')
     }
   },
@@ -161,6 +161,8 @@ export default {
     //  let res= this.$axios.get('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302')
     //       .then(console.log(res))
     //  this.backgroundimg = "url('https://img.xjh.me/desktop/bg/nature/63505535_p0.jpg')"
+
+    this.getdata({ api: '/api/dlavatar', type: 'avatars' })
   }
 }
 </script>
