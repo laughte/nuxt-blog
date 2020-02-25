@@ -1,0 +1,94 @@
+<template>
+  <v-row class="pa-0 ma-0" justify="center">
+    <v-col  xs="12" sm="12" md="4" lg="4" xl="3">
+      <systemmsg :items="fadedata"/>
+    </v-col>
+    <v-col xs="12" sm="12" md="8" lg="8" xl="8">
+      <v-row justify="space-between">
+        <v-col class="pa-0 ma-0" >
+          <!-- <carousel :items="pictures" :height="'300px'"></carousel> -->
+          <notice
+            :item="{icon:'mdi-heart',notice:'通知',msg:'my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
+          ></notice>
+          <dividline class="my-4" :item="{icon:'mdi-book',title:'收藏的文章' }"></dividline>
+
+        </v-col>
+
+        
+        <v-col
+          xl="4"
+          lg="6"
+          md="6"
+          sm="12"
+          v-for="(item) in $store.state.content.article.slice((page-1)*sliceN,sliceN*page)"
+          :key="item._id"
+        >
+          <v-row justify="center">
+            <v-col  lg="11" xl="11" md="11" sm="11">
+              <w-card :item="item"></w-card>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
+          <v-pagination
+            circle
+            v-model="page"
+            :length="Math.ceil($store.state.content.article.length/sliceN)"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
+          ></v-pagination>
+        </v-col>
+
+      
+      </v-row>
+    </v-col>
+  </v-row>
+</template>
+
+<script>
+import notice from '../components/notice.vue'
+import dividline from '../components/Dividingline.vue'
+import hCard from '../components/hCard.vue'
+import wCard from '../components/wCard.vue'
+import systemmsg from '~/components/systemMsg'
+export default {
+  components: { systemmsg, wCard, dividline, notice },
+  name: 'user',
+  // data(){
+  //   return{
+  //     fadedata:[{title:'系统消息',avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',msg:"姬长信API For Docker 一个基于多种编程语言开源免费不限制提供生活常用,出行服务,开发工具,金融服务,通讯服务和公益大数据的平台.!",time:'1hr'},
+  //       {title:'系统消息',msg:"恭喜你注册成功!",time:'3hr',action: 'mdi-account-multiple'}],
+  //     page:1,
+  //   }
+  // },
+  data: () => ({
+    sliceN: 10,
+    page: 1,
+    fadedata: [
+      {
+        title: '系统消息',
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        msg:
+          '姬长信API For Docker 一个基于多种编程语言开源免费不限制提供生活常用,出行服务,开发工具,金融服务,通讯服务和公益大数据的平台.!',
+        time: '1hr'
+      },
+      {
+        title: '系统消息',
+        msg: '恭喜你注册成功!',
+        time: '3hr',
+        action: 'mdi-account-multiple'
+      }
+    ],
+    page: 1
+  }),
+  activated() {
+    if (this.$store.state.user.id) {
+      this.$store.commit('userCollect')
+      this.$store.commit('imgCollect')
+      this.$store.commit('myArticle')
+    } else {
+      this.$router.push('/signin')
+    }
+  }
+}
+</script>

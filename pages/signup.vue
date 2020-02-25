@@ -203,14 +203,15 @@ export default {
       //     })
       //   })
 
-      let res = await this.$axios.get(
-        'http://api.btstu.cn/sjtx/api.php?lx=c1&format=images'
+      let res = await this.$axios.get("/api/downloadavatar",{})
+      console.log(res)
+        // 'http://api.btstu.cn/sjtx/api.php?lx=c1&format=images'
         // 'https://api.ixiaowai.cn/api/api.php?return=json'
         // 'https://www.mxnzp.com/image/girl/list/random'
         // 'http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=false'
-      )
+      
 
-      console.log(res)
+    
       this.user.imgsrc = res.imgurl
     },
       imgsrcicon(e) {

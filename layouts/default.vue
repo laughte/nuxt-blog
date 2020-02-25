@@ -112,12 +112,12 @@ export default {
       menus: [
         { title: '首页', href: '/' },
         { title: '写文章', href: '/writeboard' },
-        { title: '图片', href: '' },
+        { title: '图片', href: '/uploadavatar' },
         { title: '音乐' },
         { title: '读书' }
       ],
       usermenus: [
-        { title: '管理中心' },
+        { title: '管理中心',action:this.managepath },
         { title: '设置' },
         { title: '注销', action: this.userexit }
       ],
@@ -141,6 +141,9 @@ export default {
     ...mapActions(['getdata', 'userexit', 'userlogin']),
     gohome() {
       this.$router.push('/')
+    },
+    managepath(){
+      this.$router.push('/manage')
     }
   },
   mounted() {

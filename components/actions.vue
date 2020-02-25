@@ -7,14 +7,14 @@
     <!-- <v-spacer></v-spacer> -->
     <v-btn :disabled="disabled" @click.stop="addLike" icon>
       <v-icon
-        :color="item.like.indexOf($store.state.user.userName)?'transprant':'red'"
+        :color="item.like.indexOf($store.state.user.userName)>-1?'red':'transprant'"
         small
       >mdi-heart</v-icon>
       <p>{{ item.like.length }}</p>
     </v-btn>
     <v-btn :disabled="disabled" class="mx-0" @click.stop="addCollect" icon>
       <v-icon
-        :color="item.collect.indexOf($store.state.user.userName)?'transprant':'orange'"
+        :color="item.collect.indexOf($store.state.user.userName)>-1?'orange':'transprant'"
         small
       >mdi-star</v-icon>
       <p v-text="item.collect.length"></p>

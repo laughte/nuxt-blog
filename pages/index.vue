@@ -1,6 +1,6 @@
 <template>
   <v-row class="pa-0 ma-0" justify="center">
-    <v-col  xs="12" sm="12" md="10" lg="8" xl="6">
+    <v-col class="pa-0 ma-0" xs="12" sm="12" md="10" lg="8" xl="6">
       <v-row justify="space-between">
         <!-- <v-col class="d-none d-sm-flex pa-0" class="d-flex d-sm-none pa-0">
             <carousel :items="pictures" :height="'350px'"></carousel>
@@ -22,7 +22,7 @@
           sm="4"
         >
           <v-row justify="center">
-            <v-col class="pa-0" lg="10" xl="10" md="10" sm="10">
+            <v-col lg="10" xl="10" md="10" sm="10">
               <h-card :item="item"></h-card>
             </v-col>
           </v-row>
@@ -40,7 +40,7 @@
           :key="item._id"
         >
           <v-row justify="center">
-            <v-col class="pa-0" lg="11" xl="11" md="11" sm="11">
+            <v-col lg="11" xl="11" md="11" sm="11">
               <w-card :item="item"></w-card>
             </v-col>
           </v-row>
