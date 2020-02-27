@@ -54,13 +54,6 @@ import systemmsg from '~/components/systemMsg'
 export default {
   components: { systemmsg, wCard, dividline, notice },
   name: 'user',
-  // data(){
-  //   return{
-  //     fadedata:[{title:'系统消息',avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',msg:"姬长信API For Docker 一个基于多种编程语言开源免费不限制提供生活常用,出行服务,开发工具,金融服务,通讯服务和公益大数据的平台.!",time:'1hr'},
-  //       {title:'系统消息',msg:"恭喜你注册成功!",time:'3hr',action: 'mdi-account-multiple'}],
-  //     page:1,
-  //   }
-  // },
   data: () => ({
     sliceN: 10,
     page: 1,

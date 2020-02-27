@@ -1,5 +1,10 @@
 <template>
+  <v-hover
+        v-slot:default="{ hover }"
+        open-delay="200"
+      >
   <v-card
+  :elevation="hover ? 16 : 0"
     color="rgba(255,255,255,0.5)"
     dark
     shaped
@@ -68,6 +73,7 @@
       </div>
     </div>
   </v-card>
+  </v-hover>
 </template>
 
 <script>

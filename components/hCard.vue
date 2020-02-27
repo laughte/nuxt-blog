@@ -1,52 +1,59 @@
 <template>
-  <v-card flat max-width="100%" @click="showDetail">
-    <v-img
-      class="white--text align-end"
-      width="auto"
-      height="159px"
-      :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
-    >
-      <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
-    </v-img>
-    <div class="grid_author_avt">
-      <v-avatar class="avatar" size="30">
-        <img :src="item.avatar" />
-      </v-avatar>
-    </div>
+  <v-hover v-slot:default="{hover}" >
+    <v-card flat max-width="100%" @click="showDetail">
+      <v-img
+        class="white--text align-end"
+        width="auto"
+        height="159px"
+        :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+      >
+        <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out blue darken-2 v-card--reveal display-3 white--text"
+            style="height:100%"
+          > $14.99</div>
+        </v-expand-transition>
+      </v-img>
+      <div class="grid_author_avt">
+        <v-avatar class="avatar" size="30">
+          <img :src="item.avatar" />
+        </v-avatar>
+      </div>
 
-    <v-card-subtitle class="py-2 d-flex justify-start align-center">
-      <div class="dot"></div>
-      {{item.author?item.author:'未知作者'}}
-      <div class="dot"></div>
-      {{item.type?item.type:'未分类'}}
-      <div class="dot"></div>
-      {{item.sorce?item.sorce:"未知来源"}}
-    </v-card-subtitle>
+      <v-card-subtitle class="py-2 d-flex justify-start align-center">
+        <div class="dot"></div>
+        {{item.author?item.author:'未知作者'}}
+        <div class="dot"></div>
+        {{item.type?item.type:'未分类'}}
+        <div class="dot"></div>
+        {{item.sorce?item.sorce:"未知来源"}}
+      </v-card-subtitle>
 
-    <v-card-text class="text--primary pb-0">
-      <v-list color="transparent" three-line class="pa-0">
-        <v-list-item class="pa-0">
-          <v-list-item-content class="pa-0">
-            <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
+      <v-card-text class="text--primary pb-0">
+        <v-list color="transparent" three-line class="pa-0">
+          <v-list-item class="pa-0">
+            <v-list-item-content class="pa-0">
+              <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
 
-            <v-list-item-subtitle
-              class="font-weight-medium"
-              v-if="item.blocks[1]"
-              v-text="item.blocks[1].data.text"
-            ></v-list-item-subtitle>
-            <!-- <v-list-item-subtitle
+              <v-list-item-subtitle
+                class="font-weight-medium"
+                v-if="item.blocks[1]"
+                v-text="item.blocks[1].data.text"
+              ></v-list-item-subtitle>
+              <!-- <v-list-item-subtitle
               class="font-weight-medium"
               v-if="item.blocks[2]"
               v-text="item.blocks[2].data.text"
-            ></v-list-item-subtitle>-->
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-card-text>
-    <action :item="item" :flag="false" :disabled="false" />
-    <!-- <v-card-actions class="py-0 px-0"> -->
+              ></v-list-item-subtitle>-->
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+      <action :item="item" :flag="false" :disabled="false" />
+      <!-- <v-card-actions class="py-0 px-0"> -->
 
-    <!-- <v-btn class="ma-0 pa-0" disabled text>
+      <!-- <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-clock-outline</v-icon>
         {{new Date(item.time).toLocaleDateString()}}
       </v-btn>
@@ -58,9 +65,10 @@
       <v-btn class="ma-0 pa-0" disabled text>
         <v-icon small>mdi-chat-processing</v-icon>
         {{item.reply.length}}
-    </v-btn>-->
-    <!-- </v-card-actions> -->
-  </v-card>
+      </v-btn>-->
+      <!-- </v-card-actions> -->
+    </v-card>
+  </v-hover>
 </template>
 
 
@@ -130,4 +138,14 @@ export default {
 .dot:nth-child(3) {
   background: #00e5ff;
 }
+
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .5;
+  position: absolute;
+  width: 100%;
+}
+
 </style>

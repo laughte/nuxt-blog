@@ -11,21 +11,24 @@
         <v-img :src="url"></v-img>
       </v-list-item-avatar>
     </v-list-item>
+    <useravatar :items="urls" />
 
-    <v-avatar class="ma-2" size="80" v-for="(e,i) in urls" :key="i">
+    <!-- <v-avatar class="ma-2" size="80" v-for="(e,i) in urls" :key="i">
       <v-img :src="e"></v-img>
-    </v-avatar>
+    </v-avatar> -->
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn @click="upload" color="rgba(255,255,255,.3)">upload</v-btn>
+      <v-btn :size="'45px'" @click="upload" color="rgba(255,255,255,.3)">upload</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import useravatar from '~/components/useravatar.vue'
 export default {
   name: 'uploadavatar',
+  components:{useravatar},
   data() {
     return {
       url: '',

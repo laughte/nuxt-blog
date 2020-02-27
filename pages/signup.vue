@@ -17,49 +17,10 @@
                   </v-btn>
                 </v-avatar>
 
-                <!-- <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      :href="source"
-                      icon
-                      large
-                      target="_blank"
-                      v-on="on"
-                    >
-                      <v-icon>mdi-code-tags</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Source</span>
-                </v-tooltip>
-                <v-tooltip right>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      icon
-                      large
-                      href="https://codepen.io/johnjleider/pen/pMvGQO"
-                      target="_blank"
-                      v-on="on"
-                    >
-                      <v-icon>mdi-codepen</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Codepen</span>
-                </v-tooltip>-->
               </v-toolbar>
 
               <v-container>
-                <v-avatar
-                  size="36px"
-                  :key="i"
-                  class="ma-4"
-                  @click="imgsrcicon(e)"
-                  v-for="(e,i) in $store.state.content.avatars"
-                >
-                  <img alt="Avatar" :src="e.url" />
-                </v-avatar>
-                <!-- <v-card-actions> -->
-                <!-- <v-btn @click="avatarflag=false" text>确认</v-btn> -->
-                <!-- </v-card-actions> -->
+                <useravatar :size="'40px'" @imgclick="imgsrcicon" :items="$store.state.content.avatars" />
               </v-container>
               <v-card-text>
                 <v-form ref="form" v-model="valid">
@@ -130,9 +91,11 @@
 </template>
 
 <script>
+import useravatar from "~/components/useravatar.vue"
 import { mapActions } from 'vuex'
 export default {
   name: 'signup',
+  components:{useravatar},
   data: () => ({
     tempurls: [],
     show2: false,
