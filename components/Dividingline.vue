@@ -4,7 +4,7 @@
       <v-icon>{{item.icon}}</v-icon>
       {{item.title}}
     </div>
-    <v-divider light inset></v-divider>
+    <!-- <v-divider light inset></v-divider> -->
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
 .divline {
   position: relative;
   width: 100%;
-  height: 45px;
+  /* height: 45px; */
 }
 hr {
   position: absolute;

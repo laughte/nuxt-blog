@@ -3,16 +3,16 @@
     <v-col xs="12" sm="12" md="4" lg="4" xl="3">
       <systemmsg :items="fadedata" />
     </v-col>
-    <v-col xs="12" sm="12" md="8" lg="8" xl="6">
+    <v-col class="py-0" xs="12" sm="12" md="8" lg="8" xl="6">
       <v-row justify="space-between">
-        <v-col class="pa-0 ma-0" xl="12">
+        <v-col  xl="12">
           <!-- <carousel :items="pictures" :height="'300px'"></carousel> -->
           <notice
             :item="{icon:'mdi-heart',notice:'通知',msg:'my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
           ></notice>
-          <dividline class="my-4" :item="{icon:'mdi-book',title:'收藏的文章' }"></dividline>
         </v-col>
-
+        <v-col class="py-0" cols="12"><dividline :item="{icon:'mdi-book',title:'收藏的文章' }"></dividline></v-col>
+        
         <v-col
           xl="6"
           lg="6"
@@ -22,11 +22,11 @@
           v-show="item.collect.indexOf($store.state.user.userName)>-1"
           :key="item._id"
         >
-          <v-row justify="center">
-            <v-col lg="11" xl="11" md="11" sm="11">
+          <!-- <v-row justify="center">
+            <v-col class="py-0"> -->
               <w-card :item="item"></w-card>
-            </v-col>
-          </v-row>
+            <!-- </v-col>
+          </v-row> -->
         </v-col>
         <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
           <v-pagination

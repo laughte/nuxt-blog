@@ -1,5 +1,5 @@
 <template>
-  <v-card justify-center >
+  <v-card color="transparent" flat justify-center >
     <div class="box" :class="falg?'forstyel':'nomore'" >
       <v-avatar
         :size="size"
