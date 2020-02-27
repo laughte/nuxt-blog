@@ -1,5 +1,5 @@
 <template>
-  <v-hover v-slot:default="{hover}" >
+  <v-hover v-slot:default="{hover}" open-delay="100" >
     <v-card flat max-width="100%" @click="showDetail">
       <v-img
         class="white--text align-end"

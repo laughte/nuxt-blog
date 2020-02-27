@@ -1,6 +1,6 @@
 <template>
-    <v-card flat color="rgba(255,255,255,0.6" >
-      <v-toolbar flat dense dark  >
+    <v-card flat color="rgba(255,255,255,0.5)" >
+      <v-toolbar flat dense dark color="rgba(255,255,255,0.1)" >
 
         <v-toolbar-title>Inbox</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -12,7 +12,7 @@
 
       </v-toolbar>
 
-      <v-list three-line flat color="rgba(255,255,255,0.6">
+      <v-list three-line flat color="transparent">
         <v-list-item-group
           v-model="selected"
           multiple
@@ -20,9 +20,6 @@
         >
           <template v-for="(item, index) in items">
             <v-list-item :key="item.time">
-
-
-
               <template v-slot:default="{ active, toggle }">
                 <v-list-item-avatar >
                   <v-img v-if="item.avatar" :src="item.avatar"></v-img>
@@ -52,10 +49,10 @@
               </template>
             </v-list-item>
 
-            <v-divider
+            <!-- <v-divider
               v-if="index + 1 < items.length"
               :key="index"
-            ></v-divider>
+            ></v-divider> -->
           </template>
         </v-list-item-group>
       </v-list>

@@ -92,16 +92,16 @@
         <nuxt keep-alive />
       </v-container>
     </v-content>
-    <foot :item="{author:'Laughter',time:'2020',version:'V4.0'}" />
+    <blogfoot :item="{author:'Laughter',time:'2020',version:'V4.0'}" />
   </v-app>
 </template>
 
 <script>
-import foot from '~/components/foot.vue'
+import blogfoot from '~/components/blogfoot.vue'
 import star from '~/components/star-demo.vue'
 import { mapActions } from 'vuex'
 export default {
-  components: { foot },
+  components: { blogfoot },
   props: {
     source: String
   },

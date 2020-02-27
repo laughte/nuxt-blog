@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'footer',
+  name: 'blogfoot',
   props: { item: Object }
 }
 </script>
