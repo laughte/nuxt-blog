@@ -1,9 +1,10 @@
 <template>
   <v-row justify="center">
-    <v-col xs="12" sm="12" md="4" lg="4" xl="3">
-      <systemmsg :items="fadedata" />
+    <v-col xs="12" sm="12" md="4" lg="3" xl="3">
+      <!-- <systemmsg :items="fadedata" />
+      <uploadavatar /> -->
     </v-col>
-    <v-col class="py-0" xs="12" sm="12" md="8" lg="8" xl="6">
+    <v-col class="py-0" xs="12" sm="12" md="8" lg="9" xl="6">
       <v-row justify="space-between">
         <v-col  xl="12">
           <!-- <carousel :items="pictures" :height="'300px'"></carousel> -->
@@ -14,10 +15,7 @@
         <v-col class="py-0" cols="12"><dividline :item="{icon:'mdi-book',title:'收藏的文章' }"></dividline></v-col>
         
         <v-col
-          xl="6"
-          lg="6"
-          md="6"
-          sm="12"
+      cols="6"
           v-for="(item) in $store.state.content.article.slice((page-1)*sliceN,sliceN*page)"
           v-show="item.collect.indexOf($store.state.user.userName)>-1"
           :key="item._id"
@@ -37,12 +35,45 @@
             next-icon="mdi-menu-right"
           ></v-pagination>
         </v-col>
+
+        <v-col class="py-0" cols="12">
+          <dividline :item="{icon:'mdi-book',title:'我的文章' }"></dividline>
+        </v-col>
+        <v-col
+          class="py-0"
+          :key="index"
+          v-for="(item,index) in $store.state.content.article.slice(0,4)"
+           v-show="item.author===$store.state.user.userName"
+          lg="3"
+          xl="3"
+          md="4"
+          sm="4"
+          xs='6'
+        >
+          <v-row justify="center">
+            <v-col cols="12">
+              <h-card :item="item"></h-card>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
+          <v-pagination
+            circle
+            v-model="page"
+            :length="Math.ceil($store.state.content.article.length/sliceN)"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
+          ></v-pagination>
+        </v-col>
+
       </v-row>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import uploadavatar from '~/components/uploadavatar.vue'
 import notice from '../components/notice.vue'
 import dividline from '../components/Dividingline.vue'
 import hCard from '../components/hCard.vue'
@@ -50,7 +81,7 @@ import wCard from '../components/wCard.vue'
 import systemmsg from '~/components/systemMsg'
 import { mapActions } from 'vuex'
 export default {
-  components: { systemmsg, wCard, dividline, notice },
+  components: {uploadavatar,systemmsg, wCard,hCard, dividline, notice },
   name: 'user',
   data: () => ({
     sliceN: 10,

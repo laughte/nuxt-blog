@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" width="700px" color="rgba(255,255,255,.3)" dark>
+  <v-card class="mx-auto" color="rgba(255,255,255,.3)" dark>
     <v-list-item three-line>
       <v-list-item-content>
         <div class="overline mb-4">MOREBEAUTY</div>

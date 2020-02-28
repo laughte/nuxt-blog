@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col xs="12" sm="12" md="10" lg="8" xl="6">
+    <v-col  sm="12" md="12" lg="9" xl="7">
       <v-row justify="space-between">
         <!-- <v-col class="d-none d-sm-flex pa-0" class="d-flex d-sm-none pa-0">
             <carousel :items="pictures" :height="'350px'"></carousel>
@@ -20,16 +20,17 @@
           v-for="(item,index) in $store.state.content.article.slice(0,4)"
           lg="3"
           xl="3"
-          md="4"
-          sm="5"
+          md="3"
+          sm="4"
+          xs='6'
         >
           <v-row justify="center">
-            <v-col lg="12" xl="12" md="10" sm="12">
+            <v-col lg="12" xl="12" md="12" sm="12">
               <h-card :item="item"></h-card>
             </v-col>
           </v-row>
         </v-col>
-        <v-col  cols="12">
+        <v-col class="py-0"  cols="12">
           <dividline :item="{icon:'mdi-book',title:'文章分类' }"></dividline>
         </v-col>
         <v-col
