@@ -16,11 +16,14 @@
                     <v-icon else>mdi-plus</v-icon>
                   </v-btn>
                 </v-avatar>
-
               </v-toolbar>
 
               <v-container>
-                <useravatar :size="'40px'" @imgclick="imgsrcicon" :items="$store.state.content.avatars" />
+                <useravatar
+                  :size="'40px'"
+                  @imgclick="imgsrcicon"
+                  :items="$store.state.content.avatars"
+                />
               </v-container>
               <v-card-text>
                 <v-form ref="form" v-model="valid">
@@ -50,6 +53,16 @@
                     @click:append="show1 = !show1"
                     prepend-icon="mdi-lock"
                   />
+
+                  <v-radio-group row v-model="user.gender">
+                    <v-radio
+                      v-for="(e,n) in genders"
+                      :key="n"
+                      :label="e.gender"
+                      :color="e.color"
+                      :value="e.gender"
+                    ></v-radio>
+                  </v-radio-group>
 
                   <v-checkbox
                     v-model="checkbox"
@@ -91,12 +104,16 @@
 </template>
 
 <script>
-import useravatar from "~/components/useravatar.vue"
+import useravatar from '~/components/useravatar.vue'
 import { mapActions } from 'vuex'
 export default {
   name: 'signup',
-  components:{useravatar},
+  components: { useravatar },
   data: () => ({
+    genders: [
+      { gender: '男', color: 'cyan' },
+      { gender: '女', color: 'red' }
+    ],
     tempurls: [],
     show2: false,
     avatarflag: false,
@@ -113,8 +130,10 @@ export default {
       username: '',
       pass: '',
       email: '',
+      gender: '',
       age: '',
       tel: '',
+      signature: '',
       creationdate: new Date(),
       delflag: false,
       imgsrc: ''

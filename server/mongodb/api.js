@@ -215,7 +215,12 @@ router
               "id": res.ops[0]._id,
               "email": res.ops[0].email,
               "imgsrc": res.ops[0].imgsrc,
-              "msgFlag": res.ops[0].delflag,
+              "delFlag": res.ops[0].delflag,
+              "tel": res.ops[0].tel,
+              "time": res.ops[0].creationdate,
+              "gender": res.ops[0].gender,
+              "age": res.ops[0].age,
+              "signature": res.ops[0].signature,
             },
             msg: '注册成功'
           }
@@ -248,7 +253,12 @@ router.post('/signin', async (ctx, next) => {
         "id": res[0]._id,
         "email": res[0].email,
         "imgsrc": res[0].imgsrc,
-        "delflag": res.delflag
+        "delflag": res[0].delflag,
+        "tel": res[0].tel,
+        "time": res[0].creationdate,
+        "gender": res[0].gender,
+        "age": res[0].age,
+        "signature": res[0].signature,
       },
       msg: '登录成功'
     }

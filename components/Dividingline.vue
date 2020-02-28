@@ -20,12 +20,12 @@ export default {
   width: 100%;
   /* height: 45px; */
 }
-hr {
+/* hr {
   position: absolute;
   top: 16px;
   opacity: 0.3;
   width: 100%;
-}
+} */
 .dividline {
   width: 130px;
   padding: 4px 10px;
