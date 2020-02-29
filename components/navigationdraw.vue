@@ -2,8 +2,11 @@
   <v-navigation-drawer
     width="100%"
     v-model="drawer"
+    floating
+    permanent
     color="rgba(255,255,255,.6)"
     :mini-variant="miniVariant"
+    :disable-resize-watcher="sfalg"
     dark
   >
     <v-list dense nav class="py-0">
@@ -42,7 +45,7 @@
 <script>
 export default {
   name: 'navigation',
-  props: { items: Array },
+  props: { items: Array, sfalg: Boolean },
   data: () => ({
     miniVariant: false,
     drawer: true

@@ -1,40 +1,68 @@
 <template>
   <v-app id="inspire">
-    <!-- <v-navigation-drawer v-model="drawer" app right clipped>
+    <v-navigation-drawer
+      class="d-flex d-sm-none d-none d-sm-flex d-md-none"
+      v-model="drawer"
+      clipped
+      app
+      disable-resize-watcher
+      disable-route-watcher
+      overlay-opacity="0.9"
+      overlay-color="white"
+      color="rgba(55,85,155,0.8)"
+      dark
+    >
       <v-list dense>
-        <v-list-item v-for="item in items" :key="item.text" link>
+        <v-list-item three-line :class="miniVariant && 'px-0'">
+          <v-list-item-avatar tile>
+            <img :src="$store.state.user.imgsrc" />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>{{$store.state.user.userName}}</v-list-item-title>
+            <v-list-item-subtitle>{{$store.state.user.signature}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list-item v-for="item in menus" :key="item.title" :to="item.href">
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader class="mt-4 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
-        <v-list>
+        <v-subheader>SUBSCRIPTIONS</v-subheader>
+        <!-- <v-list>
           <v-list-item v-for="item in items2" :key="item.text" link>
             <v-list-item-avatar>
               <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt />
             </v-list-item-avatar>
             <v-list-item-title v-text="item.text" />
           </v-list-item>
-        </v-list>
+        </v-list>-->
         <v-list-item class="mt-4" link>
           <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
+            <v-icon>mdi-plus-circle-outline</v-icon>
           </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">Browse Channels</v-list-item-title>
+          <v-list-item-title>Browse Channels</v-list-item-title>
         </v-list-item>
         <v-list-item link>
           <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-settings</v-icon>
+            <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">Manage Subscriptions</v-list-item-title>
+          <v-list-item-title>Manage Subscriptions</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>-->
+    </v-navigation-drawer>
 
     <v-app-bar app clipped-right dense>
+      <v-app-bar-nav-icon
+        class="d-flex d-sm-none d-none d-sm-flex d-md-none"
+        @click.stop="drawer = !drawer"
+      />
       <v-spacer />
       <v-icon class="mx-4">fab fa-youtube</v-icon>
       <v-toolbar-title class="mr-12 align-center" @click="gohome">
@@ -47,13 +75,7 @@
         </v-btn>
       </v-row>
 
-      <v-menu
-        v-if="$store.state.user.userName"
-        :open-on-hover="true"
-        :close-on-click="true"
-        :close-on-content-click="true"
-        :offset-y="true"
-      >
+      <v-menu v-if="$store.state.user.userName" :close-on-click="true" :offset-y="true">
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
@@ -77,17 +99,11 @@
       <v-avatar size="40px">
         <img v-if="$store.state.user.imgsrc" :src=" $store.state.user.imgsrc" alt="avatar" />
       </v-avatar>
-      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
+
       <v-spacer />
     </v-app-bar>
     <v-content :style="{backgroundImage:backgroundimg}">
-      <v-container class="pa-0 mt-12" fluid>
-        <v-tabs class="d-flex d-sm-none d-none d-sm-flex d-md-none" show-arrows>
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-          <v-tab v-for="(item,index) in menus" :key="index" :to="item.href">
-            <b>{{item.title}}</b>
-          </v-tab>
-        </v-tabs>
+      <v-container class="pa-0 mt-4" fluid>
         <!-- <star class="star" /> -->
         <nuxt keep-alive />
       </v-container>
@@ -108,13 +124,13 @@ export default {
   data() {
     return {
       backgroundimg: '',
-      drawer: null,
+      drawer: false,
       menus: [
-        { title: '首页', href: '/' },
-        { title: '写文章', href: '/writeboard' },
-        { title: '图片', href: '/uploadavatar' },
-        { title: '音乐' },
-        { title: '读书' }
+        { title: '首页', href: '/', icon: 'mdi-home' },
+        { title: '写文章', href: '/writeboard', icon: 'mdi-pencil' },
+        { title: '图片', href: '/uploadavatar', icon: 'mdi-image' },
+        { title: '音乐', icon: 'mdi-music' },
+        { title: '读书', icon: 'mdi-book' }
       ],
       usermenus: [
         { title: '管理中心', action: this.managepath },

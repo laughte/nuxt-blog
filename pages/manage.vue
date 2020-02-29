@@ -1,11 +1,18 @@
 <template>
   <v-row justify="center">
-    <v-col xs="12" sm="12" md="3" lg="2" xl="2">
-      <navigationdraw :items="navigations" />
+    <v-col class="d-none d-md-flex" xs="12" sm="12" md="3" lg="2" xl="2">
+      <navigationdraw :items="navigations" :sflag="true" />
       <!-- <systemmsg :items="fadedata" />
       <uploadavatar />-->
     </v-col>
+
     <v-col class="py-0" xs="12" sm="12" md="7" lg="9" xl="7">
+      <v-tabs class="d-flex d-sm-none d-none d-sm-flex d-md-none" show-arrows>
+        <v-tabs-slider color="yellow"></v-tabs-slider>
+        <v-tab v-for="(item,index) in navigations" :key="index" :to="item.path">
+          <b>{{item.title}}</b>
+        </v-tab>
+      </v-tabs>
       <nuxt-child keep-alive />
 
       <!-- <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
