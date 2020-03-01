@@ -68,11 +68,11 @@
           </v-list-item-action>
           <v-list-item-title>Browse Channels</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item to="/manage">
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
-          <v-list-item-title>Manage Subscriptions</v-list-item-title>
+          <v-list-item-title>设置管理</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -115,6 +115,7 @@
         <v-btn class="mr-4" to="/login" text>login</v-btn>
         <!-- <v-btn depressed class="mr-4 textcolor--text" color="listbgcolor" to="/signup">login</v-btn> -->
       </div>
+      <!-- <div>{{$store.state.user.age}}</div> -->
       <v-avatar size="40px">
         <img v-if="$store.state.user.imgsrc" :src=" $store.state.user.imgsrc" alt="avatar" />
       </v-avatar>
@@ -153,23 +154,23 @@ export default {
       ],
       usermenus: [
         { title: '管理中心', action: this.managepath },
-        { title: '设置' },
+
         { title: '注销', action: this.userexit }
-      ],
-      items: [
-        { icon: 'mdi-trending_up', text: 'Most Popular' },
-        { icon: 'mdi-subscriptions', text: 'Subscriptions' },
-        { icon: 'mdi-history', text: 'History' },
-        { icon: 'mdi-featured_play_list', text: 'Playlists' },
-        { icon: 'mdi-watch_later', text: 'Watch Later' }
-      ],
-      items2: [
-        { icon: 'mdi-trending_up', text: 'Most Popular' },
-        { icon: 'mdi-subscriptions', text: 'Subscriptions' },
-        { icon: 'mdi-history', text: 'History' },
-        { icon: 'mdi-featured_play_list', text: 'Playlists' },
-        { icon: 'mdi-watch_later', text: 'Watch Later' }
       ]
+      // items: [
+      //   { icon: 'mdi-trending_up', text: 'Most Popular' },
+      //   { icon: 'mdi-subscriptions', text: 'Subscriptions' },
+      //   { icon: 'mdi-history', text: 'History' },
+      //   { icon: 'mdi-featured_play_list', text: 'Playlists' },
+      //   { icon: 'mdi-watch_later', text: 'Watch Later' }
+      // ],
+      // items2: [
+      //   { icon: 'mdi-trending_up', text: 'Most Popular' },
+      //   { icon: 'mdi-subscriptions', text: 'Subscriptions' },
+      //   { icon: 'mdi-history', text: 'History' },
+      //   { icon: 'mdi-featured_play_list', text: 'Playlists' },
+      //   { icon: 'mdi-watch_later', text: 'Watch Later' }
+      // ]
     }
   },
   methods: {

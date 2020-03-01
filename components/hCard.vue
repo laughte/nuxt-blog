@@ -1,18 +1,18 @@
 <template>
-  <v-hover v-slot:default="{hover}" open-delay="100" >
+  <v-hover v-slot:default="{hover}" open-delay="100">
     <v-card flat max-width="100%" @click="showDetail">
       <v-img
         class="white--text align-end"
         width="auto"
         height="159px"
-        :src="item.pic?item.pic:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+        :src="item.avatar?item.avatar:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
       >
         <v-expand-transition>
           <div
             v-if="hover"
             class="d-flex transition-fast-in-fast-out blue darken-2 v-card--reveal display-3 white--text"
             style="height:100%"
-          > $14.99</div>
+          >{{item.author}}</div>
         </v-expand-transition>
       </v-img>
       <div class="grid_author_avt">
@@ -143,9 +143,8 @@ export default {
   align-items: center;
   bottom: 0;
   justify-content: center;
-  opacity: .5;
+  opacity: 0.6;
   position: absolute;
   width: 100%;
 }
-
 </style>

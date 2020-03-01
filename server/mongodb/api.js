@@ -52,9 +52,8 @@ router //bolgcontent
   .get('/dlavatar', async ctx => {
     let res = await DB.find('avatar', ctx.request.body);
     console.log(res)
-    try {
-      if (res.result.ok) { ctx.body = res }
-    } catch (err) { console.log(err) }
+    ctx.body = res
+
   })
 
 
@@ -168,29 +167,29 @@ router //bolgcontent
   })
 
 
-// 用户登录注册api
+  // 用户登录注册api
 
-router.get('/getUser', async (ctx) => {
-  // 判断用户是否登录，Passport内置的
-  if (ctx.isAuthenticated()) {
-    const {
-      userName,
-      email
-    } = ctx.session.passport.user
-    ctx.body = {
-      userName,
-      email
+  .get('/getUser', async (ctx) => {
+    // 判断用户是否登录，Passport内置的
+    if (ctx.isAuthenticated()) {
+      const {
+        userName,
+        email
+      } = ctx.session.passport.user
+      ctx.body = {
+        userName,
+        email
+      }
+    } else {
+      ctx.body = {
+        user: '',
+        email: ''
+      }
     }
-  } else {
-    ctx.body = {
-      user: '',
-      email: ''
-    }
-  }
 
-})
-// 注册
-router
+  })
+  // 注册
+
   .post('/signup', async (ctx) => {
 
     let userName = ctx.request.body.username
@@ -240,70 +239,88 @@ router
     }
 
   })
-// 登录
-router.post('/signin', async (ctx, next) => {
-  let res = await DB.find('users', ctx.request.body);
-  console.log(res)
-  try {
+  // 登录
+  .post('/signin', async (ctx) => {
+    let res = await DB.find('users', ctx.request.body);
+    console.log(ctx.request.body)
+    try {
 
-    ctx.body = {
-      status: 200,
-      data: {
-        "userName": res[0].username,
-        "id": res[0]._id,
-        "email": res[0].email,
-        "imgsrc": res[0].imgsrc,
-        "delflag": res[0].delflag,
-        "tel": res[0].tel,
-        "time": res[0].creationdate,
-        "gender": res[0].gender,
-        "age": res[0].age,
-        "signature": res[0].signature,
-      },
-      msg: '登录成功'
-    }
+      ctx.body = {
+        status: 200,
+        data: {
+          "userName": res[0].username,
+          "id": res[0]._id,
+          "email": res[0].email,
+          "imgsrc": res[0].imgsrc,
+          "delflag": res[0].delflag,
+          "tel": res[0].tel,
+          "time": res[0].creationdate,
+          "gender": res[0].gender,
+          "age": res[0].age,
+          "signature": res[0].signature,
+        },
+        msg: '登录成功'
+      }
 
-  } catch (error) {
-    ctx.body = {
-      status: 0,
-      msg: '登录失败'
+    } catch (error) {
+      ctx.body = {
+        status: 0,
+        msg: '登录失败'
+      }
+      console.log(error);
     }
-    console.log(error);
-  }
+  })
+
+  // 更新用户信息
+  .post('/updateUser', async (ctx) => {
+    let data = ctx.request.body;
+    let id = data.id;
+    delete (data.id)
+    let res = await DB.update('users', {
+      '_id': DB.setObjectId(id)
+    }, data);
+    try {
+      if (res.result.ok) {
+        ctx.body = res
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  })
 
   // 图片上传
-  router.post('/upload', async ctx => {
+  .post('/upload', async ctx => {
     console.log(ctx)
   })
 
-  // 本地登录
-  // return Passport.authenticate('local', function (err, user, info, status) {
-  //   if (err) {
-  //     ctx.body = {
-  //       status: -1,
-  //       msg: err
-  //     }
-  //   } else {
-  //     if (user) {
-  //       ctx.body = {
-  //         status: 200,
-  //         msg: '登录成功',
-  //         user: {
-  //           userName: user.userName,
-  //           email: user.userPwd
-  //         }
-  //       }
-  //       // Passport中间件带的ctx.login
-  //       return ctx.login(user)
-  //     } else {
-  //       ctx.body = {
-  //         status: 0,
-  //         msg: info
-  //       }
-  //     }
-  //   }
-  // })(ctx, next)
-})
+// 本地登录
+// return Passport.authenticate('local', function (err, user, info, status) {
+//   if (err) {
+//     ctx.body = {
+//       status: -1,
+//       msg: err
+//     }
+//   } else {
+//     if (user) {
+//       ctx.body = {
+//         status: 200,
+//         msg: '登录成功',
+//         user: {
+//           userName: user.userName,
+//           email: user.userPwd
+//         }
+//       }
+//       // Passport中间件带的ctx.login
+//       return ctx.login(user)
+//     } else {
+//       ctx.body = {
+//         status: 0,
+//         msg: info
+//       }
+//     }
+//   }
+// })(ctx, next)
+// })
 
 // 退出登录
 router.get('/exit', async (ctx) => {
@@ -320,10 +337,10 @@ router.get('/exit', async (ctx) => {
   }
 })
 
-// picture服务端api
-// picture 数据库查询 api
+  // picture服务端api
+  // picture 数据库查询 api
 
-router
+
   .get('/picture', async ctx => {
 
     let res = await DB.find('picture', ctx.request.body, 60);

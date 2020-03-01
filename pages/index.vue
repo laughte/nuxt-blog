@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col  sm="12" md="12" lg="9" xl="7">
+    <v-col sm="12" md="12" lg="9" xl="7">
       <v-row justify="space-between">
         <!-- <v-col class="d-none d-sm-flex pa-0" class="d-flex d-sm-none pa-0">
             <carousel :items="pictures" :height="'350px'"></carousel>
@@ -22,7 +22,7 @@
           xl="3"
           md="3"
           sm="4"
-          xs='6'
+          xs="6"
         >
           <v-row justify="center">
             <v-col lg="12" xl="12" md="12" sm="12">
@@ -30,7 +30,7 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col class="py-0"  cols="12">
+        <v-col class="py-0" cols="12">
           <dividline :item="{icon:'mdi-book',title:'文章分类' }"></dividline>
         </v-col>
         <v-col
@@ -47,7 +47,11 @@
           <!-- </v-col>
           </v-row>-->
         </v-col>
-        <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
+        <v-col
+          cols="12"
+          class="text-center"
+          v-if="Math.ceil($store.state.content.article.length/sliceN)>1"
+        >
           <v-pagination
             circle
             v-model="page"
