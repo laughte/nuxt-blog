@@ -6,23 +6,42 @@
       clipped
       app
       disable-resize-watcher
-      disable-route-watcher
       overlay-opacity="0.9"
       overlay-color="white"
       color="rgba(55,85,155,0.8)"
       dark
     >
       <v-list dense>
-        <v-list-item three-line :class="miniVariant && 'px-0'">
-          <v-list-item-avatar tile>
-            <img :src="$store.state.user.imgsrc" />
+        <v-list-item three-line>
+          <v-list-item-avatar size="65">
+            <img
+              :src="$store.state.user.imgsrc?$store.state.user.imgsrc:'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
+            />
           </v-list-item-avatar>
 
+          <v-list-item-content>
+            <v-list-item-title
+              v-if="$store.state.user.userName"
+              class="subtitle-1"
+            >{{$store.state.user.userName}}</v-list-item-title>
+
+            <v-list-item-title v-else class="subtitle-1">
+              <v-btn class="mr-4" to="/login" text>login</v-btn>
+            </v-list-item-title>
+            <v-list-item-subtitle>{{$store.state.user.signature?$store.state.user.signature:'自在飞花轻似梦,无边丝雨细如愁'}}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <!-- 
+        <v-list-item link>
           <v-list-item-content>
             <v-list-item-title>{{$store.state.user.userName}}</v-list-item-title>
             <v-list-item-subtitle>{{$store.state.user.signature}}</v-list-item-subtitle>
           </v-list-item-content>
-        </v-list-item>
+
+          <v-list-item-action>
+            <v-icon>mdi-menu-down</v-icon>
+          </v-list-item-action>
+        </v-list-item>-->
 
         <v-divider></v-divider>
 

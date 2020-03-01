@@ -1,16 +1,18 @@
 <template>
   <v-card flat>
-    <editor
-      autofocus
-      holder-id="codex-editor"
-      save-button-id="save-button"
-      :init-data="initData"
-      :config="config"
-      @save="onSave"
-      @ready="onReady"
-      @change="onChange"
-      ref="editor"
-    />
+    <v-rol>
+      <editor
+        autofocus
+        holder-id="codex-editor"
+        save-button-id="save-button"
+        :init-data="initData"
+        :config="config"
+        @save="onSave"
+        @ready="onReady"
+        @change="onChange"
+        ref="editor"
+      />
+    </v-rol>
     <v-card-actions>
       <v-text-field color="textcolor" v-model="type" label="填写类别"></v-text-field>
       <v-spacer />

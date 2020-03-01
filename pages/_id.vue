@@ -2,13 +2,15 @@
   <!-- <div class="idstyle" > -->
 
   <v-card flat light color="rgba(255,255,255,0.6)">
-    <editor
-      :autofocus="true"
-      :init-data="initData"
-      ref="editor"
-      @ready="onReady"
-      @change="onChange"
-    />
+    <v-col>
+      <editor
+        :autofocus="true"
+        :init-data="initData"
+        ref="editor"
+        @ready="onReady"
+        @change="onChange"
+      />
+    </v-col>
 
     <v-card-actions class="pt-0">
       <action :item="initData" :flag="true" :disabled="false" />
