@@ -33,7 +33,7 @@ export default {
 }
 </script>
 <style>
-.v-content__wrap {
+.theme--light.v-application {
   background: radial-gradient(
     200% 100% at bottom center,
     #f7f7b6,

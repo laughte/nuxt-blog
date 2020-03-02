@@ -1,10 +1,10 @@
 <template>
   <v-navigation-drawer
-    width="100%"
     v-model="drawer"
-    floating
-    permanent
-    color="rgba(255,255,255,.6)"
+    temporary
+    absolute
+    clipped
+    color="rgba(160,120,225,.9)"
     :mini-variant="miniVariant"
     :disable-resize-watcher="sfalg"
     dark
@@ -49,7 +49,12 @@ export default {
   data: () => ({
     miniVariant: false,
     drawer: true
-  })
+  }),
+  methods: {
+    changedrawer() {
+      this.drawer = !this.drawer
+    }
+  }
 }
 </script>
 

@@ -1,31 +1,34 @@
 <template>
-  <v-row justify="center">
-    <v-col class="d-none d-md-flex" xs="12" sm="12" md="3" lg="2" xl="2">
+  <v-card flat class="mx-auto overflow-hidden" color="rgba(255,255,255,.6)">
+    <v-app-bar flat dark color="rgba(255,255,255,0)">
+      <v-app-bar-nav-icon @click="changedrawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>管理中心</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <!-- <v-text-field solo-inverted flat clearable dense rounded hide-details label="seach"></v-text-field>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>-->
+    </v-app-bar>
+    <navigationdraw ref="draw" :items="navigations" :sflag="true" />
+
+    <!-- <v-col class="d-none d-md-flex" xs="12" sm="12" md="3" lg="2" xl="2">
       <navigationdraw :items="navigations" :sflag="true" />
-      <!-- <systemmsg :items="fadedata" />
-      <uploadavatar />-->
-    </v-col>
-
-    <v-col class="py-0" xs="12" sm="12" md="7" lg="9" xl="7">
-      <v-tabs class="d-flex d-sm-none d-none d-sm-flex d-md-none" show-arrows>
-        <v-tabs-slider color="yellow"></v-tabs-slider>
-        <v-tab v-for="(item,index) in navigations" :key="index" :to="item.path">
-          <b>{{item.title}}</b>
-        </v-tab>
-      </v-tabs>
-      <nuxt-child keep-alive />
-
-      <!-- <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
-          <v-pagination
-            circle
-            v-model="page"
-            :length="Math.ceil($store.state.content.article.length/sliceN)"
-            prev-icon="mdi-menu-left"
-            next-icon="mdi-menu-right"
-          ></v-pagination>
-      </v-col>-->
-    </v-col>
-  </v-row>
+    </v-col>-->
+    <v-row justify="center">
+      <v-col class="py-0" xs="12" sm="12" md="7" lg="9" xl="7">
+        <!-- <v-tabs class="d-flex d-sm-none d-none d-sm-flex d-md-none" show-arrows>
+            <v-tabs-slider color="yellow"></v-tabs-slider>
+            <v-tab v-for="(item,index) in navigations" :key="index" :to="item.path">
+              <b>{{item.title}}</b>
+            </v-tab>
+        </v-tabs>-->
+        <nuxt-child keep-alive />
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
@@ -67,11 +70,7 @@ export default {
         badge: 9,
         color: 'red'
       },
-      {
-        title: '我的消息',
-        icon: 'mdi-message-processing',
-        path: '/manage/message'
-      },
+
       {
         title: '上传头像',
         icon: 'mdi-account-circle',
@@ -104,10 +103,11 @@ export default {
           C.push(e)
         }
       })
+    },
+    changedrawer() {
+      this.$refs.draw.changedrawer()
     }
   },
-  computed: {},
-  watch: {},
   activated() {
     if (!this.$store.state.user.id) {
       this.$router.push('/login')
@@ -115,6 +115,7 @@ export default {
       console.log(this.$store.state.user)
     }
   },
+
   mounted() {
     let user = window.sessionStorage.getItem('user')
     if (user) {

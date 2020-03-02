@@ -77,22 +77,25 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-right dense>
+    <v-app-bar app color="rgba(255,255,255,0.6)" dense dark>
       <v-app-bar-nav-icon
         class="d-flex d-sm-none d-none d-sm-flex d-md-none"
         @click.stop="drawer = !drawer"
       />
       <v-spacer />
-      <v-icon class="mx-4">fab fa-youtube</v-icon>
       <v-toolbar-title class="mr-12 align-center" @click="gohome">
         <span class="title">goLove</span>
       </v-toolbar-title>
-
-      <v-row class="d-none d-sm-flex d-sm-none d-md-flex" align="center">
+      <div class="d-sm-none d-md-flex d-none" align="center">
         <v-btn text :key="index" v-for="(item,index) in menus" :to="item.href">
           <b>{{item.title}}</b>
         </v-btn>
-      </v-row>
+      </div>
+      <v-text-field solo-inverted flat clearable dense rounded hide-details label="seach"></v-text-field>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
 
       <v-menu v-if="$store.state.user.userName" :close-on-click="true" :offset-y="true">
         <template v-slot:activator="{ on }">
@@ -100,7 +103,7 @@
             v-on="on"
             depressed
             class="ml-4textcolor--text"
-            color="listbgcolor"
+            color="transparent"
             v-text="$store.state.user.userName"
           ></v-btn>
         </template>
@@ -123,7 +126,7 @@
       <v-spacer />
     </v-app-bar>
     <v-content :style="{backgroundImage:backgroundimg}">
-      <v-container class="pa-0 mt-4" fluid>
+      <v-container class="pa-0" fluid>
         <!-- <star class="star" /> -->
         <nuxt keep-alive />
       </v-container>
@@ -150,7 +153,12 @@ export default {
         { title: '写文章', href: '/writeboard', icon: 'mdi-pencil' },
         { title: '图片', href: '/uploadavatar', icon: 'mdi-image' },
         { title: '音乐', icon: 'mdi-music' },
-        { title: '读书', icon: 'mdi-book' }
+        { title: '读书', icon: 'mdi-book' },
+        {
+          title: '消息',
+          icon: 'mdi-message-processing',
+          href: '/message'
+        }
       ],
       usermenus: [
         { title: '管理中心', action: this.managepath },
