@@ -1,7 +1,7 @@
 <template>
   <!-- <v-row justify="space-between"> -->
   <v-col class="px-0">
-    <v-card flat color="rgba(255,255,255,.6)" dark>
+    <v-card flat color="rgba(255,255,255,0)" dark>
       <!-- <v-img class="cardimg" :src="$store.state.user.imgsrc"></v-img> -->
       <v-card-title class="headline font-weight-medium">个人详细信息</v-card-title>
       <v-row justify="space-around">

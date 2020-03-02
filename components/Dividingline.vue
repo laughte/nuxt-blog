@@ -1,9 +1,11 @@
 <template>
   <div class="divline align-center">
-    <div class="dividline">
-      <v-icon>{{item.icon}}</v-icon>
-      {{item.title}}
-    </div>
+    <v-badge overlap bordered :content="item.badge" :value="item.badge" :color="item.color">
+      <div class="dividline">
+        <v-icon>{{item.icon}}</v-icon>
+        {{item.title}}
+      </div>
+    </v-badge>
     <!-- <v-divider light inset></v-divider> -->
   </div>
 </template>

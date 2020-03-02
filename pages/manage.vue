@@ -48,33 +48,34 @@ export default {
     page: 1,
     collectbadge: Number,
     navigations: [
-      { title: '总览', icon: 'mdi-view-dashboard', path: '/manage/' },
+      { title: '总览', icon: 'mdi-view-dashboard', path: '/manage/',badge:false },
       {
         title: '个人信息',
         icon: 'mdi-information',
         path: '/manage/userinfo',
-        badge: '9',
-        color: 'red'
+        badge: '6',
+        color: 'rgba(255,50,50,.3)'
       },
       {
         title: '我的文章',
         icon: 'mdi-book',
         path: '/manage/myarticle',
-        badge: '',
-        color: 'red'
+        badge: '5',
+        color: 'rgba(50,255,150,.3)'
       },
       {
         title: '我的收藏',
         icon: 'mdi-star',
         path: '/manage/mycollect',
         badge: 9,
-        color: 'red'
+        color: 'rgba(60,90,255,.6)'
       },
 
       {
         title: '上传头像',
         icon: 'mdi-account-circle',
-        path: '/manage/uploadavatar'
+        path: '/manage/uploadavatar',
+        badge:false
       }
     ],
     fadedata: [

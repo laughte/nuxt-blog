@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-card class="mx-auto" color="rgba(255,255,255,.3)" dark>
+      <v-card flat class="mx-auto" color="rgba(255,255,255,0)" dark>
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">MOREBEAUTY</div>

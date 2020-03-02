@@ -32,11 +32,11 @@
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-badge :content="item.badge" :value="item.badge" :color="item.clor" overlap>
+        <v-badge inline :content="item.badge" :value="item.badge" :color="item.color">
+          <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-badge>
-        </v-list-item-content>
+          </v-list-item-content>
+        </v-badge>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>

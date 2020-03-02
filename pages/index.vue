@@ -13,7 +13,7 @@
             ></notice>
           </v-col>
           <v-col class="py-0" cols="12">
-            <dividline :item="{icon:'mdi-book',title:'最新文章' }"></dividline>
+            <dividline :item="{icon:'mdi-book',title:'最新文章',badge:'new',color:'red'  }"></dividline>
           </v-col>
           <v-col
             class="py-0"
@@ -32,7 +32,7 @@
             </v-row>
           </v-col>
           <v-col class="py-0" cols="12">
-            <dividline :item="{icon:'mdi-book',title:'文章分类' }"></dividline>
+            <dividline :item="{icon:'mdi-book',title:'文章分类',badge:$store.state.content.article.length,color:'red' }"></dividline>
           </v-col>
           <v-col
             xl="6"
