@@ -36,9 +36,7 @@
     </v-col>
 
     <v-col class="py-0" cols="12">
-      <dividline
-        :item="{icon:'mdi-book',title:'我的文章',badge:false,color:'red' }"
-      ></dividline>
+      <dividline :item="item2"></dividline>
     </v-col>
     <v-col
       class="py-0"
@@ -70,8 +68,10 @@ export default {
   components: { wCard, hCard, dividline, notice },
   data: () => ({
     sliceN: 10,
-    page: 1
-  })
+    page: 1,
+    item2: { icon: 'mdi-book', title: '我的文章', badge: false, color: 'red' }
+  }),
+  methods: {}
 }
 </script>
 

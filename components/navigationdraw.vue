@@ -32,7 +32,12 @@
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
 
-        <v-badge inline :content="item.badge" :value="item.badge" :color="item.color">
+        <v-badge
+          inline
+          :content="item.content"
+          :value="item.badge"
+          :color="item.color"
+        >
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
@@ -53,6 +58,10 @@ export default {
   methods: {
     changedrawer() {
       this.drawer = !this.drawer
+    },
+    changebadge(item) {
+      console.log(this.item.badge)
+      item.badge = false
     }
   }
 }

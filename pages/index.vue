@@ -13,7 +13,7 @@
             ></notice>
           </v-col>
           <v-col class="py-0" cols="12">
-            <dividline :item="{icon:'mdi-book',title:'最新文章',badge:'new',color:'red'  }"></dividline>
+            <dividline @changebadge="changebadge(item)" :item="item"></dividline>
           </v-col>
           <v-col
             class="py-0"
@@ -32,7 +32,7 @@
             </v-row>
           </v-col>
           <v-col class="py-0" cols="12">
-            <dividline :item="{icon:'mdi-book',title:'文章分类',badge:$store.state.content.article.length,color:'red' }"></dividline>
+            <dividline @changebadge="changebadge(item2)" :item="item2"></dividline>
           </v-col>
           <v-col
             xl="6"
@@ -80,17 +80,30 @@ export default {
   data() {
     return {
       page: 1,
-      sliceN: 6
+      sliceN: 6,
+      item: {
+        icon: 'mdi-book',
+        title: '最新文章',
+        content: 'new',
+        badge: true,
+        color: 'red'
+      },
+      item2: {
+        icon: 'mdi-book',
+        title: '文章分类',
+        content: this.$store.state.content.article.length,
+        badge: true,
+        color: 'red'
+      }
     }
   },
   methods: {
     async getMusic(api) {
       let res = await this.$axios.get('http://39.105.168.171:3000' + api)
-      console.log(res)
+    },
+    changebadge(item) {
+      item.badge = false
     }
-  },
-  created() {
-    // this.getMusic('/personalized')
   }
 }
 </script>

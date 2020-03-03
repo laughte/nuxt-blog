@@ -1,6 +1,6 @@
 <template>
-  <div class="divline align-center">
-    <v-badge overlap bordered :content="item.badge" :value="item.badge" :color="item.color">
+  <div @click="$emit('changebadge')" class="divline align-center">
+    <v-badge overlap bordered :content="item.content" :value="item.badge" :color="item.color">
       <div class="dividline">
         <v-icon>{{item.icon}}</v-icon>
         {{item.title}}
@@ -12,7 +12,8 @@
 
 <script>
 export default {
-  props: { item: Object }
+  props: { item: Object },
+  methods: {}
 }
 </script>
 
