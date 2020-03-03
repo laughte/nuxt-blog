@@ -3,8 +3,8 @@
     <v-card
       flat
       @click="flag=!flag"
-      :class="flag?'card1':''"
-      class="mx-auto"
+      :class="flag?'card1_1':''"
+      class="card1 mx-auto"
       :color="item.color"
       :dark="item.flag"
       max-width="400"
@@ -37,7 +37,7 @@
         </v-list-item>
       </v-card-actions>
     </v-card>
-    <v-card @click="flag=!flag" :class="flag?'card2':''"></v-card>
+    <v-card @click="flag=!flag" class="card2" :class="flag?'card2_1':''"></v-card>
   </v-card>
 </template>
 
@@ -84,15 +84,14 @@ export default {
   z-index: 2;
 }
 .card2 {
-  background-color: green;
   /*先使背面翻转180度，当和正面一起翻转时正好背面作为正面*/
   transform: rotateY(180deg);
 }
-.card2 {
+.card2_1 {
   /*背面作为正面*/
   transform: rotateY(0deg);
 }
-.card1 {
+.card1_1 {
   /*正面作为背面*/
   transform: rotateY(180deg);
 }
