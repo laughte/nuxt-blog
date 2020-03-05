@@ -1,6 +1,7 @@
 <template>
-  <div class="d-flex flex-wrap justify-start" >
-    <twittercard class="ma-2" v-for="i in 12" :key="i" :item="item" />
+  <div class="d-flex flex-wrap justify-space-around" >
+    <twittercard class="ma-2" v-for="i in 5" :key="i" :item="item" />
+    <twittercard class="ma-2" :item="item2"/>
   </div>
 </template>
 
@@ -15,6 +16,20 @@ export default {
       title: 'twitter',
       text:
         'Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.',
+      icon: 'mdi-twitter',
+      flag:true,
+      color:'cyan',
+      time:'2019-12-14',
+      avatar:
+        'http://yanxuan.nosdn.127.net/8d82e055d343f820b7869b929c8a45e2.jpg',
+      like: 12,
+      see: 32
+    },
+    item2: {
+      name: '箫无韵',
+      title: 'twitter',
+      text:
+        'Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well.Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well',
       icon: 'mdi-twitter',
       flag:true,
       color:'cyan',
