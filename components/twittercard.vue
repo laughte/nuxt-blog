@@ -1,7 +1,7 @@
 <template>
-  <v-card :height="maxheight" color="transparent" class="wrap">
+  <div :min-height="maxheight" class="wrap">
     <v-card
-      :height="maxheight"
+      :min-height="maxheight"
       flat
       :class="flag?'card1_1':''"
       class="card1 mx-auto"
@@ -38,28 +38,26 @@
         </v-btn>
       </v-card-actions>
 
-      <v-card flat color="transparent" class="mx-auto">
-        <v-list color="transparent" three-line>
-          <template v-for="(item, index) in items.slice(0,2 )">
-            <v-divider :key="index" :inset="true"></v-divider>
-            <v-list-item :key="item.title" @click="showmsg">
-              <v-list-item-avatar>
-                <v-img :src="item.avatar"></v-img>
-              </v-list-item-avatar>
+      <v-list color="transparent" three-line>
+        <template v-for="(item, index) in items.slice(0,1 )">
+          <v-divider :key="index" :inset="true"></v-divider>
+          <v-list-item :key="item.title" @click="showmsg">
+            <v-list-item-avatar>
+              <v-img :src="item.avatar"></v-img>
+            </v-list-item-avatar>
 
-              <v-list-item-content>
-                <v-list-item-title v-html="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-list>
-        <v-card-actions class="justify-center">
-          <button @click="showmsg" icon>
-            <v-icon>mdi-menu-down</v-icon>
-          </button>
-        </v-card-actions>
-      </v-card>
+            <v-list-item-content>
+              <v-list-item-title v-html="item.title"></v-list-item-title>
+              <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-list>
+      <v-card-actions class="justify-center">
+        <button @click="showmsg" icon>
+          <v-icon>mdi-menu-down</v-icon>
+        </button>
+      </v-card-actions>
     </v-card>
 
     <v-card
@@ -87,35 +85,34 @@
           @click="addmsg"
         >回复</v-btn>
       </v-card-actions>
-      <v-card flat color="transparent" class="mx-auto">
-        <v-list color="transparent" three-line>
-          <template v-for="(item, index) in items.slice((page-1)*sliceN,sliceN*page)">
-            <v-divider :key="index" :inset="true"></v-divider>
-            <v-list-item :key="item.title" @click>
-              <v-list-item-avatar>
-                <v-img :src="item.avatar"></v-img>
-              </v-list-item-avatar>
 
-              <v-list-item-content>
-                <v-list-item-title v-html="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
+      <v-list color="transparent" three-line>
+        <template v-for="(item, index) in items.slice((page-1)*sliceN,sliceN*page)">
+          <v-divider :key="index" :inset="true"></v-divider>
+          <v-list-item :key="item.title" @click>
+            <v-list-item-avatar>
+              <v-img :src="item.avatar"></v-img>
+            </v-list-item-avatar>
 
-          <v-col cols="12" class="text-center" v-if="Math.ceil(items.length/sliceN)>1">
-            <v-pagination
-              circle
-              v-model="page"
-              :length="Math.ceil(items.length/sliceN)"
-              prev-icon="mdi-menu-left"
-              next-icon="mdi-menu-right"
-            ></v-pagination>
-          </v-col>
-        </v-list>
-      </v-card>
+            <v-list-item-content>
+              <v-list-item-title v-html="item.title"></v-list-item-title>
+              <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+
+        <v-col cols="12" class="text-center" v-if="Math.ceil(items.length/sliceN)>1">
+          <v-pagination
+            circle
+            v-model="page"
+            :length="Math.ceil(items.length/sliceN)"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
+          ></v-pagination>
+        </v-col>
+      </v-list>
     </v-card>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -129,7 +126,7 @@ export default {
     flag: false,
     btnDisabled: false,
     msgcontent: '',
-    maxheight: '468px',
+    maxheight: '426px',
     items: [
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
@@ -220,7 +217,7 @@ export default {
       }, 600)
     },
     backmsg() {
-      this.maxheight = '468px'
+      this.maxheight = '426px'
 
       setTimeout(() => {
         this.flag = !this.flag

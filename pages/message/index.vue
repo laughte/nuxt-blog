@@ -1,8 +1,11 @@
 <template>
-  <div class="d-flex flex-wrap justify-center">
-    <twittercard class="ma-3" v-for="i in 3 " :key="i" :item="item" />
+  <v-row justify="center">
+    <v-col class="mb-5" xl="8" lg="8" md="10" sm="12" v-for="i in 3 " :key="i">
+      <twittercard :item="item" />
+    </v-col>
+
     <!-- <twittercard class="ma-2" :item="item2" /> -->
-  </div>
+  </v-row>
 </template>
 
 <script>
@@ -15,7 +18,7 @@ export default {
       name: '箫无韵',
       title: 'twitter',
       text:
-        'Turns out semicolon-less style is easier and safer Turns out semicolon-less style is easier and safer Turns out semicolon-less style is easier and safer  in TS because most gotcha edge cases are type invalid as well.',
+        'Turns out semicolon-less style is easier and safer Turns out semicolon-less style Turns out semicolon-less style is easier and safer Turns out semicolon-less style Turns out semicolon-less style is easier and safer Turns out semicolon-less style Turns out semicolon-less style is easier and safer Turns out semicolon-less style is easier and safer Turns out semicolon-less style is easier and safer  in TS because most gotcha edge cases are type invalid as well.',
       icon: 'mdi-twitter',
       flag: true,
       color: 'cyan',
