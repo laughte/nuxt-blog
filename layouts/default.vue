@@ -91,7 +91,7 @@
           <b>{{item.title}}</b>
         </v-btn>
       </div>
-      <v-text-field solo-inverted flat clearable dense rounded hide-details label="seach"></v-text-field>
+      <v-text-field v-model="searchdata" @change="search"  solo-inverted flat clearable dense rounded hide-details label="seach"></v-text-field>
 
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
@@ -138,7 +138,7 @@
 <script>
 import blogfoot from '~/components/blogfoot.vue'
 import star from '~/components/star-demo.vue'
-import { mapActions } from 'vuex'
+import { mapActions ,mapMutations} from 'vuex'
 export default {
   components: { blogfoot },
   props: {
@@ -146,6 +146,7 @@ export default {
   },
   data() {
     return {
+      searchdata:'',
       backgroundimg: '',
       drawer: false,
       menus: [
@@ -183,11 +184,15 @@ export default {
   },
   methods: {
     ...mapActions(['getdata', 'userexit', 'userlogin']),
+    ...mapMutations(['setdata']),
     gohome() {
       this.$router.push('/')
     },
     managepath() {
       this.$router.push('/manage')
+    },
+    search(){
+      this.searchdata
     }
   },
   mounted() {
@@ -195,6 +200,7 @@ export default {
     if (user) {
       this.userlogin(JSON.parse(user))
     }
+  
   },
   created() {
     this.$vuetify.theme.light = true

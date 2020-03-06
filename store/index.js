@@ -3,6 +3,7 @@ export const state = () => ({
   content: {
     avatars: [],
     article: [],
+    article2: [],
     jokes: [],
     news: [],
     pictures: [],
@@ -96,6 +97,9 @@ export const mutations = {
 export const actions = {
   async getdata({ commit }, json) {
     let res = await this.$axios.get(json.api)
+    if(json.type === 'article'){
+      commit('setdata', { type: 'article2', data: res })
+    }
 
     if (res instanceof Array) {
       commit('setdata', { type: json.type, data: res })

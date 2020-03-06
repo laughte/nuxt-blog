@@ -18,7 +18,7 @@
           <v-col
             class="py-0"
             :key="index"
-            v-for="(item,index) in $store.state.content.article.slice(0,4)"
+            v-for="(item,index) in $store.state.content.article2.slice(0,4)"
             lg="3"
             xl="3"
             md="3"
@@ -39,7 +39,7 @@
             lg="6"
             md="6"
             sm="6"
-            v-for="(item) in $store.state.content.article.slice((page-1)*sliceN,sliceN*page)"
+            v-for="(item) in $store.state.content.article2.slice((page-1)*sliceN,sliceN*page)"
             :key="item._id"
           >
             <!-- <v-row justify="center">
@@ -51,12 +51,12 @@
           <v-col
             cols="12"
             class="text-center"
-            v-if="Math.ceil($store.state.content.article.length/sliceN)>1"
+            v-if="Math.ceil($store.state.content.article2.length/sliceN)>1"
           >
             <v-pagination
               circle
               v-model="page"
-              :length="Math.ceil($store.state.content.article.length/sliceN)"
+              :length="Math.ceil($store.state.content.article2.length/sliceN)"
               prev-icon="mdi-menu-left"
               next-icon="mdi-menu-right"
             ></v-pagination>
@@ -83,14 +83,14 @@ export default {
       sliceN: 6,
       item: {
         icon: 'mdi-book',
-        title: '最新文章',
+        title: '精品文章',
         content: 'new',
         badge: true,
         color: 'red'
       },
       item2: {
         icon: 'mdi-book',
-        title: '文章分类',
+        title: '好友动态',
         content: this.$store.state.content.article.length,
         badge: true,
         color: 'red'
