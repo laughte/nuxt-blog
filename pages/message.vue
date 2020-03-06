@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="mx-auto overflow-hidden" color="rgba(255,255,255,.6)">
+  <v-card flat class="mx-auto" color="rgba(255,255,255,.6)">
     <v-app-bar flat dark color="rgba(255,255,255,0)">
       <v-app-bar-nav-icon @click="changedrawer"></v-app-bar-nav-icon>
 
@@ -13,9 +13,8 @@
       </v-btn>-->
     </v-app-bar>
     <navigationdraw ref="draw" :items="navigations" :sflag="true" />
-    <v-container>
-      <nuxt-child keep-alive />
-    </v-container>
+
+    <nuxt-child keep-alive />
   </v-card>
 </template>
 
