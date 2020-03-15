@@ -5,7 +5,7 @@
         <v-textarea solo flat filled v-model="msgcontent" name="input-7-4" label="真的不来写两句吗???"></v-textarea>
         <v-card-actions>
           <v-btn
-            :disabled="btnDisabled && $store.state.user.userName ? false:true"
+            :disabled="btnDisabled && $store.state.user.name ? false:true"
             small
             color="warning"
             @click="addmsg"
@@ -51,13 +51,13 @@ export default {
     ...mapMutations(['articleEdit']),
 
     addmsg() {
-      if (this.$store.state.user.userName) {
+      if (this.$store.state.user.name) {
         let date = new Date()
         let msgItem = {
           articleId: this.item._id,
           userId: this.$store.state.user._id,
           userImg: this.$store.state.user.imgsrc,
-          userName: this.$store.state.user.userName,
+          name: this.$store.state.user.name,
           time: Date.parse(date),
           msg: this.msgcontent.trim(),
           like: 0

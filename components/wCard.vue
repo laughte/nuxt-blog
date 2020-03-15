@@ -3,7 +3,6 @@
     <v-card
       :elevation="hover ? 16 : 0"
       color="rgba(255,255,255,0.5)"
-      dark
       shaped
       style="overflow:hidden"
       max-height="206px"
@@ -26,12 +25,12 @@
               <img :src="item.avatar" />
             </v-avatar>
 
-            <div class="dot dot1"></div>
+            <!-- <div class="dot dot1"></div> -->
             {{item.author?item.author:'未知作者'}}
             <div class="dot dot2"></div>
             {{item.type?item.type:'未分类'}}
-            <div class="dot dot3"></div>
-            {{item.sorce?item.sorce:"未知来源"}}
+            <!-- <div class="dot dot3"></div>
+            {{item.sorce?item.sorce:"未知来源"}}-->
           </v-card-subtitle>
           <v-list color="transparent" three-line class="py-0">
             <v-list-item>

@@ -2,7 +2,7 @@
   <div @click="$emit('changebadge')" class="divline align-center">
     <v-badge overlap bordered :content="item.content" :value="item.badge" :color="item.color">
       <div class="dividline">
-        <v-icon>{{item.icon}}</v-icon>
+        <v-icon @click="$emit('shuffle',item.type)">{{item.icon}}</v-icon>
         {{item.title}}
       </div>
     </v-badge>

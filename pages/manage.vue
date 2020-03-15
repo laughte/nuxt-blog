@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="mx-auto overflow-hidden" color="rgba(255,255,255,.6)">
+  <v-card min-height="1080px" flat class="mx-auto overflow-hidden" color="rgba(255,255,255,0)">
     <v-app-bar flat dark color="rgba(255,255,255,0)">
       <v-app-bar-nav-icon @click="changedrawer"></v-app-bar-nav-icon>
 

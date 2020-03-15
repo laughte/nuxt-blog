@@ -1,5 +1,5 @@
 export const state = () => ({
-  user: { userName: "" },
+  user: {},
   content: {
     avatars: [],
     article: [],
@@ -20,11 +20,18 @@ export const state = () => ({
 
 export const mutations = {
   setdata(state, json) {
-    state.content[json.type] = json.data.reverse()
+    state.content[json.type] = json.data
     // console.log(state.content[json.type])
   },
   pushdata(state, json) {
     state.content[json.type].unshift(json.data)
+  },
+
+  remove(state, n) {
+    state.content.article.splice(n, 1)
+  },
+  shuffle(state) {
+    state.content.article = _.shuffle(state.content.article)
   },
 
   // 
@@ -46,33 +53,19 @@ export const mutations = {
     state.content.article.forEach(e => {
       if (e._id === json.data._id) {
         if (e[json.type] instanceof Array) {
-          let n = e[json.type].indexOf(state.user.userName)
+          let n = e[json.type].indexOf(state.user.name)
           if (n > -1) {
             e[json.type].splice(n, 1)
-            if (json.type === "collect") {
-              this.$axios.post('/api/delArray', { id: e._id, collect: state.user.userName })
-                .then(res => {
-                  console.log(res)
-                })
-            } else if (json.type === "like") {
-              this.$axios.post('/api/delArray', { id: e._id, like: state.user.userName })
-                .then(res => {
-                  console.log(res)
-                })
-            }
+            this.$axios.post('/api/delArray', { id: e._id, [json.type]: state.user.name })
+              .then(res => {
+                console.log(res)
+              })
           } else {
-            e[json.type].push(state.user.userName)
-            if (json.type === "collect") {
-              this.$axios.post('/api/addArray', { id: e._id, collect: state.user.userName })
-                .then(res => {
-                  console.log(res)
-                })
-            } else if (json.type === "like") {
-              this.$axios.post('/api/addArray', { id: e._id, like: state.user.userName })
-                .then(res => {
-                  console.log(res)
-                })
-            }
+            e[json.type].push(state.user.name)
+            this.$axios.post('/api/addArray', { id: e._id, [json.type]: state.user.name })
+              .then(res => {
+                console.log(res)
+              })
           }
         } else if (json.type === 'see') {
           e[json.type]++
@@ -97,7 +90,7 @@ export const mutations = {
 export const actions = {
   async getdata({ commit }, json) {
     let res = await this.$axios.get(json.api)
-    if(json.type === 'article'){
+    if (json.type === 'article') {
       commit('setdata', { type: 'article2', data: res })
     }
 

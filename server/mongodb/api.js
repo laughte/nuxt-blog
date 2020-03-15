@@ -173,11 +173,11 @@ router //bolgcontent
     // 判断用户是否登录，Passport内置的
     if (ctx.isAuthenticated()) {
       const {
-        userName,
+        name,
         email
       } = ctx.session.passport.user
       ctx.body = {
-        userName,
+        name,
         email
       }
     } else {
@@ -192,13 +192,13 @@ router //bolgcontent
 
   .post('/signup', async (ctx) => {
 
-    let userName = ctx.request.body.username
-    let Email = ctx.request.body.email
+    let name = ctx.request.body.name
+    let email = ctx.request.body.email
     let user = await DB.find('users', {
-      username: userName
+      name
     })
     let uemail = await DB.find('users', {
-      email: Email
+      email
     })
     // console.log(user)
     if (user.length === 0 && uemail.length === 0) {
@@ -210,7 +210,7 @@ router //bolgcontent
           ctx.body = {
             status: 200,
             data: {
-              "userName": res.ops[0].username,
+              "name": res.ops[0].name,
               "id": res.ops[0]._id,
               "email": res.ops[0].email,
               "imgsrc": res.ops[0].imgsrc,
@@ -248,7 +248,7 @@ router //bolgcontent
       ctx.body = {
         status: 200,
         data: {
-          "userName": res[0].username,
+          "name": res[0].name,
           "id": res[0]._id,
           "email": res[0].email,
           "imgsrc": res[0].imgsrc,

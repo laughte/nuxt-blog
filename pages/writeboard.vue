@@ -1,6 +1,6 @@
 <template>
-  <v-card flat>
-    <v-rol>
+  <v-card flat color="rgba(255,255,255,.6)">
+    <v-rol class>
       <editor
         autofocus
         holder-id="codex-editor"
@@ -17,7 +17,7 @@
       <v-text-field color="textcolor" v-model="type" label="填写类别"></v-text-field>
       <v-spacer />
       <v-spacer />
-      <v-btn id="save-button" :disabled="$store.state.user.userName ? false:true" @click="save">保存</v-btn>
+      <v-btn id="save-button" :disabled="$store.state.user.name ? false:true" @click="save">保存</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -49,8 +49,8 @@ export default {
     onSave(response) {
       //   console.log(JSON.stringify(response))
       response.type = this.type
-      response.author = this.$store.state.user.userName
-      response.avatar = this.$store.state.user.imgsrc
+      response.author = this.$store.state.user.name
+      response.avatar = this.$store.state.user.avatar
       response.like = []
       response.collect = []
       response.reply = []

@@ -1,7 +1,11 @@
 <template>
   <!-- <div class="idstyle" > -->
 
-  <v-card flat light color="rgba(255,255,255,0.6)">
+  <v-card flat :dark="switch2" color="rgba(255,255,255,0.6)">
+    <v-toolbar color="transparent" flat>
+      <v-switch v-model="switch2" :label="switch2?'白':'黑'"></v-switch>
+      <!-- <v-switch v-model="switch" class="ma-2" label="Disabled"></v-switch> -->
+    </v-toolbar>
     <v-col>
       <editor
         :autofocus="true"
@@ -27,6 +31,7 @@ export default {
   components: { msgBoard, action },
   data() {
     return {
+      switch2: true,
       initData: this.$store.state.content.article.find(e => {
         return e._id === this.$route.params.id
       }),

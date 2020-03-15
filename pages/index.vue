@@ -3,64 +3,130 @@
     <v-row justify="center">
       <v-col sm="12" md="12" lg="9" xl="7">
         <v-row justify="space-between">
-          <!-- <v-col class="d-none d-sm-flex pa-0" class="d-flex d-sm-none pa-0">
+          <!-- <v-col class="d-flex d-sm-none pa-0">
             <carousel :items="pictures" :height="'350px'"></carousel>
           </v-col>-->
           <v-col class="12">
-            <!-- <carousel :items="pictures" :height="'300px'"></carousel> -->
-            <notice
-              :item="{icon:'mdi-heart',notice:'通知',msg:'my love xiaofei love you forever,my love xiaofei love you forever,my love xiaofei !!!'}"
-            ></notice>
+            <carousel :items="pictures.list" :height="'300px'"></carousel>
+
+            <notice-words @random="random" :items="dailyWord"></notice-words>
           </v-col>
+
           <v-col class="py-0" cols="12">
-            <dividline @changebadge="changebadge(item)" :item="item"></dividline>
+            <v-tabs
+              v-model="tab"
+              background-color="cyan"
+              dark
+              next-icon="mdi-arrow-right"
+              prev-icon="mdi-arrow-left"
+              show-arrows
+            >
+              <v-tabs-slider color="yellow"></v-tabs-slider>
+              <v-tab
+                @click="getdatas({ type: 'news', api: `news/list?typeId=${i.typeId}&page=1` })"
+                v-for="i in newsTypes"
+                :key="i.typeId"
+              >{{ i.typeName }}</v-tab>
+            </v-tabs>
+            <v-tabs-items style="background:rgba(0,1,1,0)" v-model="tab">
+              <v-tab-item color="transparent" v-for="item in newsTypes" :key="item.typeId">
+                <nuxt-child keep-alive></nuxt-child>
+                <transition-group name="list-complete" tag="v-row">
+                  <v-col
+                    class="list-complete-item py-0"
+                    :key="item.newsId"
+                    v-for="item in news"
+                    lg="3"
+                    xl="3"
+                    md="3"
+                    sm="4"
+                    xs="6"
+                  >
+                    <v-row justify="center">
+                      <v-col lg="12" xl="12" md="12" sm="12">
+                        <h-cardnews :item="item" />
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                </transition-group>
+
+                <!-- <v-card-text>{{ item.typeName }}</v-card-text> -->
+              </v-tab-item>
+            </v-tabs-items>
           </v-col>
-          <v-col
-            class="py-0"
-            :key="index"
-            v-for="(item,index) in $store.state.content.article2.slice(0,4)"
-            lg="3"
-            xl="3"
-            md="3"
-            sm="4"
-            xs="6"
-          >
-            <v-row justify="center">
-              <v-col lg="12" xl="12" md="12" sm="12">
-                <h-card :item="item"></h-card>
+
+          <v-col class="py-0" cols="12">
+            <dividline @shuffle="shuffle" @changebadge="changebadge(item)" :item="item"></dividline>
+            <!-- <button @click="shuffle">随机</button> -->
+          </v-col>
+          <v-col>
+            <transition-group name="list-complete" tag="v-row">
+              <v-col
+                class="list-complete-item py-0"
+                :key="item.time"
+                v-for="item in $store.state.content.article.slice((page-1)*sliceN,page*sliceN)"
+                lg="3"
+                xl="3"
+                md="3"
+                sm="4"
+                xs="6"
+              >
+                <v-row justify="center">
+                  <v-col lg="12" xl="12" md="12" sm="12">
+                    <h-card :item="item"></h-card>
+                  </v-col>
+                </v-row>
               </v-col>
-            </v-row>
+            </transition-group>
           </v-col>
-          <v-col class="py-0" cols="12">
-            <dividline @changebadge="changebadge(item2)" :item="item2"></dividline>
-          </v-col>
-          <v-col
-            xl="6"
-            lg="6"
-            md="6"
-            sm="6"
-            v-for="(item) in $store.state.content.article2.slice((page-1)*sliceN,sliceN*page)"
-            :key="item._id"
-          >
-            <!-- <v-row justify="center">
-            <v-col class="py-0">-->
-            <w-card :item="item"></w-card>
-            <!-- </v-col>
-            </v-row>-->
-          </v-col>
+
           <v-col
             cols="12"
             class="text-center"
-            v-if="Math.ceil($store.state.content.article2.length/sliceN)>1"
+            v-if="Math.ceil($store.state.content.article.length/sliceN)>1"
           >
             <v-pagination
               circle
               v-model="page"
-              :length="Math.ceil($store.state.content.article2.length/sliceN)"
+              :length="Math.ceil($store.state.content.article.length/sliceN)"
               prev-icon="mdi-menu-left"
               next-icon="mdi-menu-right"
             ></v-pagination>
           </v-col>
+
+          <v-col class="py-0" cols="12">
+            <dividline @shuffle="localshuffle" @changebadge="changebadge(item2)" :item="item2"></dividline>
+            <!-- <button @click="localshuffle('jokes')">随机</button> -->
+          </v-col>
+          <v-col>
+            <transition-group name="list-complete" tag="v-row">
+              <v-col
+                xl="6"
+                lg="6"
+                md="6"
+                sm="6"
+                cols="12"
+                class="list-complete-item"
+                v-for="(item) in jokes.list"
+                :key="item.content"
+              >
+                <w-card-jokes :item="item"></w-card-jokes>
+              </v-col>
+            </transition-group>
+          </v-col>
+          <!-- <v-col
+            cols="12"
+            class="text-center"
+            v-if="Math.ceil($store.state.content.article.length/sliceN)>1"
+          >
+            <v-pagination
+              circle
+              v-model="page"
+              :length="Math.ceil($store.state.content.article.length/sliceN)"
+              prev-icon="mdi-menu-left"
+              next-icon="mdi-menu-right"
+            ></v-pagination>
+          </v-col>-->
         </v-row>
       </v-col>
     </v-row>
@@ -69,32 +135,46 @@
 
 <script>
 import carousel from '../components/carousel.vue'
-import notice from '../components/notice.vue'
+import noticeWords from '../components/noticeWords.vue'
 import dividline from '../components/Dividingline.vue'
 import hCard from '../components/hCard.vue'
-import wCard from '../components/wCard.vue'
+import hCardnews from '../components/hCard_news.vue'
+import wCardJokes from '../components/wCardJokes.vue'
 
 export default {
-  components: { hCard, wCard, dividline, notice, carousel },
+  components: {
+    hCard,
+    hCardnews,
+    wCardJokes,
+    dividline,
+    noticeWords,
+    carousel
+  },
   asyncData() {},
   data() {
     return {
+      tab: null,
       page: 1,
-      sliceN: 6,
+      sliceN: 8,
       item: {
         icon: 'mdi-book',
         title: '精品文章',
+        type: 'article',
         content: 'new',
         badge: true,
         color: 'red'
       },
       item2: {
         icon: 'mdi-book',
-        title: '好友动态',
-        content: this.$store.state.content.article.length,
-        badge: true,
-        color: 'red'
-      }
+        title: '笑话',
+        type: 'jokes'
+      },
+
+      pictures: [],
+      newsTypes: [],
+      news: [],
+      dailyWord: [],
+      jokes: []
     }
   },
   methods: {
@@ -103,7 +183,56 @@ export default {
     },
     changebadge(item) {
       item.badge = false
+    },
+    shuffle: function() {
+      console.log('hello')
+      this.$store.commit('shuffle')
+    },
+    random() {
+      this.dailyWord = _.shuffle(this.dailyWord)
+    },
+    localshuffle(type) {
+      this[type].list = _.shuffle(this[type].list)
+    },
+    // switchType(item){
+    //   this.$router.push(`/${item.typeName}`,pagramer:item.typeId)
+    // },
+    getdatas(json) {
+      this.$axios
+        .get(`https://www.mxnzp.com/api/${json.api}`, {
+          app_id: 'tguwfpqsppmjnoli',
+          app_secret: 'cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09'
+        })
+        .then(res => {
+          console.log(res)
+          this[json.type] = res.data
+        })
     }
+  },
+  created() {
+    this.getdatas({ type: 'pictures', api: 'image/girl/list?page=1' })
+    this.getdatas({ type: 'newsTypes', api: 'news/types' })
+    this.getdatas({ type: 'news', api: `news/list?typeId=509&page=1` })
+    this.getdatas({ type: 'dailyWord', api: `daily_word/recommend?count=12` })
+    this.getdatas({ type: 'jokes', api: `jokes/list?page=2` })
   }
 }
 </script>
+<style>
+.noticewords {
+  /* position: absolute; */
+  transition: all 1.6s;
+}
+.list-complete-item {
+  /* max-width: 625px; */
+  transition: all 1.6s;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(10px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
+</style>

@@ -26,8 +26,8 @@
         {{item.author?item.author:'未知作者'}}
         <div class="dot"></div>
         {{item.type?item.type:'未分类'}}
-        <div class="dot"></div>
-        {{item.sorce?item.sorce:"未知来源"}}
+        <!-- <div class="dot"></div>
+        {{item.sorce?item.sorce:"未知来源"}}-->
       </v-card-subtitle>
 
       <v-card-text class="text--primary pb-0">

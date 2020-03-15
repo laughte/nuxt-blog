@@ -2,7 +2,7 @@
   <div class="noticebox">
     <div class="noticecontent">
       <div class="msgbox">
-        <v-icon color="white">{{item.icon}}</v-icon>重要通知
+        <v-icon color="white">mdi-heart</v-icon>重要通知
       </div>
       <span class="d-inline-block text-truncate pl-2">{{item.msg}}</span>
     </div>

@@ -1,6 +1,6 @@
 <template>
-  <v-card color="transparent" flat justify-center >
-    <div class="box" :class="falg?'forstyel':'nomore'" >
+  <v-card color="transparent" flat justify-center>
+    <div class="box" :class="falg?'forstyel':'nomore'">
       <v-avatar
         :size="size"
         hover
@@ -9,18 +9,13 @@
         @click="imgsrcicon(e)"
         v-for="(e,i) in items"
       >
-        <img ref = "box" alt="Avatar" @click="borderfunc(i)"  :src="e.url?e.url:e" />
+        <img ref="box" alt="Avatar" @click="borderfunc(i)" :src="e.url?e.url:e" />
       </v-avatar>
     </div>
-    <v-card-actions>
-     
-
+    <v-card-actions class="py-0">
       <v-spacer></v-spacer>
 
-      <v-btn
-        icon
-        @click="falg = !falg"
-      >
+      <v-btn icon @click="falg = !falg">
         <v-icon>{{ falg ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
       </v-btn>
     </v-card-actions>
@@ -36,7 +31,7 @@
     </v-expand-transition>
     <!-- <v-btn @click="falg = !falg" icon>
       <v-icon>{{ falg ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-    </v-btn> -->
+    </v-btn>-->
   </v-card>
 </template>
 
@@ -46,28 +41,25 @@ export default {
   props: { items: Array, size: String },
   data: () => ({
     falg: false,
-    imgflag:false,
-    staty:Number,
-
+    imgflag: false,
+    staty: Number
   }),
   methods: {
     imgsrcicon(e) {
       this.$emit('imgclick', e)
     },
-    borderfunc(i){
-      console.log(this.$refs.box[i])
+    borderfunc(i) {
+      // console.log(this.$refs.box[i])
       // this.$refs.box.[i]
 
       this.staty = i
-
     }
-   
   }
 }
 </script>
 
 <style>
-.imgactived{
+.imgactived {
   border: 3px rgba(0, 174, 255, 0.5) solid;
 }
 .box {
@@ -75,7 +67,7 @@ export default {
   /* transition: all 3.3s; */
 }
 .nomore {
-  height: 150px;
+  height: 50px;
   overflow: hidden;
 }
 .forstyel {

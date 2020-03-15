@@ -15,26 +15,26 @@
         <v-list-item three-line>
           <v-list-item-avatar size="65">
             <img
-              :src="$store.state.user.imgsrc?$store.state.user.imgsrc:'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
+              :src="$store.state.user.avatar||'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
             />
           </v-list-item-avatar>
 
           <v-list-item-content>
             <v-list-item-title
-              v-if="$store.state.user.userName"
+              v-if="$store.state.user.name"
               class="subtitle-1"
-            >{{$store.state.user.userName}}</v-list-item-title>
+            >{{$store.state.user.name}}</v-list-item-title>
 
             <v-list-item-title v-else class="subtitle-1">
               <v-btn class="mr-4" to="/login" text>login</v-btn>
             </v-list-item-title>
-            <v-list-item-subtitle>{{$store.state.user.signature?$store.state.user.signature:'自在飞花轻似梦,无边丝雨细如愁'}}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{$store.state.user.signature||'自在飞花轻似梦,无边丝雨细如愁'}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <!-- 
         <v-list-item link>
           <v-list-item-content>
-            <v-list-item-title>{{$store.state.user.userName}}</v-list-item-title>
+            <v-list-item-title>{{$store.state.user.name}}</v-list-item-title>
             <v-list-item-subtitle>{{$store.state.user.signature}}</v-list-item-subtitle>
           </v-list-item-content>
 
@@ -91,20 +91,30 @@
           <b>{{item.title}}</b>
         </v-btn>
       </div>
-      <v-text-field v-model="searchdata" @change="search"  solo-inverted flat clearable dense rounded hide-details label="seach"></v-text-field>
+      <v-text-field
+        v-model="searchdata"
+        @change="search"
+        solo-inverted
+        flat
+        clearable
+        dense
+        rounded
+        hide-details
+        label="seach"
+      ></v-text-field>
 
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-menu v-if="$store.state.user.userName" :close-on-click="true" :offset-y="true">
+      <v-menu v-if="$store.state.user.name" :close-on-click="true" :offset-y="true">
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
             depressed
             class="ml-4textcolor--text"
             color="transparent"
-            v-text="$store.state.user.userName"
+            v-text="$store.state.user.name"
           ></v-btn>
         </template>
         <v-list>
@@ -120,7 +130,10 @@
       </div>
       <!-- <div>{{$store.state.user.age}}</div> -->
       <v-avatar size="40px">
-        <img v-if="$store.state.user.imgsrc" :src=" $store.state.user.imgsrc" alt="avatar" />
+        <img
+          :src=" $store.state.user.avatar||'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
+          alt="avatar"
+        />
       </v-avatar>
 
       <v-spacer />
@@ -128,7 +141,9 @@
     <v-content :style="{backgroundImage:backgroundimg}">
       <v-container class="pa-0" fluid>
         <!-- <star class="star" /> -->
-        <nuxt keep-alive />
+        <transition appear>
+          <nuxt keep-alive />
+        </transition>
       </v-container>
     </v-content>
     <blogfoot :item="{author:'Laughter',time:'2020',version:'V4.0'}" />
@@ -138,7 +153,7 @@
 <script>
 import blogfoot from '~/components/blogfoot.vue'
 import star from '~/components/star-demo.vue'
-import { mapActions ,mapMutations} from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   components: { blogfoot },
   props: {
@@ -146,9 +161,10 @@ export default {
   },
   data() {
     return {
-      searchdata:'',
+      searchdata: '',
       backgroundimg: '',
       drawer: false,
+
       menus: [
         { title: '首页', href: '/', icon: 'mdi-home' },
         { title: '写文章', href: '/writeboard', icon: 'mdi-pencil' },
@@ -191,7 +207,7 @@ export default {
     managepath() {
       this.$router.push('/manage')
     },
-    search(){
+    search() {
       this.searchdata
     }
   },
@@ -200,7 +216,6 @@ export default {
     if (user) {
       this.userlogin(JSON.parse(user))
     }
-  
   },
   created() {
     this.$vuetify.theme.light = true
