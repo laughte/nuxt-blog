@@ -1,6 +1,6 @@
 <template>
   <v-card flat color="rgba(255,255,255,.6)">
-    <v-rol class>
+    <v-container>
       <editor
         autofocus
         holder-id="codex-editor"
@@ -12,7 +12,7 @@
         @change="onChange"
         ref="editor"
       />
-    </v-rol>
+    </v-container>
     <v-card-actions>
       <v-text-field color="textcolor" v-model="type" label="填写类别"></v-text-field>
       <v-spacer />

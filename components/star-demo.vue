@@ -34,6 +34,7 @@ export default {
 </script>
 <style>
 .theme--light.v-application {
+  /* animation: rotate 90s infinite linear; */
   background: radial-gradient(
     200% 100% at bottom center,
     #f7f7b6,
