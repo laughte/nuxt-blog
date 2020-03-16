@@ -1,6 +1,6 @@
 
 <template>
-  <v-row align="center" justify="center">
+  <v-row class="rowstyle" align="center" justify="center">
     <v-col cols="12" sm="8" md="4">
       <v-card color="rgba(255,255,255,0.4)" class="elevation-12" dark>
         <v-toolbar color="rgba(255,255,255,0)" dark flat>
@@ -225,3 +225,9 @@ export default {
   }
 }
 </script>
+<style>
+.rowstyle {
+  height: 91vh;
+  background: rgba(255, 255, 255, 0.6);
+}
+</style>

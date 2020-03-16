@@ -136,12 +136,13 @@
 import carousel from '../components/carousel.vue'
 import noticeWords from '../components/noticeWords.vue'
 import dividline from '../components/Dividingline.vue'
-// import hCard from '../components/hCard.vue'
+import hCard from '../components/hCard.vue'
 import hCardnews from '../components/hCard_news.vue'
 import wCardJokes from '../components/wCardJokes.vue'
 
 export default {
   components: {
+    hCard,
     hCardnews,
     wCardJokes,
     dividline,

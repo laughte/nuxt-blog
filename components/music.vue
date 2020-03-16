@@ -12,18 +12,36 @@
     </audio>
 
     <div @mouseenter="mucmouseenterfunc" @mouseleave="mucmouseleavefunc">
-      <v-btn :class="mucflag?'abstyle':'restyle'" icon class="playButton" @click="lastMusic()">
+      <v-btn
+        style="background: white"
+        :class="mucflag?'abstyle':'restyle'"
+        icon
+        class="playButton"
+        @click="lastMusic()"
+      >
         <v-icon large color="red">mdi-skip-previous-circle</v-icon>
       </v-btn>
 
-      <v-btn :class="mucflag?'abstyle':'restyle'" icon class="playButton" @click="startPlayOrPause">
+      <v-btn
+        style="background: white"
+        :class="mucflag?'abstyle':'restyle'"
+        icon
+        class="playButton"
+        @click="startPlayOrPause"
+      >
         <v-icon
           large
           color="red"
         >{{$store.state.music.playing?"mdi-pause-circle":"mdi-arrow-right-drop-circle"}}</v-icon>
       </v-btn>
 
-      <v-btn :class="mucflag?'abstyle':'restyle'" icon class="playButton" @click="nextMusic()">
+      <v-btn
+        style="background: white"
+        :class="mucflag?'abstyle':'restyle'"
+        icon
+        class="playButton"
+        @click="nextMusic()"
+      >
         <v-icon large color="red">mdi-skip-next-circle</v-icon>
       </v-btn>
 
@@ -58,7 +76,7 @@ export default {
     mucmouseleavefunc() {
       this.timeout = setTimeout(() => {
         this.mucflag = false
-      }, 2000)
+      }, 1500)
     },
     mucmouseenterfunc() {
       clearTimeout(this.timeout)

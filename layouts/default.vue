@@ -152,7 +152,7 @@
 
       <v-spacer />
     </v-app-bar>
-
+    <!-- @mouseleave="drawerleavefunc" @mouseenter="drawerenterfunc" -->
     <v-navigation-drawer
       hide-overlay
       disable-route-watcher
@@ -220,6 +220,7 @@ export default {
       backgroundimg: '',
       drawer: false,
       rightDrawer: false,
+      timeout: false,
 
       menus: [
         { title: '首页', href: '/', icon: 'mdi-home' },
@@ -277,6 +278,17 @@ export default {
     },
     rightDraFunc() {
       this.rightDrawer = !this.rightDrawer
+    },
+    drawerleavefunc() {
+      console.log('iam here')
+      this.timeout = setTimeout(() => {
+        this.rightDrawer = false
+      }, 2000)
+    },
+    drawerenterfunc() {
+      console.log('you here')
+      clearTimeout(this.timeout)
+      this.rightDrawer = true
     }
   },
   mounted() {

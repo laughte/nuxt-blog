@@ -34,11 +34,14 @@
         <v-list color="transparent" three-line class="pa-0">
           <v-list-item class="pa-0">
             <v-list-item-content class="pa-0">
-              <v-list-item-title class="title font-weight-black">{{item.blocks[0].data.text}}</v-list-item-title>
+              <v-list-item-title
+                v-if="item.blocks"
+                class="title font-weight-black"
+              >{{item.blocks[0].data.text}}</v-list-item-title>
 
               <v-list-item-subtitle
                 class="font-weight-medium"
-                v-if="item.blocks[1]"
+                v-if="item.blocks&&item.blocks[1]"
                 v-text="item.blocks[1].data.text"
               ></v-list-item-subtitle>
               <!-- <v-list-item-subtitle
@@ -51,22 +54,6 @@
         </v-list>
       </v-card-text>
       <action :item="item" :flag="false" :disabled="false" />
-      <!-- <v-card-actions class="py-0 px-0"> -->
-
-      <!-- <v-btn class="ma-0 pa-0" disabled text>
-        <v-icon small>mdi-clock-outline</v-icon>
-        {{new Date(item.time).toLocaleDateString()}}
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn class="ma-0 pa-0" disabled text>
-        <v-icon small>mdi-eye</v-icon>
-        {{item.see}}
-      </v-btn>
-      <v-btn class="ma-0 pa-0" disabled text>
-        <v-icon small>mdi-chat-processing</v-icon>
-        {{item.reply.length}}
-      </v-btn>-->
-      <!-- </v-card-actions> -->
     </v-card>
   </v-hover>
 </template>
@@ -79,7 +66,7 @@ import action from '~/components/actions.vue'
 import { mapMutations } from 'vuex'
 export default {
   name: 'hCard',
-  props: { item: Object },
+  props: { item: {} },
   components: { action },
   methods: {
     ...mapMutations(['articleEdit']),
@@ -87,6 +74,9 @@ export default {
       this.$router.push(`/${this.item._id}`)
       this.articleEdit({ data: this.item, type: 'see' })
     }
+  },
+  mounted() {
+    console.log(this.item)
   }
 }
 </script>

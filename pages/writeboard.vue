@@ -1,5 +1,5 @@
 <template>
-  <v-card flat color="rgba(255,255,255,.6)" height="91vh">
+  <v-card flat color="rgba(255,255,255,.6)" min-height="91vh">
     <v-container>
       <editor
         autofocus
@@ -65,7 +65,7 @@ export default {
           // console.log(res)
           this.$store.commit('pushdata', { type: 'article', data: res.ops[0] })
           this.$router.push('/')
-          console.log(res.ops[0])
+          // console.log(res.ops[0])
         })
         .catch(err => {
           console.log(err)
