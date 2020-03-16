@@ -145,7 +145,7 @@ export default {
         age: '',
         tel: '',
         signature: '',
-        creationdate: new Date(),
+        createdate: new Date(),
         delflag: false,
         avatar: ''
       },

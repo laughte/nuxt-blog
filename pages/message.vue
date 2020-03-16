@@ -1,59 +1,157 @@
 <template>
-  <v-card flat class="mx-auto" color="rgba(255,255,255,.6)">
-    <v-app-bar flat dark color="rgba(255,255,255,0)">
-      <v-app-bar-nav-icon @click="changedrawer"></v-app-bar-nav-icon>
+  <v-row justify="center">
+    <v-col cols="12">
+      <v-btn v-on:click="shuffle">
+        <v-icon>mdi-dice-5-outline</v-icon>随机排列
+      </v-btn>
+      <v-btn @click="flag=!flag">
+        <v-icon>{{flag?'mdi-arrow-left':'mdi-pencil'}}</v-icon>
+        {{flag?'返回':'写点什么吧!'}}
+      </v-btn>
+    </v-col>
 
-      <v-toolbar-title>消息中心</v-toolbar-title>
-      <v-spacer></v-spacer>
+    <transition-group class="justifycenter" name="list-complete">
+      <inputbox :key="true" v-show="flag" class="list-complete-item mb-2" @setdata="setdata" />
 
-      <!-- <v-text-field solo-inverted flat clearable dense rounded hide-details label="seach"></v-text-field>
+      <twittercard
+        v-for="(item,index) in $store.state.content.letters.slice((page-1)*sliceN,page*sliceN)"
+        :key="item._id"
+        class="list-complete-item ma-1 align-self-auto"
+        :n="index + sliceN * (page - 1)"
+        :item="item"
+      />
+    </transition-group>
 
-      <v-btn @click="magflag=!magflag" icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>-->
-    </v-app-bar>
-    <navigationdraw ref="draw" :items="navigations" :sflag="true" />
-
-    <nuxt-child keep-alive />
-  </v-card>
+    <v-col
+      cols="12"
+      class="text-center"
+      v-if="Math.ceil($store.state.content.letters.length/sliceN)>1"
+    >
+      <v-pagination
+        light
+        circle
+        v-model="page"
+        :length="Math.ceil($store.state.content.letters.length/sliceN)"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+      ></v-pagination>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import navigationdraw from '~/components/navigationdraw.vue'
+import inputbox from '~/components/inputbox'
+import twittercard from '~/components/twittercard'
 export default {
-  name: 'message',
-  components: {
-    navigationdraw
-  },
+  name: 'index',
+  components: { twittercard, inputbox },
   data: () => ({
-    drawflag: false,
-    magflag: false,
-    navigations: [
-      { title: '我的消息', icon: 'mdi-message', path: '/message/' },
-      { title: '系统通知', icon: 'mdi-view-dashboard', path: '/message/sysmsg' }
-    ],
-    items: [
-      {
-        color: '#1F7087',
-        src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-        title: 'Supermodel',
-        artist: 'Foster the People'
-      },
-      {
-        color: '#952175',
-        src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-        title: 'Halcyon Days',
-        artist: 'Ellie Goulding'
-      }
-    ]
+    flag: false,
+    page: 1,
+    sliceN: 12
   }),
   methods: {
-    changedrawer() {
-      this.$refs.draw.changedrawer()
+    setdata(data) {
+      console.log(data)
+      this.blogs.unshift(data)
+    },
+
+    add: function() {
+      this.computedItems.lenght.splice(this.randomIndex(), 0, this.nextNum++)
+    },
+    remove(n) {
+      this.$store.commit('remove', n + 12 * (page - 1))
+    },
+
+    shuffle: function() {
+      this.$store.commit('shuffle', 'letters')
+    },
+
+    beforeEnter: function(el) {
+      el.style.opacity = 0
+      el.style.transformOrigin = 'left'
+    },
+    enter: function(el, done) {
+      Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
+      Velocity(el, { fontSize: '1em' }, { complete: done })
+    },
+    leave: function(el, done) {
+      Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+      Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+      Velocity(
+        el,
+        {
+          rotateZ: '45deg',
+          translateY: '30px',
+          translateX: '30px',
+          opacity: 0
+        },
+        { complete: done }
+      )
     }
   }
 }
 </script>
 
 <style scoped>
+.justifycenter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+/* list-complete-item */
+.list-complete-item {
+  max-width: 625px;
+  transition: all 1.6s;
+  display: inline-block;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(10px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
+
+.groupstyle {
+  position: relative;
+}
+.left-enter,
+.left-leave-to {
+  opacity: 0;
+  transform: translateX(90px);
+}
+
+.left-enter-active,
+.left-leave-active {
+  transition: all 0.6s;
+}
+
+/* .left-leave-active {
+  position: absolute;
+} */
+
+/* .v-enter,
+.v-leave-to {
+  opacity: 0;
+  transform: translateX(90px);
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+} */
+
+/* .v-enter,
+.v-leave-active {
+  position: absolute;
+} */
+
+/* .animatess {
+  display: inline-block;
+  transition: all 1s;
+} */
+.alsdjflajs {
+  min-height: 90vh;
+}
 </style>

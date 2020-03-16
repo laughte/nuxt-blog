@@ -37,6 +37,96 @@ router //bolgcontent
     }
   })
 
+
+  .get('/letters', async ctx => {
+    // let pageSize = 10
+    // let page = ctx.request.query.pa ge ? parseInt(ctx.request.query.page) : 1
+    // let skip = (page - 1) * pageSize
+    let json = {}
+    // console.log(ctx.request.body)
+    if (ctx.request.body._id) {
+      json = {
+        _id: DB.setObjectId(ctx.request.body._id)
+      }
+    } else {
+      json = ctx.request.body
+    }
+    let res = await DB.find('letters', json);
+    // console.log(ctx.request.body)
+    ctx.body = res
+  })
+
+  .post('/insertletters', async ctx => {
+
+    let res = await DB.insert('letters', ctx.request.body);
+    try {
+      if (res.result.ok) {
+        ctx.body = res
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+  .post('/addArrayletters', async ctx => {
+    let e = ctx.request.body
+    let id = e.id
+    delete (e.id)
+    let res = await DB.updateArray('letters', { _id: DB.setObjectId(id) }, e);
+    try {
+      if (res.result.ok) {
+        ctx.body = "更新成功"
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+
+  .post('/delArrayletters', async ctx => {
+    let e = ctx.request.body
+    let id = e.id
+    delete (e.id)
+    let res = await DB.deleteArray('letters', { _id: DB.setObjectId(id) }, e);
+    try {
+      if (res.result.ok) {
+        ctx.body = "更新成功"
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
+
+  .post('/updateIntletters', async ctx => {
+    let e = ctx.request.body
+    let id = e.id
+    delete (e.id)
+    console.log(e)
+    let res = await DB.updateInt('letters', { _id: DB.setObjectId(id) }, e);
+    ctx.body = {
+      status: 200,
+      msg: 'ok',
+      data: res
+    }
+
+  })
+  //删除blog
+  .post("/deleteletters", async ctx => {
+    let id = ctx.request.body._id;
+    // let artid = ctx.request.body.articleId
+    // let msgres = await DB.delete('msgboard', {
+    //   articleId: artid
+    // })
+
+    let res = await DB.update('letters', {
+      _id: DB.setObjectId(id)
+    }, {
+      delete: true
+    })
+    if (res.result.ok) { // && msgres.result.ok
+      ctx.body = "删除成功"
+    }
+  })
+
+
   // 上传头像图片
   .post("/uploadavatar", async ctx => {
     let res = await DB.insert('avatar', ctx.request.body);
@@ -213,10 +303,10 @@ router //bolgcontent
               "name": res.ops[0].name,
               "id": res.ops[0]._id,
               "email": res.ops[0].email,
-              "imgsrc": res.ops[0].imgsrc,
+              "avatar": res.ops[0].avatar,
               "delFlag": res.ops[0].delflag,
               "tel": res.ops[0].tel,
-              "time": res.ops[0].creationdate,
+              "time": res.ops[0].createdate,
               "gender": res.ops[0].gender,
               "age": res.ops[0].age,
               "signature": res.ops[0].signature,
@@ -251,10 +341,10 @@ router //bolgcontent
           "name": res[0].name,
           "id": res[0]._id,
           "email": res[0].email,
-          "imgsrc": res[0].imgsrc,
+          "avatar": res[0].avatar,
           "delflag": res[0].delflag,
           "tel": res[0].tel,
-          "time": res[0].creationdate,
+          "time": res[0].createdate,
           "gender": res[0].gender,
           "age": res[0].age,
           "signature": res[0].signature,

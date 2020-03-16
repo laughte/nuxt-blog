@@ -51,31 +51,21 @@
       </v-card-text>
       <v-card-actions class="justify-space-around" style="opacity:0.7">
         <v-btn @click="addlike" icon>
-          <v-badge
-            offset-x
-            :value="item.like.length"
-            :content="item.like.length?item.like.length:'0'"
-          >
+          <v-badge offset-x :value="item.like.length?true:false" :content="item.like.length">
             <v-icon class="mr-1">mdi-thumb-up</v-icon>赞
           </v-badge>
         </v-btn>
 
         <v-btn @click="addunlike" icon>
-          <!-- <v-badge
-            :value="item.unlike&&item.unlike.length"
-            :content="item.unlike.length?item.unlike.length:'0'"
-          >-->
-          <v-icon class="mr-1">mdi-thumb-down</v-icon>踩
-          <!-- </v-badge> -->
+          <v-badge :value="item.unlike.length?true:false" :content="item.unlike.length">
+            <v-icon class="mr-1">mdi-thumb-down</v-icon>踩
+          </v-badge>
         </v-btn>
 
         <v-btn @click="showmsg" icon>
-          <!-- <v-badge
-            :value="item.reply&&item.reply.length"
-            :content="item.reply.length?item.reply.length:'0'"
-          >-->
-          <v-icon class="mr-1">mdi-message</v-icon>评论
-          <!-- </v-badge> -->
+          <v-badge :value="item.reply.length?true:false" :content="item.reply.length">
+            <v-icon class="mr-1">mdi-message</v-icon>评论
+          </v-badge>
         </v-btn>
 
         <!-- <v-btn icon>
@@ -86,7 +76,7 @@
           {{tflag?'收起':'更多'}}
         </button>
       </v-card-actions>
-      <v-list color="transparent" three-line>
+      <!-- <v-list color="transparent" three-line>
         <template v-for="(item, index) in item.reply.slice(0,1 )">
           <v-divider :key="index" :inset="true"></v-divider>
           <v-list-item :key="item.title" @click="showmsg">
@@ -104,8 +94,7 @@
             </v-list-item-content>
           </v-list-item>
         </template>
-      </v-list>
-      <v-card-actions class="justify-center pa-0"></v-card-actions>
+      </v-list>-->
     </v-card>
 
     <v-card
@@ -119,7 +108,7 @@
       <msgboard @backmsg="backmsg" :page="page" :item="item" />
       <v-pagination
         class="paginatsss"
-        v-if="Math.ceil(item.reply.length/sliceN)>1&&item.reply"
+        v-if="Math.ceil(item.reply.length/sliceN)>1"
         light
         circle
         v-model="page"
@@ -134,12 +123,12 @@
 
 <script>
 import msgboard from '~/components/msgBoardTwitter.vue'
-// import simplereply from '~/components/simpleReply.vue'
+import simplereply from '~/components/simpleReply.vue'
 import { mapMutations } from 'vuex'
 export default {
   name: 'twittercard',
   props: { item: Object, n: Number },
-  components: { msgboard },
+  components: { simplereply, msgboard },
   data() {
     return {
       tflag: false,
@@ -152,24 +141,24 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['lettersEdit']),
+    ...mapMutations(['articleEdit']),
     swipe(direction) {},
     watchnow() {
-      this.lettersEdit({ data: this.item, type: 'see' })
+      this.articleEdit({ data: this.item, type: 'see' })
     },
     remove() {
       this.$store.commit('remove', this.n)
     },
     addunlike() {
       if (this.$store.state.user.name) {
-        this.lettersEdit({ data: this.item, type: 'unlike' })
+        this.articleEdit({ data: this.item, type: 'unlike' })
       } else {
         alert('要先登陆哟!!!')
       }
     },
     addlike() {
       if (this.$store.state.user.name) {
-        this.lettersEdit({ data: this.item, type: 'like' })
+        this.articleEdit({ data: this.item, type: 'like' })
       } else {
         alert('要先登陆哟!!!')
       }

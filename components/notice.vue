@@ -2,7 +2,8 @@
   <div class="noticebox">
     <div class="noticecontent">
       <div class="msgbox">
-        <v-icon color="white">mdi-heart</v-icon>重要通知
+        <v-icon color="white">mdi-heart</v-icon>
+        <span class="d-inline-block text-truncate">重要通知</span>
       </div>
       <span class="d-inline-block text-truncate pl-2">{{item.msg}}</span>
     </div>
@@ -30,7 +31,7 @@ export default {
   width: 100%;
   border-radius: 4px;
   background: rgba(243, 243, 243, 0.5);
-  padding: 1%;
+  padding: 12px;
 }
 .noticecontent {
   padding: 10px;

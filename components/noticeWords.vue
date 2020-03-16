@@ -4,7 +4,7 @@
       <div class="noticecontent" v-for="item in items" :key="item.content">
         <div class="msgbox">
           <v-icon @click="random" color="white">mdi-heart</v-icon>
-          {{item.author}}
+          <!-- <span class="d-inline-block text-truncate">{{item.author}}</span> -->
         </div>
         <span class="d-inline-block text-truncate pl-2">{{item.content}}</span>
       </div>
@@ -35,7 +35,8 @@ export default {
   background: orange;
   padding: 0px 8px;
   text-align: center;
-  min-width: 60px;
+  overflow: hidden;
+  min-width: 40px;
 
   border-radius: 50px;
   color: white;
@@ -47,7 +48,7 @@ export default {
   width: 100%;
   border-radius: 4px;
   background: rgba(243, 243, 243, 0.5);
-  padding: 1%;
+  padding: 12px;
 }
 .noticecontent {
   transition: all 1.6s;

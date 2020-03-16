@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <music @musiclistf="rightDraFunc" draggable="true" />
     <v-navigation-drawer
       class="d-flex d-sm-none d-none d-sm-flex d-md-none"
       v-model="drawer"
@@ -8,14 +9,14 @@
       disable-resize-watcher
       overlay-opacity="0.9"
       overlay-color="white"
-      color="rgba(55,85,155,0.8)"
+      color="cyan"
       dark
     >
       <v-list dense>
         <v-list-item three-line>
           <v-list-item-avatar size="65">
             <img
-              :src="$store.state.user.avatar||'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
+              :src="$store.state.user.avatar?$store.state.user.avatar:'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
             />
           </v-list-item-avatar>
 
@@ -62,22 +63,27 @@
             <v-list-item-title v-text="item.text" />
           </v-list-item>
         </v-list>-->
-        <v-list-item class="mt-4" link>
+        <v-list-item
+          class="mt-4"
+          v-for="(item, index) in usermenus"
+          :key="index"
+          @click="item.action"
+        >
           <v-list-item-action>
-            <v-icon>mdi-plus-circle-outline</v-icon>
+            <v-icon>{{item.icon}}</v-icon>
           </v-list-item-action>
-          <v-list-item-title>Browse Channels</v-list-item-title>
+          <v-list-item-title>{{item.title}}</v-list-item-title>
         </v-list-item>
-        <v-list-item to="/manage">
+        <!-- <v-list-item to="/manage">
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
           <v-list-item-title>设置管理</v-list-item-title>
-        </v-list-item>
+        </v-list-item>-->
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="rgba(255,255,255,0.6)" dense dark>
+    <v-app-bar hide-on-scroll app color="cyan" dense dark>
       <v-app-bar-nav-icon
         class="d-flex d-sm-none d-none d-sm-flex d-md-none"
         @click.stop="drawer = !drawer"
@@ -107,7 +113,12 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-menu v-if="$store.state.user.name" :close-on-click="true" :offset-y="true">
+      <v-menu
+        class="d-sm-none d-md-flex d-none"
+        v-if="$store.state.user.name"
+        :close-on-click="true"
+        :offset-y="true"
+      >
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
@@ -119,6 +130,9 @@
         </template>
         <v-list>
           <v-list-item v-for="(item, index) in usermenus" :key="index" @click="item.action">
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -138,11 +152,51 @@
 
       <v-spacer />
     </v-app-bar>
+
+    <v-navigation-drawer
+      hide-overlay
+      disable-route-watcher
+      disable-resize-watcher
+      v-model="rightDrawer"
+      right
+      fixed
+    >
+      <!-- 音乐播放列表 -->
+      <v-simple-table fixed-header>
+        <template v-slot:default class="musiclist">
+          <thead>
+            <tr>
+              <th class="text-left" style="width:20px"></th>
+              <th class="text-left" style="width:180px">歌曲</th>
+              <th class="text-left" style="width:150px">歌手</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              @dblclick="playlist(item)"
+              v-for="(item,index) in $store.state.music.playlist"
+              :key="item.id"
+            >
+              <td>
+                <v-icon color="red">
+                  {{
+                  $store.state.music.song.id===item.id?($store.state.music.playing?"mdi-pause-circle":"mdi-arrow-right-drop-circle"):""
+                  }}
+                </v-icon>
+              </td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.artists?item.artists[0].name:item.ar[0].name }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-navigation-drawer>
+
     <v-content :style="{backgroundImage:backgroundimg}">
       <v-container class="pa-0" fluid>
         <!-- <star class="star" /> -->
-        <transition appear>
-          <nuxt keep-alive />
+        <transition name="list-complete">
+          <nuxt class="list-item" keep-alive />
         </transition>
       </v-container>
     </v-content>
@@ -152,10 +206,11 @@
 
 <script>
 import blogfoot from '~/components/blogfoot.vue'
+import music from '~/components/music.vue'
 import star from '~/components/star-demo.vue'
 import { mapActions, mapMutations } from 'vuex'
 export default {
-  components: { blogfoot },
+  components: { blogfoot, music },
   props: {
     source: String
   },
@@ -164,13 +219,15 @@ export default {
       searchdata: '',
       backgroundimg: '',
       drawer: false,
+      rightDrawer: false,
 
       menus: [
         { title: '首页', href: '/', icon: 'mdi-home' },
         { title: '写文章', href: '/writeboard', icon: 'mdi-pencil' },
-        { title: '图片', href: '/uploadavatar', icon: 'mdi-image' },
-        { title: '音乐', icon: 'mdi-music' },
-        { title: '读书', icon: 'mdi-book' },
+        { title: '音乐', href: '/music', icon: 'mdi-music' },
+        // { title: '图片', href: '/uploadavatar', icon: 'mdi-image' },
+
+        // { title: '读书', href: '/book', icon: 'mdi-book' },
         {
           title: '消息',
           icon: 'mdi-message-processing',
@@ -178,9 +235,9 @@ export default {
         }
       ],
       usermenus: [
-        { title: '管理中心', action: this.managepath },
+        { title: '管理中心', action: this.managepath, icon: 'mdi-image' },
 
-        { title: '注销', action: this.userexit }
+        { title: '注销', action: this.userexit, icon: 'mdi-pencil' }
       ]
       // items: [
       //   { icon: 'mdi-trending_up', text: 'Most Popular' },
@@ -199,7 +256,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getdata', 'userexit', 'userlogin']),
+    ...mapActions([
+      'getdata',
+      'userexit',
+      'userlogin',
+      'nextMusic',
+      'reqMusic',
+      'lastMusic',
+      'playlist'
+    ]),
     ...mapMutations(['setdata']),
     gohome() {
       this.$router.push('/')
@@ -209,6 +274,9 @@ export default {
     },
     search() {
       this.searchdata
+    },
+    rightDraFunc() {
+      this.rightDrawer = !this.rightDrawer
     }
   },
   mounted() {
@@ -222,6 +290,9 @@ export default {
     if (this.$store.state.content.article.length < 1) {
       this.getdata({ api: '/api/myblog', type: 'article' })
     }
+    if (this.$store.state.content.letters.length < 1) {
+      this.getdata({ api: '/api/letters', type: 'letters' })
+    }
 
     //  let res= this.$axios.get('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302')
     //       .then(console.log(res))
@@ -234,5 +305,8 @@ export default {
 <style scoped>
 .star {
   position: absolute;
+}
+.list-item {
+  transition: all 0.6s;
 }
 </style>

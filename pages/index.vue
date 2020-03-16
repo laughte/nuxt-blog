@@ -185,8 +185,7 @@ export default {
       item.badge = false
     },
     shuffle: function() {
-      console.log('hello')
-      this.$store.commit('shuffle')
+      this.$store.commit('shuffle', 'article')
     },
     random() {
       this.dailyWord = _.shuffle(this.dailyWord)
