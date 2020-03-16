@@ -30,10 +30,9 @@
             </v-tabs>
             <v-tabs-items style="background:rgba(0,1,1,0)" v-model="tab">
               <v-tab-item color="transparent" v-for="item in newsTypes" :key="item.typeName">
-                <nuxt-child keep-alive></nuxt-child>
-                <transition-group name="list-complete" tag="v-row">
+                <transition-group name="list-complete" tag="div" class="row">
                   <v-col
-                    class="list-complete-item py-0"
+                    class="list-complete-item"
                     :key="item.newsId+i"
                     v-for="(item,i) in news"
                     lg="3"
@@ -42,11 +41,11 @@
                     sm="4"
                     xs="6"
                   >
-                    <v-row justify="center">
-                      <v-col lg="12" xl="12" md="12" sm="12">
-                        <h-cardnews :item="item" />
-                      </v-col>
-                    </v-row>
+                    <!-- <v-row justify="center">
+                    <v-col lg="12" xl="12" md="12" sm="12">-->
+                    <h-cardnews :item="item" />
+                    <!-- </v-col>
+                    </v-row>-->
                   </v-col>
                 </transition-group>
 
@@ -60,7 +59,7 @@
             <!-- <button @click="shuffle">随机</button> -->
           </v-col>
           <v-col>
-            <transition-group name="list-complete" tag="v-row">
+            <transition-group name="list-complete" tag="div" class="row">
               <v-col
                 class="list-complete-item py-0"
                 :key="item._id"
@@ -99,7 +98,7 @@
             <!-- <button @click="localshuffle('jokes')">随机</button> -->
           </v-col>
           <v-col>
-            <transition-group name="list-complete" tag="v-row">
+            <transition-group name="list-complete" tag="div" class="row">
               <v-col
                 xl="6"
                 lg="6"
