@@ -24,18 +24,18 @@
               <v-tabs-slider color="yellow"></v-tabs-slider>
               <v-tab
                 @click="getdatas({ type: 'news', api: `news/list?typeId=${i.typeId}&page=1` })"
-                v-for="i in newsTypes"
-                :key="i.typeId"
+                v-for="(i,n) in newsTypes"
+                :key="i.typeId+n"
               >{{ i.typeName }}</v-tab>
             </v-tabs>
             <v-tabs-items style="background:rgba(0,1,1,0)" v-model="tab">
-              <v-tab-item color="transparent" v-for="item in newsTypes" :key="item.typeId">
+              <v-tab-item color="transparent" v-for="item in newsTypes" :key="item.typeName">
                 <nuxt-child keep-alive></nuxt-child>
                 <transition-group name="list-complete" tag="v-row">
                   <v-col
                     class="list-complete-item py-0"
-                    :key="item.newsId"
-                    v-for="item in news"
+                    :key="item.newsId+i"
+                    v-for="(item,i) in news"
                     lg="3"
                     xl="3"
                     md="3"
@@ -63,7 +63,7 @@
             <transition-group name="list-complete" tag="v-row">
               <v-col
                 class="list-complete-item py-0"
-                :key="item.time"
+                :key="item._id"
                 v-for="item in $store.state.content.article.slice((page-1)*sliceN,page*sliceN)"
                 lg="3"
                 xl="3"

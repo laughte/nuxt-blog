@@ -86,7 +86,7 @@
           {{tflag?'收起':'更多'}}
         </button>
       </v-card-actions>
-      <v-list color="transparent" three-line>
+      <!-- <v-list color="transparent" three-line>
         <template v-for="(item, index) in item.reply.slice(0,1 )">
           <v-divider :key="index" :inset="true"></v-divider>
           <v-list-item :key="item.title" @click="showmsg">
@@ -104,8 +104,7 @@
             </v-list-item-content>
           </v-list-item>
         </template>
-      </v-list>
-      <v-card-actions class="justify-center pa-0"></v-card-actions>
+      </v-list>-->
     </v-card>
 
     <v-card

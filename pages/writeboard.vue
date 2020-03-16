@@ -1,5 +1,5 @@
 <template>
-  <v-card flat color="rgba(255,255,255,.6)">
+  <v-card flat color="rgba(255,255,255,.6)" height="91vh">
     <v-container>
       <editor
         autofocus

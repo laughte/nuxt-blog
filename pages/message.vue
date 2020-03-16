@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="rowstyle">
     <v-col cols="12">
       <v-btn v-on:click="shuffle">
         <v-icon>mdi-dice-5-outline</v-icon>随机排列
@@ -94,6 +94,10 @@ export default {
 </script>
 
 <style scoped>
+.rowstyle {
+  background: rgba(255, 255, 255, 0.6);
+  min-height: 95vh;
+}
 .justifycenter {
   display: flex;
   justify-content: center;
