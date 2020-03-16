@@ -31,23 +31,22 @@ export default {
 </script>
 
 <style scoped>
-.msgbox {
-  background: orange;
-  padding: 0px 8px;
-  text-align: center;
-  min-width: 60px;
-
-  border-radius: 50px;
-  color: white;
-}
 .noticebox {
   overflow: hidden;
-  height: 69.5px;
+  height: 64px;
   position: relative;
   width: 100%;
   border-radius: 4px;
   background: rgba(243, 243, 243, 0.5);
-  padding: 1%;
+  padding: 8px;
+}
+.msgbox {
+  background: orange;
+  padding: 0px 8px;
+  text-align: center;
+  min-width: 120px;
+  border-radius: 50px;
+  color: white;
 }
 .noticecontent {
   transition: all 1.6s;
@@ -55,7 +54,7 @@ export default {
   text-align: center;
   display: flex;
   margin: 0 auto;
-  margin-bottom: 14px;
+  margin-bottom: 15px;
   border-radius: 50px;
   color: cyan;
   background: white;
