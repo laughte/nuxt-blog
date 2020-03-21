@@ -1,25 +1,26 @@
 <template>
   <v-row justify="space-between">
-    <v-col
-      md="12"
-      lg="6"
-      xl="6"
-      sm="6"
-      v-for="(item) in $store.state.content.article.slice((page-1)*sliceN,sliceN*page)"
-      v-show="item.collect.indexOf($store.state.user.userName)>-1"
-      :key="item._id"
-    >
-      <!-- <v-row justify="center">
-      <v-col class="py-0">-->
-      <w-card :item="item"></w-card>
-      <!-- </v-col>
-      </v-row>-->
+    <v-col>
+      <transition-group name="list-complete" tag="div" class="row">
+        <v-col
+          class="list-complete-item"
+          md="12"
+          lg="6"
+          xl="6"
+          sm="6"
+          v-for="(item) in myCollects.slice((page-1)*sliceN,sliceN*page)"
+          :key="item._id"
+        >
+          <w-card :item="item"></w-card>
+        </v-col>
+      </transition-group>
     </v-col>
-    <v-col class="text-center" v-if="Math.ceil($store.state.content.article.length/sliceN)>1">
+
+    <v-col class="text-center" v-if="Math.ceil(myCollects.length/sliceN)>1">
       <v-pagination
         circle
         v-model="page"
-        :length="Math.ceil($store.state.content.article.length/sliceN)"
+        :length="Math.ceil(myCollects.length/sliceN)"
         prev-icon="mdi-menu-left"
         next-icon="mdi-menu-right"
       ></v-pagination>
@@ -33,10 +34,28 @@ import wCard from '~/components/wCard.vue'
 export default {
   name: 'mycollect',
   components: { wCard, hCard },
-  data: () => ({
-    sliceN: 10,
-    page: 1
-  })
+  data() {
+    return {
+      myCollects: [],
+      sliceN: 10,
+      page: 1
+    }
+  },
+  methods: {
+    filterdatas(item) {
+      this.myCollects = []
+      for (let e of item) {
+        let n = e.collect.indexOf(this.$store.state.user.name)
+        if (n > -1) {
+          console.log(e)
+          this.myCollects.push(e)
+        }
+      }
+    }
+  },
+  activated() {
+    this.filterdatas(this.$store.state.content.article)
+  }
 }
 </script>
 

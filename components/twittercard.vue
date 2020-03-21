@@ -157,7 +157,7 @@ export default {
       this.lettersEdit({ data: this.item, type: 'see' })
     },
     remove() {
-      this.$store.commit('remove', this.n)
+      this.$store.commit('remove', { type: 'letters', n: this.n })
     },
     addunlike() {
       if (this.$store.state.user.name) {

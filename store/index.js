@@ -1,7 +1,9 @@
 export const state = () => ({
   user: {},
+  searchflag: false,
   content: {
     letters: [],
+    letters2: [],
     avatars: [],
     article: [],
     article2: [],
@@ -15,80 +17,16 @@ export const state = () => ({
     myArticle: [],
     collect: [],
     comment: [],
+    searchData: []
   },
   musicserve: "http://39.105.168.171:3000",
   music: {
     user: {},
-    song: {
-      "id": 393593,
-      "url": "http://m7.music.126.net/20191007064804/d1780084c12f24a309f905f05e229394/ymusic/0d01/e264/f42a/593935f41139a89911f1e5db1cb7c806.mp3",
-      "br": 192000,
-      "size": 3124079,
-      "md5": "593935f41139a89911f1e5db1cb7c806",
-      "code": 200,
-      "expi": 1200,
-      "type": "mp3",
-      "gain": 0,
-      "fee": 0,
-      "uf": null,
-      "payed": 0,
-      "flag": 0,
-      "canExtend": false,
-      "freeTrialInfo": null,
-      "level": "higher",
-      "encodeType": "mp3"
-    },
+    song: {},
     songDetail: {},
     songs: [],
     searchSong: {},
-    playlist: [
-      {
-        "id": 393593,
-        "name": "晨光剑舞",
-        "artists": [{
-          "id": 190325,
-          "name": "王晓",
-          "picUrl": null,
-          "alias": [],
-          "albumSize": 0,
-          "picId": 0,
-          "img1v1Url": "https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg",
-          "img1v1": 0,
-          "trans": null
-        }],
-        "album": {
-          "id": 38991,
-          "name": "九阴真经OL 音乐原声集",
-          "artist": {
-            "id": 0,
-            "name": "",
-            "picUrl": null,
-            "alias": [],
-            "albumSize": 0,
-            "picId": 0,
-            "img1v1Url": "https://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg",
-            "img1v1": 0,
-            "trans": null
-          },
-          "publishTime": 1287331200000,
-          "size": 32,
-          "copyrightId": 0,
-          "status": 1,
-          "picId": 67070209310509,
-          "mark": 0
-        },
-        "duration": 130089,
-        "copyrightId": 0,
-        "status": 0,
-        "alias": [],
-        "rtype": 0,
-        "ftype": 0,
-        "mvid": 0,
-        "fee": 0,
-        "rUrl": null,
-        "mark": 0
-      }
-    ],
+    playlist: [],
     album: {},
     album2: {},
     albums: [],
@@ -100,14 +38,15 @@ export const state = () => ({
 export const mutations = {
   setdata(state, json) {
     state.content[json.type] = json.data
+    state.content[json.type].reverse()
     // console.log(state.content[json.type])
   },
   pushdata(state, json) {
     state.content[json.type].unshift(json.data)
   },
 
-  remove(state, n) {
-    state.content.article.splice(n, 1)
+  remove(state, json) {
+    state.content[json.type].splice(json.n, 1)
   },
   shuffle(state, type) {
     state.content[type] = _.shuffle(state.content[type])
@@ -186,16 +125,16 @@ export const mutations = {
     state.content.letters.forEach(e => {
       if (e._id === json.data._id) {
         if (e[json.type] instanceof Array) {
-          let n = e[json.type].indexOf(state.user)
+          let n = e[json.type].indexOf(state.user.name)
           if (n > -1) {
             e[json.type].splice(n, 1)
 
-            this.$axios.post('/api/delArrayletters', { id: e._id, [json.type]: state.user })
+            this.$axios.post('/api/delArrayletters', { id: e._id, [json.type]: state.user.name })
 
           } else {
             e[json.type].push(state.user)
 
-            this.$axios.post('/api/addArrayletters', { id: e._id, [json.type]: state.user })
+            this.$axios.post('/api/addArrayletters', { id: e._id, [json.type]: state.user.name })
 
           }
         } else if (json.type === 'see') {
@@ -214,8 +153,29 @@ export const mutations = {
       }
     })
   },
+  changeflag(state) {
+    state.searchflag = false
+  },
+  searchFunc(state, str) {
 
+    state.searchflag = true
+    state.content.searchData = state.content.article.filter((el => {
+      return el.author.indexOf(str) > -1 || el.type.indexOf(str) > -1
+    }))
+  },
+  // ||el.blocks.filter((e=>{
+  //   e.
+  // }));
+  searchMsgFunc(state, str) {
+    if (str !== '') {
+      state.content.letters = state.content.letters.filter((el => {
+        return el.author.indexOf(str) > -1 || el.text.indexOf(str) > -1
+      }))
+    } else {
+      state.content.letters = state.content.letters2
+    }
 
+  }
 
 }
 
@@ -223,8 +183,8 @@ export const mutations = {
 export const actions = {
   async getdata({ commit }, json) {
     let res = await this.$axios.get(json.api)
-    if (json.type === 'article') {
-      commit('setdata', { type: 'article2', data: res })
+    if (json.type === 'letters') {
+      commit('setdata', { type: 'letters2', data: res })
     }
 
     if (res instanceof Array) {

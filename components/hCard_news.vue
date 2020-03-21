@@ -26,8 +26,8 @@
       <v-card-subtitle class="py-2 d-flex justify-start align-center">
         <div class="dot"></div>
         {{item.source||'未知作者'}}
-        <div class="dot"></div>
-        {{item.type||'未分类'}}
+        <!-- <div class="dot"></div>
+        {{item.type||'未分类'}}-->
         <!-- <div class="dot"></div>
         {{item.sorce?item.sorce:"未知来源"}}-->
       </v-card-subtitle>

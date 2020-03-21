@@ -1,6 +1,6 @@
 <template>
-  <v-row style="background:rgba(255,255,255,0.6)" justify="center">
-    <v-col xl="6" lg="8" md="10" cols="12" >
+  <v-row style="background:rgba(255,255,255,0)" justify="center">
+    <v-col xl="6" lg="8" md="10" cols="12">
       <v-card flat color="rgba(255,255,255,0.6)" :loading="loading" class="mx-auto my-12">
         <v-img :src="newsdata.cover"></v-img>
 

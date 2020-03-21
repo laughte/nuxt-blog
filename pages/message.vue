@@ -95,7 +95,6 @@ export default {
 
 <style scoped>
 .rowstyle {
-  background: rgba(255, 255, 255, 0.6);
   min-height: 95vh;
 }
 .justifycenter {

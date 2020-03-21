@@ -9,7 +9,7 @@
             <v-card-title class="align-end fill-height">I'm a title</v-card-title>
     </v-img>-->
 
-    <v-simple-table fixed-header v-if="$store.state.music.searchSong.songs" >
+    <v-simple-table fixed-header v-if="$store.state.music.searchSong.songs">
       <template v-slot:default>
         <thead>
           <tr>
@@ -24,8 +24,7 @@
         <tbody>
           <tr
             @dblclick="getPlay(item)"
-
-            v-for="(item,index) in $store.state.music.searchSong.songs"
+            v-for="(item) in $store.state.music.searchSong.songs"
             :key="item.id"
           >
             <td>
@@ -49,14 +48,14 @@
 export default {
   methods: {
     getPlay(e) {
-      this.$store.dispatch('playlist',e)
+      this.$store.dispatch('playlist', e)
     }
   }
 }
 </script>
 
 <style>
-  tbody.tr:hover {
-    background: #fff;
-  }
+tbody.tr:hover {
+  background: #fff;
+}
 </style>

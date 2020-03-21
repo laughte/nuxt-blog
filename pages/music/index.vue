@@ -1,28 +1,10 @@
 <template>
   <v-card flat color="transparent">
-<!--    <v-toolbar color="cyan" dark flat>-->
-      <!-- <v-carousel
-      cycle
-      show-arrows-on-hover
-      hide-delimiter-background
-      delimiter-icon="mdi-minus"
-      height="300"
-    >
-      <v-carousel-item v-for="(slide, i) in musicImgSlides" :key="i">
-        <v-sheet :color="colors[i]" height="100%" tile>
-          <v-row class="fill-height" align="center" justify="center">
-            <div class="display-3">{{ slide }} Slide</div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-      </v-carousel>-->
-<!--    </v-toolbar>-->
-
-    <v-tabs  background-color="listbgcolor" color="textcolor accent-4">
+    <v-tabs background-color="listbgcolor" color="textcolor accent-4">
       <v-tab v-for="(e,i) in musicItems" :key="i">{{e.title}}</v-tab>
 
       <v-tab-item v-for="n in 4" :key="n">
-        <v-container fluid >
+        <v-container fluid>
           <v-row v-if="$store.state.music.albums.length>0" justify="center">
             <v-col
               lg="2"
@@ -32,14 +14,14 @@
               v-for="(item,index) in $store.state.music.albums.slice((page-1)*18,page*18)"
               :key="index"
             >
-              <v-card flat color="transparent"  @click.stop="getMusicAlbumm(item)">
+              <v-card flat color="transparent" @click.stop="getMusicAlbumm(item)">
                 <v-img :src="item.picUrl" :lazy-src="item.picUrl">
                   <v-card-text class="white--text">{{item.copywriter}}</v-card-text>
                 </v-img>
 
-                <v-list-item color="transparent" three-line >
+                <v-list-item color="transparent" three-line>
                   <v-list-item-subtitle v-text="item.name"></v-list-item-subtitle>
-                  <v-btn @click.stop="playlist(item)" color="red" icon>
+                  <v-btn @click.stop="playnow(item)" color="red" icon>
                     <v-icon>mdi-arrow-right-drop-circle</v-icon>
                   </v-btn>
                 </v-list-item>
@@ -47,7 +29,12 @@
             </v-col>
           </v-row>
           <div v-if="Math.ceil($store.state.music.albums.length/18)>1" class="text-center">
-            <v-pagination :color="$vuetify.theme.dark?'listbgcolor':'textcolor'" circle v-model="page" :length="Math.ceil($store.state.music.albums.length/18)"></v-pagination>
+            <v-pagination
+              :color="$vuetify.theme.dark?'listbgcolor':'textcolor'"
+              circle
+              v-model="page"
+              :length="Math.ceil($store.state.music.albums.length/18)"
+            ></v-pagination>
           </div>
         </v-container>
       </v-tab-item>
@@ -56,8 +43,8 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
-  import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -74,13 +61,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['reqSong' ,'reqMusic','lastMusic','nextMusic']),
+    ...mapActions(['reqSong', 'reqMusic', 'lastMusic', 'nextMusic']),
     ...mapMutations(['getmusic']),
     getMusicAlbumm(e) {
       this.$router.push('/music/albumDetail')
       this.playlist(e)
     },
-    playlist(e){
+    playnow(e) {
+      this.playlist(e)
+      this.nextMusic()
+    },
+    playlist(e) {
       this.getmusic({ type: 'album', data: e })
       this.$axios
         .get(this.$store.state.musicserve + '/playlist/detail?id=' + e.id)
@@ -94,14 +85,13 @@ export default {
           this.$axios
             .get(
               this.$store.state.musicserve +
-              '/song/detail?ids=' +
-              idlists.join(',')
+                '/song/detail?ids=' +
+                idlists.join(',')
             )
             .then(res => {
-              this.getmusic( { type: 'songs', data: res.songs });
-              this.getmusic( {type:'playlist',data:res.songs});
+              this.getmusic({ type: 'songs', data: res.songs })
+              this.getmusic({ type: 'playlist', data: res.songs })
             })
-          this.nextMusic()
         })
     }
   }

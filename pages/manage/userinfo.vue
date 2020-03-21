@@ -7,12 +7,7 @@
       <v-row justify="space-around">
         <v-col class="pa-0" lg="8" md="8" sm="8" xs="9">
           <v-form ref="form" v-model="valid">
-            <v-text-field
-              label="姓名"
-              :rules="nameRules"
-              :disabled="editflag"
-              v-model="user.userName"
-            ></v-text-field>
+            <v-text-field label="姓名" :rules="nameRules" :disabled="editflag" v-model="user.name"></v-text-field>
             <v-text-field label="邮箱" :rules="emailRules" :disabled="editflag" v-model="user.email"></v-text-field>
             <v-text-field label="手机" :rules="telRules" :disabled="editflag" v-model="user.tel"></v-text-field>
             <v-text-field label="年龄" :rules="ageRules" :disabled="editflag" v-model="user.age"></v-text-field>
@@ -25,7 +20,7 @@
           </v-form>
         </v-col>
         <v-col lg="3" md="4" sm="4" xs="3">
-          <img width="100%" :src="user.imgsrc" alt />
+          <img width="100%" :src="user.avatar" alt />
 
           <v-textarea
             name="input-7-1"
@@ -41,7 +36,7 @@
           <h4>更换头像</h4>
           <v-container>
             <useravatar
-              :size="'40px'"
+              :size="'32px'"
               @imgclick="imgsrcicon"
               :items="$store.state.content.avatars"
             />
@@ -101,7 +96,7 @@ export default {
       }
     },
     imgsrcicon(e) {
-      this.user.imgsrc = e.url
+      this.user.avatar = e.url
       this.editflag = false
       // console.log(this.user.imgsrc)
     }

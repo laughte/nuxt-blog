@@ -121,7 +121,7 @@ export default {
     if (!this.$store.state.user.id) {
       this.$router.push('/login')
     } else {
-      console.log(this.$store.state.user)
+      // console.log(this.$store.state.user)
     }
   },
 

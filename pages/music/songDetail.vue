@@ -1,22 +1,27 @@
 <template>
   <v-card flat color="transparent">
-    <v-img style="position: absolute ;width: 100%;height: auto;filter: blur(55px);opacity:0.2;z-index: 0"
-           v-if="$store.state.music.album"
-           :src="$store.state.music.album.picUrl?$store.state.music.album.picUrl:$store.state.music.album.coverImgUrl">
-    </v-img>
+    <v-img
+      style="position: absolute ;width: 100%;height: auto;filter: blur(55px);opacity:0.2;z-index: 0"
+      v-if="$store.state.music.album"
+      :src="$store.state.music.album.picUrl?$store.state.music.album.picUrl:$store.state.music.album.coverImgUrl"
+    ></v-img>
     <v-list-item three-line>
       <v-list-item-avatar size="220">
-        <v-img :class="$store.state.music.playing?'cycleimg':''"
-               v-if="$store.state.music.album"
-               :src="$store.state.music.album.picUrl?$store.state.music.album.picUrl:$store.state.music.album.coverImgUrl">
-        </v-img>
+        <v-img
+          :class="$store.state.music.playing?'cycleimg':''"
+          v-if="$store.state.music.album"
+          :src="$store.state.music.album.picUrl?$store.state.music.album.picUrl:$store.state.music.album.coverImgUrl"
+        ></v-img>
       </v-list-item-avatar>
       <v-list-item-content class="align-self-start">
         <v-list-item-title class="mb-2" v-text="$store.state.music.songsInfo.name"></v-list-item-title>
         <v-list-item-subtitle v-text="'专辑名'"></v-list-item-subtitle>
         <v-list-item-subtitle v-text="$store.state.music.album.name"></v-list-item-subtitle>
       </v-list-item-content>
-      <v-list-item-content class="lyricstyle" style="height: 250px;overflow: auto">{{musicLyric?musicLyric.lyric:'没有歌词'}}</v-list-item-content>
+      <v-list-item-content
+        class="lyricstyle"
+        style="height: 250px;overflow: auto"
+      >{{musicLyric?musicLyric.lyric:'没有歌词'}}</v-list-item-content>
     </v-list-item>
     <v-divider class="mx-4"></v-divider>
 
@@ -130,8 +135,8 @@ export default {
 
             .get(
               this.$store.state.musicserve +
-              '/song/detail?ids=' +
-              idlists.join(',')
+                '/song/detail?ids=' +
+                idlists.join(',')
             )
             .then(res => {
               this.$store.commit('getmusic', { type: 'songs', data: res.songs })
@@ -200,7 +205,6 @@ export default {
     // 播放相似歌曲
     getPlay(e) {
       this.$store.dispatch('playlist', e)
-
     },
     getLikeUser() {
       //  /simi/user?id=
@@ -216,51 +220,65 @@ export default {
         })
     }
   },
-  activated(){
+  activated() {
     this.getMusicComment()
     this.getMusicLyric()
     this.getRelatedRecommend()
     this.getSimilarSongs()
+  },
+  computed: {
+    changed: function() {
+      return this.$store.state.music.songsInfo
+    }
+  },
+  watch: {
+    changed: {
+      handler(n, o) {
+        this.getMusicComment()
+        this.getMusicLyric()
+        this.getRelatedRecommend()
+        this.getSimilarSongs()
+      },
+      deep: true
+    }
   }
-
-    // this.getLikeUser()
-
 }
+
+// this.getLikeUser()
 </script>
 
 <style>
-  .cycleimg{
-    animation:cyclepic 6s linear infinite forwards;
+.cycleimg {
+  animation: cyclepic 6s linear infinite forwards;
+}
+@keyframes cyclepic {
+  from {
+    transform: rotate(0);
   }
-  @keyframes cyclepic {
-    from{
-      transform: rotate(0);
-    }
-    to{
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
+}
 
+/*滚动条样式*/
+.lyricstyle::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 8px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 0px;
+}
 
-    /*滚动条样式*/
-  .lyricstyle::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    width: 8px;
-    /*高宽分别对应横竖滚动条的尺寸*/
-    height: 0px;
-  }
+.lyricstyle::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.2);
+  background: rgba(255, 255, 255, 0.3);
+}
 
-  .lyricstyle::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.2);
-    background: rgba(255,255,255,0.3);
-  }
-
-  .lyricstyle::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
-    box-shadow: inset 0 0 5px rgba(223, 206, 235, 0.2);
-    border-radius: 5px;
-    background: rgba(234, 204, 235, 0.1);
-  }
+.lyricstyle::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  box-shadow: inset 0 0 5px rgba(223, 206, 235, 0.2);
+  border-radius: 5px;
+  background: rgba(234, 204, 235, 0.1);
+}
 </style>

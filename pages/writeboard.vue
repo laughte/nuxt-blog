@@ -1,12 +1,10 @@
 <template>
-  <v-card flat color="rgba(255,255,255,.6)" min-height="91vh">
+  <v-card flat color="transparent" min-height="91vh">
     <v-container>
       <editor
         autofocus
         holder-id="codex-editor"
-        save-button-id="save-button"
         :init-data="initData"
-        :config="config"
         @save="onSave"
         @ready="onReady"
         @change="onChange"
@@ -27,18 +25,7 @@ export default {
   data() {
     return {
       initData: {},
-      type: '',
-      config: {
-        image: {
-          // Like in https://github.com/editor-js/image#config-params
-          endpoints: {
-            byFile: 'http://39.105.168.171:8090/image/',
-            byUrl: 'http://39.105.168.171:8090/image-by-url'
-          },
-          field: 'image',
-          types: 'image/*'
-        }
-      }
+      type: ''
     }
   },
   methods: {
@@ -58,18 +45,24 @@ export default {
       response.delete = 0
       // console.log(response)
       //   this.$store.state.article.unshift(response)
-
-      this.$axios
-        .post('/api/insert', response)
-        .then(res => {
-          // console.log(res)
-          this.$store.commit('pushdata', { type: 'article', data: res.ops[0] })
-          this.$router.push('/')
-          // console.log(res.ops[0])
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      if (response.blocks.length > 0) {
+        this.$axios
+          .post('/api/insert', response)
+          .then(res => {
+            console.log(res)
+            this.$store.commit('pushdata', {
+              type: 'article',
+              data: res.ops[0]
+            })
+            this.$router.push('/')
+            // console.log(res.ops[0])
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        alert('内容不能为空!!!')
+      }
     },
     onReady() {
       console.log('ready')

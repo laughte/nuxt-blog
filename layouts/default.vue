@@ -98,18 +98,18 @@
         </v-btn>
       </div>
       <v-text-field
-        v-model="searchdata"
         @change="search"
+        v-model="searchmodeldata"
         solo-inverted
         flat
         clearable
         dense
         rounded
         hide-details
-        label="seach"
+        :label="searchlabel"
       ></v-text-field>
 
-      <v-btn icon>
+      <v-btn @click="search" icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
@@ -174,7 +174,7 @@
           <tbody>
             <tr
               @dblclick="playlist(item)"
-              v-for="(item,index) in $store.state.music.playlist"
+              v-for="(item) in $store.state.music.playlist"
               :key="item.id"
             >
               <td>
@@ -192,9 +192,16 @@
       </v-simple-table>
     </v-navigation-drawer>
 
-    <v-content :style="{backgroundImage:backgroundimg}">
+    <v-content class="backgroundstyle" :style="{backgroundImage:backgroundimg}">
       <v-container class="pa-0" fluid>
         <!-- <star class="star" /> -->
+        <transition name="list-complete">
+          <search-result
+            class="list-item"
+            v-if="$store.state.searchflag"
+            :searchData="$store.state.content.searchData"
+          />
+        </transition>
         <transition name="list-complete">
           <nuxt class="list-item" keep-alive />
         </transition>
@@ -205,23 +212,24 @@
 </template>
 
 <script>
+import searchResult from '~/components/searchResult/searchResult.vue'
 import blogfoot from '~/components/blogfoot.vue'
 import music from '~/components/music.vue'
 import star from '~/components/star-demo.vue'
 import { mapActions, mapMutations } from 'vuex'
 export default {
-  components: { blogfoot, music },
+  components: { blogfoot, music, searchResult },
   props: {
     source: String
   },
   data() {
     return {
-      searchdata: '',
       backgroundimg: '',
       drawer: false,
       rightDrawer: false,
       timeout: false,
-
+      searchlabel: '搜文章,作者,分类',
+      searchmodeldata: '',
       menus: [
         { title: '首页', href: '/', icon: 'mdi-home' },
         { title: '写文章', href: '/writeboard', icon: 'mdi-pencil' },
@@ -236,9 +244,13 @@ export default {
         }
       ],
       usermenus: [
-        { title: '管理中心', action: this.managepath, icon: 'mdi-image' },
+        { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
 
-        { title: '注销', action: this.userexit, icon: 'mdi-pencil' }
+        {
+          title: '注销',
+          action: this.userexit,
+          icon: 'mdi-arrow-left-bold-box-outline'
+        }
       ]
       // items: [
       //   { icon: 'mdi-trending_up', text: 'Most Popular' },
@@ -247,13 +259,6 @@ export default {
       //   { icon: 'mdi-featured_play_list', text: 'Playlists' },
       //   { icon: 'mdi-watch_later', text: 'Watch Later' }
       // ],
-      // items2: [
-      //   { icon: 'mdi-trending_up', text: 'Most Popular' },
-      //   { icon: 'mdi-subscriptions', text: 'Subscriptions' },
-      //   { icon: 'mdi-history', text: 'History' },
-      //   { icon: 'mdi-featured_play_list', text: 'Playlists' },
-      //   { icon: 'mdi-watch_later', text: 'Watch Later' }
-      // ]
     }
   },
   methods: {
@@ -273,8 +278,14 @@ export default {
     managepath() {
       this.$router.push('/manage')
     },
-    search() {
-      this.searchdata
+    search(string) {
+      if (this.$route.path.indexOf('/music') !== -1) {
+        this.searchMusic(string)
+      } else if (this.$route.path.indexOf('/message') !== -1) {
+        this.$store.commit('searchMsgFunc', string)
+      } else {
+        this.$store.commit('searchFunc', string)
+      }
     },
     rightDraFunc() {
       this.rightDrawer = !this.rightDrawer
@@ -289,12 +300,36 @@ export default {
       console.log('you here')
       clearTimeout(this.timeout)
       this.rightDrawer = true
+    },
+    //音乐所搜
+    searchMusic(e) {
+      this.reqMusic({ api: '/search?keywords=' + e, type: 'searchSong' })
+      this.$router.push('/music/songlist')
     }
   },
   mounted() {
     let user = window.sessionStorage.getItem('user')
     if (user) {
       this.userlogin(JSON.parse(user))
+    }
+  },
+  computed: {
+    isActive() {
+      return this.$route.path
+    }
+  },
+
+  watch: {
+    isActive: function(n, o) {
+      this.$store.commit('changeflag')
+      this.searchmodeldata = ''
+      if (n.indexOf('/music') !== -1) {
+        this.searchlabel = '搜音乐,歌手,专辑'
+      } else if (n.indexOf('/message') !== -1) {
+        this.searchlabel = '搜留言,作者'
+      } else {
+        this.searchlabel = '搜文章,作者,分类'
+      }
     }
   },
   created() {
@@ -306,6 +341,11 @@ export default {
       this.getdata({ api: '/api/letters', type: 'letters' })
     }
 
+    this.$axios
+      .get(this.$store.state.musicserve + '/song/detail?ids=393593')
+      .then(res => {
+        console.log(res)
+      })
     //  let res= this.$axios.get('https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302')
     //       .then(console.log(res))
     //  this.backgroundimg = "url('https://img.xjh.me/desktop/bg/nature/63505535_p0.jpg')"
@@ -315,6 +355,9 @@ export default {
 }
 </script>
 <style scoped>
+.backgroundstyle {
+  background: rgba(255, 255, 255, 0.6);
+}
 .star {
   position: absolute;
 }

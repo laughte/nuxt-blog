@@ -1,11 +1,11 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card max-width="100%" @click="showDetail">
+    <v-card max-width="100%">
       <v-img
         class="white--text align-end"
         width="auto"
         height="159px"
-        :src="item.avatar?item.avatar:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+        :src="imageBlocks[0]?imageBlocks[0].data.file.url:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
       >
         <v-expand-transition>
           <div
@@ -21,28 +21,41 @@
         </v-avatar>
       </div>
 
-      <v-card-subtitle class="py-2 d-flex justify-start align-center">
-        <div class="dot"></div>
-        {{item.author?item.author:'未知作者'}}
-        <div class="dot"></div>
-        {{item.type?item.type:'未分类'}}
-        <!-- <div class="dot"></div>
-        {{item.sorce?item.sorce:"未知来源"}}-->
-      </v-card-subtitle>
+      <v-toolbar dense flat>
+        <div class="d-flex justify-start align-center">
+          <div class="dot"></div>
+          {{item.author?item.author:'未知作者'}}
+          <div class="dot"></div>
+          {{item.type?item.type:'未分类'}}
+        </div>
+        <v-spacer></v-spacer>
+        <v-menu transition="slide-y-transition" offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on">
+              <v-icon>mdi-dots-horizontal</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="(item, index) in menulists" :key="index" @click="item.func">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar>
 
-      <v-card-text class="text--primary pb-0">
+      <v-card-text class="text--primary py-0">
         <v-list color="transparent" three-line class="pa-0">
-          <v-list-item class="pa-0">
+          <v-list-item @click="showDetail" class="pa-0">
             <v-list-item-content class="pa-0">
               <v-list-item-title
                 v-if="item.blocks"
                 class="title font-weight-black"
-              >{{item.blocks[0].data.text}}</v-list-item-title>
+              >{{headerBlocks[0]?headerBlocks[0].data.text:paragraphBlocks[0]?paragraphBlocks[0].data.text:'作者很懒居然什么文字都没写'}}</v-list-item-title>
 
               <v-list-item-subtitle
                 class="font-weight-medium"
-                v-if="item.blocks&&item.blocks[1]"
-                v-text="item.blocks[1].data.text"
+                v-if="paragraphBlocks[0]"
+                v-text="paragraphBlocks[0].data.text"
               ></v-list-item-subtitle>
               <!-- <v-list-item-subtitle
               class="font-weight-medium"
@@ -66,17 +79,39 @@ import action from '~/components/actions.vue'
 import { mapMutations } from 'vuex'
 export default {
   name: 'hCard',
-  props: { item: {} },
+  props: { item: {}, n: Number },
   components: { action },
+  data() {
+    return {
+      headerBlocks: [],
+      imageBlocks: [],
+      paragraphBlocks: [],
+      menulists: [{ title: '删除', func: this.remove }]
+    }
+  },
   methods: {
     ...mapMutations(['articleEdit']),
     showDetail() {
       this.$router.push(`/${this.item._id}`)
       this.articleEdit({ data: this.item, type: 'see' })
+    },
+    remove() {
+      this.$store.commit('remove', { type: 'article', n: this.n })
+    },
+    filterData(item) {
+      for (let e of item.blocks) {
+        if (e.type === 'header') {
+          this.headerBlocks.push(e)
+        } else if (e.type === 'image') {
+          this.imageBlocks.push(e)
+        } else if (e.type === 'paragraph') {
+          this.paragraphBlocks.push(e)
+        }
+      }
     }
   },
   mounted() {
-    console.log(this.item)
+    this.filterData(this.item)
   }
 }
 </script>

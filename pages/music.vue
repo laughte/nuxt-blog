@@ -1,5 +1,5 @@
 <template>
-  <v-card flat tile color="rgba(255,255,255,.6)">
+  <v-card flat tile color="rgba(255,255,255,0)">
     <v-toolbar flat color="cyan">
       <v-toolbar-title to="/music" class="white--text">
         <v-btn to="/music" icon color="white">
@@ -14,7 +14,7 @@
         <v-icon>mdi-arrow-right</v-icon>
       </v-btn>
       <div class="flex-grow-1"></div>
-      <v-row align="center">
+      <!-- <v-row align="center">
         <v-text-field
           desnse
           hide-details
@@ -27,8 +27,8 @@
           flat
           label="Search"
         ></v-text-field>
-      </v-row>
-      <div class="flex-grow-1"></div>
+      </v-row>-->
+      <v-spacer></v-spacer>
       <v-btn color="white" text>登录</v-btn>
     </v-toolbar>
     <v-row justify="center">

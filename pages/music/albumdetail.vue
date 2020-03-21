@@ -3,7 +3,9 @@
     <v-card flat color="transparent">
       <v-list-item three-line>
         <v-list-item-avatar size="155" tile>
-          <v-img :src="$store.state.music.album.picUrl?$store.state.music.album.picUrl:$store.state.music.album.coverImgUrl"></v-img>
+          <v-img
+            :src="$store.state.music.album.picUrl?$store.state.music.album.picUrl:$store.state.music.album.coverImgUrl"
+          ></v-img>
         </v-list-item-avatar>
         <v-list-item-content class="align-self-start">
           <v-list-item-title class="headline mb-2" v-text="$store.state.music.album.name"></v-list-item-title>
@@ -25,11 +27,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            @dblclick="playMusic(item)"
-            v-for="(item,index) in $store.state.music.songs"
-            :key="item.id"
-          >
+          <tr @dblclick="playMusic(item)" v-for="(item) in $store.state.music.songs" :key="item.id">
             <td>
               <v-icon
                 color="red"

@@ -8,7 +8,7 @@
       @play="onPlay"
       @ended="onEnded"
     >
-      <source :src="$store.state.music.song.url" type="audio/mpeg" />您的浏览器不支持 audio 元素。
+      <source :src="this.$store.state.music.song.url" type="audio/mpeg" />您的浏览器不支持 audio 元素。
     </audio>
 
     <div @mouseenter="mucmouseenterfunc" @mouseleave="mucmouseleavefunc">
@@ -67,7 +67,8 @@ export default {
     return {
       timeout: Function,
       playListFlag: false,
-      mucflag: true
+      mucflag: true,
+      url: ''
     }
   },
   methods: {
