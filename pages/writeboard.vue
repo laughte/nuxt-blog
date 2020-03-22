@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style>
-.codex-editor__redactor {
-  min-height: 350px !important;
+#vue-editor-js {
+  min-height: 80vh;
 }
 </style>

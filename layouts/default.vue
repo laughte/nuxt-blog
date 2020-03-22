@@ -83,7 +83,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar hide-on-scroll app color="cyan" dense dark>
+    <v-app-bar app color="cyan" dense dark clipped-right>
       <v-app-bar-nav-icon
         class="d-flex d-sm-none d-none d-sm-flex d-md-none"
         @click.stop="drawer = !drawer"
@@ -113,54 +113,42 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-menu
-        class="d-sm-none d-md-flex d-none"
-        v-if="$store.state.user.name"
-        :close-on-click="true"
-        :offset-y="true"
-      >
-        <template v-slot:activator="{ on }">
-          <v-btn
-            v-on="on"
-            depressed
-            class="ml-4textcolor--text"
-            color="transparent"
-            v-text="$store.state.user.name"
-          ></v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="(item, index) in usermenus" :key="index" @click="item.action">
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <span class="d-sm-none d-md-flex d-none">
+        <v-menu v-if="$store.state.user.name" :close-on-click="true" :offset-y="true">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              v-on="on"
+              depressed
+              class="ml-4textcolor--text"
+              color="transparent"
+              v-text="$store.state.user.name"
+            ></v-btn>
+          </template>
+          <v-list>
+            <v-list-item v-for="(item, index) in usermenus" :key="index" @click="item.action">
+              <v-list-item-action>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-action>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
 
-      <div v-else>
-        <v-btn class="mr-4" to="/login" text>login</v-btn>
-        <!-- <v-btn depressed class="mr-4 textcolor--text" color="listbgcolor" to="/signup">login</v-btn> -->
-      </div>
-      <!-- <div>{{$store.state.user.age}}</div> -->
-      <v-avatar size="40px">
-        <img
-          :src=" $store.state.user.avatar||'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
-          alt="avatar"
-        />
-      </v-avatar>
+        <div v-else>
+          <v-btn class="mr-4" to="/login" text>login</v-btn>
+        </div>
+        <v-avatar size="40px">
+          <img
+            :src=" $store.state.user.avatar||'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
+            alt="avatar"
+          />
+        </v-avatar>
+      </span>
 
       <v-spacer />
     </v-app-bar>
-    <!-- @mouseleave="drawerleavefunc" @mouseenter="drawerenterfunc" -->
-    <v-navigation-drawer
-      hide-overlay
-      disable-route-watcher
-      disable-resize-watcher
-      v-model="rightDrawer"
-      right
-      fixed
-    >
+
+    <v-navigation-drawer app clipped absolute v-model="rightDrawer" right>
       <!-- 音乐播放列表 -->
       <v-simple-table fixed-header>
         <template v-slot:default class="musiclist">
@@ -192,7 +180,7 @@
       </v-simple-table>
     </v-navigation-drawer>
 
-    <v-content class="backgroundstyle" :style="{backgroundImage:backgroundimg}">
+    <v-content class="backgroundstylecolor">
       <v-container class="pa-0" fluid>
         <!-- <star class="star" /> -->
         <transition name="list-complete">
@@ -228,7 +216,7 @@ export default {
       drawer: false,
       rightDrawer: false,
       timeout: false,
-      searchlabel: '搜文章,作者,分类',
+      searchlabel: '搜文章,作者,分类,发布时间',
       searchmodeldata: '',
       menus: [
         { title: '首页', href: '/', icon: 'mdi-home' },
@@ -326,9 +314,9 @@ export default {
       if (n.indexOf('/music') !== -1) {
         this.searchlabel = '搜音乐,歌手,专辑'
       } else if (n.indexOf('/message') !== -1) {
-        this.searchlabel = '搜留言,作者'
+        this.searchlabel = '搜留言,作者,发布时间'
       } else {
-        this.searchlabel = '搜文章,作者,分类'
+        this.searchlabel = '搜文章,作者,分类,发布时间'
       }
     }
   },
@@ -355,7 +343,7 @@ export default {
 }
 </script>
 <style scoped>
-.backgroundstyle {
+.backgroundstylecolor {
   background: rgba(255, 255, 255, 0.6);
 }
 .star {

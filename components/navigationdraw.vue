@@ -1,16 +1,13 @@
 <template>
   <v-navigation-drawer
+    floating
+    permanent
+    :color="navStyle.color"
+    :clipped="navStyle.clipped"
     v-model="drawer"
-    temporary
-    absolute
-    clipped
-    color="rgba(160,120,225,.9)"
-    :mini-variant="miniVariant"
-    :disable-resize-watcher="sfalg"
-    dark
   >
     <v-list dense nav class="py-0">
-      <v-list-item two-line :class="miniVariant && 'px-0'">
+      <v-list-item two-line :class="navStyle.miniVariant && 'px-0'">
         <v-list-item-avatar>
           <img
             :src="$store.state.user.imgsrc?$store.state.user.imgsrc:'https://randomuser.me/api/portraits/men/81.jpg'"
@@ -32,12 +29,7 @@
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
 
-        <v-badge
-          inline
-          :content="item.content"
-          :value="item.badge"
-          :color="item.color"
-        >
+        <v-badge inline :content="item.content" :value="item.badge" :color="item.color">
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
@@ -50,11 +42,7 @@
 <script>
 export default {
   name: 'navigation',
-  props: { items: Array, sfalg: Boolean },
-  data: () => ({
-    miniVariant: false,
-    drawer: true
-  }),
+  props: { drawer: Boolean, items: Array, navStyle: {} },
   methods: {
     changedrawer() {
       this.drawer = !this.drawer

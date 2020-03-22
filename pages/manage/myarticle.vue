@@ -3,7 +3,7 @@
     <v-col>
       <transition-group name="list-complete" tag="div" class="row">
         <v-col
-          class="py-0 list-complete-item"
+          class="list-complete-item"
           :key="item._id"
           v-for="(item) in myLetters.slice((page-1)*sliceN,sliceN*page)"
           lg="3"

@@ -56,7 +56,7 @@
           <v-col>
             <transition-group name="list-complete" tag="div" class="row">
               <v-col
-                class="list-complete-item py-0"
+                class="list-complete-item"
                 :key="item._id"
                 v-for="(item,index) in $store.state.content.article.slice((page-1)*sliceN,page*sliceN)"
                 lg="3"

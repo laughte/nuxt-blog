@@ -157,19 +157,23 @@ export const mutations = {
     state.searchflag = false
   },
   searchFunc(state, str) {
+    if (str !== '') {
+      state.searchflag = true
+      state.content.searchData = state.content.article.filter((el => {
+        return el.author.indexOf(str) > -1 || el.type.indexOf(str) > -1
+          || returnFunc(el, str).length > 0 || (new Date(el.time).toLocaleDateString()).indexOf(str) > -1
 
-    state.searchflag = true
-    state.content.searchData = state.content.article.filter((el => {
-      return el.author.indexOf(str) > -1 || el.type.indexOf(str) > -1
-    }))
+      }))
+    } else {
+      state.searchflag = false
+    }
   },
-  // ||el.blocks.filter((e=>{
-  //   e.
-  // }));
+
   searchMsgFunc(state, str) {
     if (str !== '') {
       state.content.letters = state.content.letters.filter((el => {
         return el.author.indexOf(str) > -1 || el.text.indexOf(str) > -1
+          || (new Date(el.time).toLocaleString()).indexOf(str) > -1
       }))
     } else {
       state.content.letters = state.content.letters2
@@ -177,6 +181,17 @@ export const mutations = {
 
   }
 
+}
+
+// 字符串搜索方法
+function returnFunc(el, str) {
+  let res = []
+  res = el.blocks.filter(e => {
+    if (e.data.text) {
+      return e.data.text.indexOf(str) > -1
+    }
+  })
+  return res
 }
 
 

@@ -44,7 +44,7 @@
     <v-col>
       <transition-group name="list-complete" tag="div" class="row">
         <v-col
-          class="list-complete-item py-0"
+          class="list-complete-item"
           :key="item._id"
           v-for="(item) in myLetters.slice((page-1)*sliceN,sliceN*page)"
           lg="3"
